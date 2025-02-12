@@ -1,0 +1,48 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<!-- Home page to present the TRE from BioData -->
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1>Welcome to TRE</h1>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2>What is the TRE?</h2>
+        <p>A TRE is a Trusted Research Environment that provides a secure and controlled environment for researchers to work with sensitive data.</p>
+        <a href="https://www.biodata.pt/" class="btn btn-primary">Visit BioData.pt</a>
+      </div>
+    </div>
+  
+    <div class="col-md-3 text-center">
+        <div class="square" (click)="goToPage('/metadata-details')">
+            <i class="fas fa-database"></i>
+            <h3>Metadata</h3>
+            <p>Metadata handling</p>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+          <div class="square" (click)="goToPage('/storage-details')">
+            <i class="fas fa-hdd"></i>
+            <h3>Storage</h3>
+            <p>Data storage</p>
+          </div>
+      </div>
+      <div class="col-md-3 text-center">
+          <div class="square" (click)="goToPage('/computing-details')">
+            <i class="fas fa-cogs"></i>
+            <h3>Computing</h3>
+            <p>High-performance computing</p>
+          </div>
+      </div>
+      <div class="col-md-3 text-center">
+          <div class="square" (click)="goToPage('/data-managing-details')">
+            <i class="fas fa-tasks"></i>
+            <h3>Data Managing</h3>
+            <p>Data management</p>
+          </div>
+      </div>
+    </div>
+  

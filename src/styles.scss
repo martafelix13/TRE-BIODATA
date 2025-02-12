@@ -1,1 +1,148 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  /* Header */
+  h1 {
+    font-size: 2.5rem;
+    color: #ff7f00;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  /* Button */
+  .btn-primary {
+    background-color: #ff7f00;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #e66a00;
+  }
+  
+  /* Squares */
+  .square-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .square {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .square:hover {
+    background-color: #ff7f00;
+    color: white;
+    transform: translateY(-5px);
+  }
+  
+  .square i {
+    font-size: 3rem;
+    color: #ff7f00;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+  }
+  
+  .square:hover i {
+    color: white;
+  }
+  
+  .square h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .square p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  /* Layout */
+  .row {
+    margin-bottom: 40px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .square-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .square-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .square-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .col-md-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

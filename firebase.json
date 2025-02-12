@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/tre-biodata",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
