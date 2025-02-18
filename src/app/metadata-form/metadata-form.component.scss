@@ -1,0 +1,39 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #ff7f00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #ff7f00;
+      }
+    }
+  }
+  

@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/tre-biodata",
+    "public": "dist/tre-biodata/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import {Router, RouterModule, RouterOutlet} from '@angular/router';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent {
   title = 'Trusted Research Environment';
   isMenuOpen = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe(() => {
       this.isMenuOpen = false;
     });
@@ -38,6 +39,10 @@ export class AppComponent {
     if (menuElement && !menuElement.contains(event.target as Node)) {
       this.isMenuOpen = false;
     }
+  }
+
+  login(){
+    this.authService.login();
   }
 }
 
