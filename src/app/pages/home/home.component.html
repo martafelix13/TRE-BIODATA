@@ -4,7 +4,8 @@
 <div class="container">
     <div class="row">
       <div class="col-md-12 text-center">
-        <h1>Welcome to TRE</h1>
+        <h1>Welcome</h1>
+        <h3 *ngIf="userData">{{userData.name}}</h3>
       </div>
     </div>
   
@@ -16,6 +17,7 @@
       </div>
     </div>
   
+    <div class="square-container">
     <div class="col-md-3 text-center">
         <div class="square" (click)="goToPage('/metadata-details')">
             <i class="fas fa-database"></i>
@@ -44,5 +46,6 @@
             <p>Data management</p>
           </div>
       </div>
+    </div>
     </div>
   

@@ -65,7 +65,7 @@ body {
   
   /* Squares */
   .square-container {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
   }
@@ -116,7 +116,7 @@ body {
   }
   
  /* Responsive Design */
- /**
+
   @media (max-width: 1200px) {
     .square-container {
       grid-template-columns: repeat(3, 1fr);
@@ -133,7 +133,7 @@ body {
     .square-container {
       grid-template-columns: 1fr;
     }
-  }*/
+  }
   
   .col-md-3 {
     display: flex;

@@ -1,62 +1,93 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors'); 
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = 8080;  
 
 const CLIENT_ID = 'metadados-tre';
 const CLIENT_SECRET = 'esparguete';
 const REDIRECT_URI = 'http://localhost:8080/oidc-callback'; 
-const LOGIN_URL = 'https://kc.portal.gdi.biodata.pt/oidc/login'; 
-const AUTHORIZATION_URL = 'https://kc.portal.gdi.biodata.pt/oidc/authorize';  
+const LOGIN_URL = 'https://kc.portal.gdi.biodata.pt/oidc/auth/authorize'; 
+const AUTHORIZATION_URL = 'https://kc.portal.gdi.biodata.pt/oidc/token';  
+const USER_INFO_URL = 'https://kc.portal.gdi.biodata.pt/oidc/userinfo';  
 
-// Enable CORS so your Angular frontend can make requests to the backend
-app.use(cors());
+const FRONTEND_URL = 'http://localhost:4200';
 
-// Endpoint to initiate the OAuth login flow
+app.use(cors({ origin: 'http://localhost:4200', credentials: true }));
+app.use(express.json());
+
 app.get('/login', (req, res) => {
-  const lsLoginUrl = `${LOGIN_URL}?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scopes=openid%20profile%20email%5Ccountry%20ga4gh_passport_v1`;
-
+  const lsLoginUrl = `${LOGIN_URL}?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=openid%20profile%20email`;
   console.log("Redirecting user to:", lsLoginUrl);
-  res.redirect(lsLoginUrl); // Redirect the user to the LS Login page
-
-
+  res.redirect(lsLoginUrl);
 });
 
-// Endpoint to handle OAuth callback and exchange authorization code for access token
+
 app.get('/oidc-callback', async (req, res) => {
 
   console.log("Received /callback request:", req.query);
+  const { code } = req.query;
 
-  const { code, state } = req.query;
-  if (!code) {
-      console.error("Authorization code is missing.");
-      return res.status(400).send("Authorization code is required.");
-  }
-
+  if (!code) return res.status(400).json({ error: "Authorization code missing" });
   console.log("Received authorization code:", code);
-  console.log("Received state:", state);
-
-
+  
   try {
-    // Exchange the code for an access token
-    const tokenResponse = await axios.post(AUTHORIZATION_URL, {
-      code: code,
-      state: state,
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-    });
+    
+    const requestConfig = {
+    url: AUTHORIZATION_URL,
+    method: 'POST',
+    headers: {'content-type': 'application/x-www-form-urlencoded'},
+    data: {
+        code: code,
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        scope: 'openid profile email',
+        redirect_uri: REDIRECT_URI,
+        requested_token_type: 'urn:ietf:params:oauth:token-type:refresh_token',
+        grant_type: 'authorization_code'
+      }
+    };
 
-    res.json({
-      access_token: tokenResponse.data.access_token,
-      refresh_token: tokenResponse.data.refresh_token,
-      expires_in: tokenResponse.data.expires_in,
-    });
 
+    axios.request(requestConfig).then(function (response) {
+      console.log(response.data);
+
+      const id_token = response.data.id_token;
+      const token_type = response.data.token_type;
+      const access_token = response.data.access_token;  
+
+      axios.request({
+          url: USER_INFO_URL,
+          method: 'POST',
+          headers: {'Authorization': `${token_type} ${access_token}`}
+        }).then(response => {
+          console.log(response.data);
+          const userData = response.data;
+          res.redirect(`${FRONTEND_URL}/?name=${userData.name}&email=${userData.email}`);
+      });
+      
+    });
 
   } catch (error) {
-    console.error('Error exchanging authorization code for token:', error);
-    res.status(500).send('Error exchanging authorization code');
+    console.error("Error during authentication:", error);
+    res.redirect('http://localhost:4200/error'); 
+  }
+});
+
+
+app.get('/api/user', (req, res) => {
+  console.log("Received /api/user request");
+
+  const token = req.cookies.authToken
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  try {
+      const userData = jwt.verify(token, CLIENT_SECRET);
+      console.log("User data:", userData);
+      res.json(userData);
+  } catch (error) {
+      res.status(403).json({ message: "Invalid token" });
   }
 });
 

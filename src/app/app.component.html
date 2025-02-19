@@ -1,7 +1,11 @@
-<div class="menu-container">
+<div class="header-container">
+  <h1>Trusted Research Environment </h1>
   <button class="menu-toggle" (click)="toggleMenu()">Menu</button>
-  <button (click)="login()">Login with LS-Login</button>
-  
+  <button *ngIf="isLogged()" (click)="logout()">Logout</button>
+  <button *ngIf="!isLogged()" (click)="login()">Login with LS-Login</button>
+</div>
+
+<div class="menu-container">
   <nav [class.open]="isMenuOpen">
     <ul>
       <li *ngFor="let link of menuLinks">
