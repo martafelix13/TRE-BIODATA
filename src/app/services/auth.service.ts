@@ -7,10 +7,6 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
-
-  user: any = null;
-
   private backendUrl = 'http://localhost:8080';
   private userSubject = new BehaviorSubject<any>(null);
   public user$ = this.userSubject.asObservable(); 
