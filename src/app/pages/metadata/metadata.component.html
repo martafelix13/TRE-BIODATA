@@ -41,11 +41,8 @@
     </div>
   </div>
 
-  
-<button (click)="onToggleFakeLogin()"> FAKE LOGIN </button>
 
-<app-metadata-form *ngIf="isAuthenticated"></app-metadata-form>
-
+  <button *ngIf="isLogged()" (click)="goToForm()"> Go to the form </button>
 
 
   

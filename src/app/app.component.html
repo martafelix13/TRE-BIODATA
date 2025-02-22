@@ -1,24 +1,6 @@
-<div class="header-container">
-  <h1>Trusted Research Environment </h1>
-  <button class="menu-toggle" (click)="toggleMenu()">Menu</button>
-  <button *ngIf="isLogged()" (click)="logout()">Logout</button>
-  <button *ngIf="!isLogged()" (click)="login()">Login with LS-Login</button>
-</div>
-
-<div class="menu-container">
-  <nav [class.open]="isMenuOpen">
-    <ul>
-      <li *ngFor="let link of menuLinks">
-        <a [routerLink]="link.path">{{ link.label }}</a>
-      </li>
-    </ul>
-  </nav>
-</div>
-
-
+<app-header></app-header>
 
 <div class="content-container">
   <router-outlet></router-outlet>
 </div>
-
-
+ 

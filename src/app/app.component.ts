@@ -3,10 +3,13 @@ import { Component, HostListener } from '@angular/core';
 import {Router, RouterModule, RouterOutlet} from '@angular/router';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { AuthService } from './services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterModule, MatSidenavModule],
+  imports: [CommonModule, RouterModule, MatSidenavModule, TooltipModule, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -14,32 +17,14 @@ export class AppComponent {
   title = 'Trusted Research Environment';
   isMenuOpen = false;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService
+  ) {
     this.router.events.subscribe(() => {
       this.isMenuOpen = false;
     });
   }
 
-  menuLinks = [
-    { label: 'Home', path: '/' },
-    { label: 'Metadata Information', path: '/metadata-details' },
-  ];
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  closeMenu() {
-    this.isMenuOpen = false;
-  }
-
-  @HostListener('document:click', ['$event'])
-  handleClickOutside(event: Event) {
-    const menuElement = document.querySelector('.menu-container');
-    if (menuElement && !menuElement.contains(event.target as Node)) {
-      this.isMenuOpen = false;
-    }
-  }
+  
 
   login(){
     this.authService.login();

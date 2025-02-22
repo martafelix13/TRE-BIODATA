@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,32 +10,40 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class AuthService {
   private backendUrl = 'http://localhost:8080';
   private userSubject = new BehaviorSubject<any>(null);
-  public user$ = this.userSubject.asObservable(); 
+  public user$ = this.userSubject.asObservable();
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router, 
+    private http: HttpClient, 
+    private cookieService: CookieService
+  ) {
+    this.loadUserData();
+  }
 
-   
+  /** Redirect user to login page */
   login(): void {  
-    window.location.href=`${this.backendUrl}/login`;
+    window.location.href = `${this.backendUrl}/login`;
   }  
 
   handleCallback(): void {
-    console.log('Handling callback')
     const urlParams = new URLSearchParams(window.location.search);
-
-    const code = urlParams.get('code');  // Extract the "code" from the URL query parameters
-
+    const code = urlParams.get('code');  // Extract "code" from URL
+  
     if (code) {
-      this.exchangeCodeForToken(code);  // Send the code to the backend for token exchange
+      this.exchangeCodeForToken(code);  
     } else {
-      console.error('No authorization code returned');
+      console.error('No authorization code found in callback URL');
     }
   }
+  
 
   exchangeCodeForToken(code: string): void {
     this.http.get(`${this.backendUrl}/oidc-callback?code=${code}`, { withCredentials: true })
       .subscribe({
-        //next: () => this.loadUserData(),
+        next: () => {
+          console.log('Tokens set in cookies, redirecting...');
+          this.loadUserData();  
+        },
         error: (error) => console.error('Error exchanging code:', error)
       });
   }
@@ -43,10 +52,9 @@ export class AuthService {
     this.http.get(`${this.backendUrl}/api/user`, { withCredentials: true })
       .subscribe({
         next: (user) => {
-          console.log( user);
-
-          this.userSubject.next(user); // Store user data
-          this.router.navigate(['/']); // Redirect to home
+          console.log('User data received:', user);
+          this.userSubject.next(user); 
+          this.router.navigate(['/']); 
         },
         error: (error) => {
           console.error('Error getting user data:', error);
@@ -55,21 +63,23 @@ export class AuthService {
       });
   }
 
-  setUserData(userData: any): void {
-    this.user =  userData;
-  }
-
-  getUserData() {
-    return this.user;
-  }
-
   isLogged(): boolean {
-    return this.user !== null;
+    return this.userSubject.value !== null;
   }
 
+  /** Logs out the user */
   logout(): void {
-    //this.userSubject.next(null);
-    this.user = null;
-    this.router.navigate(['/']);
+    this.cookieService.delete('id_token', '/');
+    this.cookieService.delete('access_token', '/');
+    this.cookieService.delete('token_type', '/');
+    this.cookieService.delete('user', '/');
+    this.userSubject.next(null);
+    this.router.navigate(['/']); 
   }
+
+  getIdToken(): string {
+    return this.cookieService.get('id_token');
+  }
+
+  
 }

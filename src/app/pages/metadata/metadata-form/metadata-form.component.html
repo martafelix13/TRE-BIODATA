@@ -1,0 +1,139 @@
+<div class="container mt-5">
+  <h2>Metadata Form</h2>
+  <p>Select the type of data you want to add and fill in the details.</p>
+
+  <!-- Type Selection -->
+  <div class="mb-3">
+    <label for="type" class="form-label">Type:</label>
+    <select id="type" class="form-select" [(ngModel)]="type" (change)="resetForm()">
+      <option *ngFor="let option of type_options" [value]="option">{{ option }}</option>
+    </select>
+  </div>
+
+  <!-- Catalog Form -->
+  <form [formGroup]="catalogForm" *ngIf="type === 'catalog'" (ngSubmit)="saveForm('catalog')">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title:*</label>
+      <input id="title" formControlName="title" class="form-control" required>
+      <div *ngIf="isInvalid('title')" class="text-danger">Title is required.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="version" class="form-label">Version:*</label>
+      <input id="version" formControlName="version" class="form-control" required>
+      <div *ngIf="isInvalid('version')"  class="text-danger">Version is required.</div>
+    </div>
+    
+    <div class="mb-3">
+      <label for="publisher" class="form-label">Publisher Name:*</label>
+      <input id="publisher" formControlName="publisher" class="form-control" required>
+      <div *ngIf="isInvalid('publisher')" class="text-danger">Publisher name is required.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="homePage" class="form-label">Home Page:</label>
+      <input id="homePage" formControlName="homePage" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="rights" class="form-label">Rights:</label>
+      <input id="rights" formControlName="rights" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="license" class="form-label">License:</label>
+      <input id="license" formControlName="license" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea id="description" formControlName="description" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="catalogForm.invalid">Save Catalog</button>
+  </form>
+</div>
+
+
+<!-- Dataset Form -->
+<form [formGroup]="datasetForm" *ngIf="type === 'dataset'" (ngSubmit)="saveForm('dataset')">
+  <label for="isPartOf">Associated Dataset:</label>
+  <select id="isPartOf" formControlName="isPartOf" required>
+    <option *ngFor="let catalog of savedCatalogs" [value]="catalog.id">{{ catalog.title }}</option>
+  </select>
+
+  <div class="mb-3">
+    <label for="title" class="form-label">Title:*</label>
+    <input id="title" formControlName="title" class="form-control" required>
+    <div *ngIf="isInvalid('title')"  class="text-danger">Title is required.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="theme" class="form-label">Theme:*</label>
+    <input id="theme" formControlName="theme" class="form-control" required>
+    <div *ngIf="isInvalid('theme')"  class="text-danger">Theme is required.</div>
+  </div>
+  
+  <div class="mb-3">
+    <label for="publisher" class="form-label">Publisher Name:*</label>
+    <input id="publisher" formControlName="publisher" class="form-control" required>
+    <div *ngIf="isInvalid('publisher')"  class="text-danger">Publisher name is required.</div>
+  </div>
+
+  <label for="version">Version:</label>
+  <input id="version" formControlName="version" required>
+  
+  <label for="modified">Modified Date:</label>
+  <input id="modified" formControlName="modified">
+  
+  <label for="issued">Issued Date:</label>
+  <input id="issued" formControlName="issued">
+  
+  <label for="license">License:</label>
+  <input id="license" formControlName="license">
+  
+  <label for="description">Description:</label>
+  <textarea id="description" formControlName="description"></textarea>
+  
+  <button type="submit" class="btn btn-primary" [disabled]="datasetForm.invalid">Save Dataset</button>
+</form>
+
+<!-- Distribution Form -->
+ 
+<form [formGroup]="distributionForm" *ngIf="type === 'distribution'" (ngSubmit)="saveForm('distribution')">
+  <label for="isPartOf">Associated Dataset:</label>
+  <select id="isPartOf" formControlName="isPartOf" required>
+    <option *ngFor="let dataset of savedDatasets" [value]="dataset.id">{{ dataset.title }}</option>
+  </select>
+
+  <div class="mb-3">
+    <label for="title" class="form-label">Title:*</label>
+    <input id="title" formControlName="title" class="form-control" required>
+    <div *ngIf="isInvalid('title')"  class="text-danger">Title is required.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="mediaType" class="form-label">Media Type:*</label>
+    <input id="mediaType" formControlName="mediaType" class="form-control" required>
+    <div *ngIf="isInvalid('mediaType')" class="text-danger">Media Type is required.</div>
+  </div>
+
+  
+  <label for="description">Description:</label>
+  <textarea id="description" formControlName="description"></textarea>
+  
+  <label for="license">License:</label>
+  <input id="license" formControlName="license">
+  
+  
+  <label for="version">Version:</label>
+  <input id="version" formControlName="version" required>
+  
+  <label for="format">Format:</label>
+  <input id="format" formControlName="format">
+  
+  <label for="publisher">Publisher Name:</label>
+  <input id="publisher" formControlName="publisher" required>
+  
+  <button type="submit" class="btn btn-primary" [disabled]="distributionForm.invalid">Save Distribution</button>
+</form>
