@@ -25,14 +25,14 @@ form {
     button {
       margin-top: 15px;
       padding: 10px;
-      background-color: #ff7f00;
+      background-color: var(--bs-primary);
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
   
       &:hover {
-        background-color: #ff7f00;
+        background-color: var(--bs-primary);
       }
     }
   }

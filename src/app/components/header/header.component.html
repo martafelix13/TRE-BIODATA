@@ -1,42 +1,41 @@
-<script src="../assets/js/color-modes.js"></script>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <div class="col-md-3 mb-2 mb-md-0">
-        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-          <img class="bi" width="40" height="32" src="/src/assets/img/BiodataLogo.svg" alt="">
+        <a  href="https://www.biodata.pt/" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <img class="bi" height="50" src="assets/img/BiodataLogo.svg" alt="">
         </a>
       </div>
 
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 center-nav">
         <li><a routerLink="/" class="nav-link px-2 link-secondary">Home</a></li>
         <li><a routerLink="/metadata-details" class="nav-link px-2">Guides</a></li>
         <li><a href="#" class="nav-link px-2">Documentation</a></li>
         <li><a href="#" class="nav-link px-2">About</a></li>
       </ul>
 
-      <div class="col-md-3 text-end">
+      <div  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
         <button type="button" class="btn btn-primary" *ngIf="!isLogged()" (click)="login()">Login</button>
       </div>
       
       <div class="d-flex align-items-center" *ngIf="isLogged()"> {{userData['name']}} </div>       
 
-      <div class="dropdown text-end" *ngIf="isLogged()">
-        <a  class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="flex-shrink-0 dropdown" *ngIf="isLogged()">
+        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small">
-          <li><a class="dropdown-item" routerLink="/metadata-details/new-form">Submit Metadata</a></li>
+          <li><a class="dropdown-item" href="#">Submit Metadata</a></li>
           <li><a class="dropdown-item" href="#">Submit Data</a></li>
           <li><a class="dropdown-item" href="#">Profile</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
-        </ul>
+        </ul> 
       </div>
-
+      
     </header>
   </div>
 
 
-<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
 

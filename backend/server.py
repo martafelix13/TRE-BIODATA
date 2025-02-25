@@ -116,7 +116,7 @@ def submit_form():
         print("Form Data:", form_data)
         datasetDB.insert_one(form_data)
 
-    elif (form_data.get("type") == ""):
+    elif (form_data.get("type") == "distribution"):
         print("Form Data:", form_data)
         distributionDB.insert_one(form_data)
 
@@ -129,22 +129,37 @@ def submit_form():
 def get_catalogs():
     """Return all catalogs"""
     data = list(catalogDB.find({}, {"_id": 0}))  # Fetch data from MongoDB
-    return jsonify(data), 200
+    json_data = json.dumps(data, default=str)
+    print('Catalogs:', json_data)
+    return jsonify(json_data), 200
 
 @app.route('/datasets', methods=['GET'])
 def get_datasets():
     """Return all datasets"""
     datasets = list(datasetDB.find({}, {"_id": 0}))
-    return jsonify(datasets), 200
+    json_data = json.dumps(datasets, default=str)
+    print('Datasets:', json_data)
+    return jsonify(json_data), 200
 
 @app.route('/distributions', methods=['GET'])
 def get_distributions():
     """Return all distributions"""
     distributions = list(distributionDB.find({}, {"_id": 0}))
-    return jsonify(distributions), 200
+    json_data = json.dumps(distributions, default=str)
+    print('Distributions:', json_data)
+    return jsonify(json_data), 200
 
+@app.route('/catalog/<string:catalog_id>', methods=['GET'])
+def get_catalog(catalog_id):
+    """Return a specific catalog"""
+    catalog = catalogDB.find_one({"_id": catalog_id})
+    return jsonify(catalog), 200
 
-
+@app.route('/dataset/<string:dataset_id>', methods=['GET'])
+def get_dataset(dataset_id):
+    """Return a specific dataset"""
+    dataset = datasetDB.find_one({"_id": dataset_id})
+    return jsonify(dataset), 200
 
 
 if __name__ == '__main__':

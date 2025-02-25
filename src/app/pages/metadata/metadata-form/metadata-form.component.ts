@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import * as uuid from 'uuid';
 import { MetadataUploadService } from '../../../services/metadata-upload.service';
 import { AuthService } from '../../../services/auth.service';
+import { ObjectId } from 'mongodb';
 
 
 @Component({
@@ -22,12 +23,17 @@ export class MetadataFormComponent {
   datasetForm: FormGroup;
   distributionForm: FormGroup;
 
+  selectItem: any;
+
   type = 'catalog';
   type_options = ['catalog', 'dataset', 'distribution'];
+
+  user_id = '';
 
     constructor(private fb: FormBuilder, private metadataUploadService: MetadataUploadService, private authService: AuthService) {
       
       this.catalogForm = this.fb.group({
+        id: [''],
         title: ['', Validators.required],
         version: ['', Validators.required],
         publisher: ['', Validators.required],
@@ -36,10 +42,11 @@ export class MetadataFormComponent {
         license: [''],
         language: [''],
         description: [''],
-        user_id: [authService.getIdToken()]
+        user_id: ['']
       });
 
       this.datasetForm = this.fb.group({
+        id: [uuid.v4()],
         title: ['', Validators.required],
         version: ['', Validators.required],
         publisher: ['', Validators.required],
@@ -53,6 +60,7 @@ export class MetadataFormComponent {
       });
 
       this.distributionForm = this.fb.group({
+        id: [uuid.v4()],
         isPartOf: ['', Validators.required],
         title: ['', Validators.required],
         description: [''],
@@ -70,13 +78,19 @@ export class MetadataFormComponent {
       this.getCatalogs();
       this.getDatasets();
       this.getDistributions();
+
+      this.user_id =  this.authService.getIdToken();
   }
 
   
 
   saveForm(type:string) {
 
+
     if (type === 'catalog') {
+      this.catalogForm.patchValue({id: uuid.v4()});
+      this.catalogForm.patchValue({user_id: this.user_id});
+      console.log(this.catalogForm.value)
       this.metadataUploadService.submitForm(this.catalogForm.value, 'catalog').subscribe(
         (data) => {
           this.getCatalogs();
@@ -86,6 +100,9 @@ export class MetadataFormComponent {
         }
       )
     } else if (type === 'dataset') {
+      this.datasetForm.patchValue({id: uuid.v4()});
+      this.datasetForm.patchValue({user_id: this.user_id});
+      console.log(this.datasetForm.value)
       this.metadataUploadService.submitForm(this.datasetForm.value, 'dataset').subscribe(
         (data) => {
           this.getDatasets();
@@ -95,6 +112,9 @@ export class MetadataFormComponent {
         }
       )
     } else if (type === 'distribution') {
+      this.distributionForm.patchValue({id: uuid.v4()});
+      this.distributionForm.patchValue({user_id: this.user_id});
+      console.log(this.distributionForm.value)
       this.metadataUploadService.submitForm(this.distributionForm.value, 'distribution').subscribe(
         (data) => {
           this.getDistributions();
@@ -111,8 +131,8 @@ export class MetadataFormComponent {
   getCatalogs() {
     this.metadataUploadService.getCatalogs().subscribe((data: any) => {
       console.log("loaded catalogs:") 
-      console.log(data)
-      this.savedCatalogs = data;
+      this.savedCatalogs = JSON.parse(data)
+      console.log(this.savedCatalogs)
     });
   }
 
@@ -120,15 +140,15 @@ export class MetadataFormComponent {
     this.metadataUploadService.getDatasets().subscribe((data: any) => {
       console.log("loaded datasets:") 
       console.log(data)
-      this.savedDatasets = data;
+      this.savedDatasets = JSON.parse(data)
     });
   }
 
   getDistributions() {
     this.metadataUploadService.getDistributions().subscribe((data: any) => {
-      console.log("loaded dsitributions:") 
+      console.log("loaded distributions:") 
       console.log(data)
-      this.savedDistributions = data;
+      this.savedDistributions  = JSON.parse(data)
     });
   }
 

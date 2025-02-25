@@ -78,7 +78,7 @@ export class AuthService {
   }
 
   getIdToken(): string {
-    return this.cookieService.get('id_token');
+    return this.userSubject.value.sub;
   }
 
   
