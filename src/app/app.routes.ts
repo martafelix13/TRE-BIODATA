@@ -3,13 +3,21 @@ import { MetadataComponent } from './pages/metadata/metadata.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CallbackComponent } from './pages/callback/callback.component';
 import { MetadataFormComponent } from './pages/metadata/metadata-form/metadata-form.component';
+import { ProjectDisplayComponent } from './pages/project-display/project-display.component';
+import { ProjectDetailsComponent } from './pages/project-display/project-details/project-details.component';
+import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
+import { MetadataListComponent } from './pages/metadata-list/metadata-list.component';
 
 export const routes: Routes = [
         { path: '', component: HomeComponent, title: 'Home' },
         { path: 'home', component: HomeComponent, title: 'Home' },
         { path: 'metadata-details', component: MetadataComponent, title: 'Metadata Details'},
-        {path: 'metadata-details/new-form',  component:MetadataFormComponent, title: 'Metadata Form'},
-        { path: 'oidc-callback', component: CallbackComponent }
+        { path: 'metadata-list', component: MetadataListComponent, title: 'Metadata'},
+        { path: 'metadata-details/new-form',  component:MetadataFormComponent, title: 'Metadata Form', canDeactivate: [UnsavedChangesGuard]},
+        { path: 'oidc-callback', component: CallbackComponent },
+        { path: 'projects', component: ProjectDisplayComponent, title: 'Projects' },
+        { path: 'projects/:id', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] }
+
 ];
 
 export default routes;

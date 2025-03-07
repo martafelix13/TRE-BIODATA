@@ -27,4 +27,13 @@ export class MetadataUploadService {
     return this.http.get(this.backendUrl + '/distributions');
   }
 
+  getDatasetByCatalog(catalog_id: string) {
+    return this.http.get(this.backendUrl + '/catalog/' + catalog_id + "/datasets");
+  }
+
+  getDistributionByDataset(dataset_id: string) {
+    return this.http.get(this.backendUrl + '/dataset/' + dataset_id + "/distributions");
+  }
+
+
 }

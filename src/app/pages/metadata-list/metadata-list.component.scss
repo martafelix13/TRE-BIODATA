@@ -1,0 +1,44 @@
+mat-card {
+    border-radius: 12px;
+    background-color: #f8f9fa;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  th {
+    background: #007bff;
+    color: white;
+    text-align: left;
+    padding: 10px;
+  }
+  
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .mat-elevation-z8 {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-expanded-state-height{
+    height: 100px;
+  }
+  
+  mat-panel-description {
+    max-width: 100%;
+    word-wrap: break-word;
+    height: 600px;
+  }
+  
+  mat-panel-header {
+    background-color: #f1f1f1;
+    font-weight: bold;
+  }
+  
+  mat-expansion-panel {
+    margin-bottom: 15px;
+  }
+  

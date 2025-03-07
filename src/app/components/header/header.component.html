@@ -8,6 +8,7 @@
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 center-nav">
         <li><a routerLink="/" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a routerLink="/metadata-list" class="nav-link px-2">Data Discovery</a></li>
         <li><a routerLink="/metadata-details" class="nav-link px-2">Guides</a></li>
         <li><a href="#" class="nav-link px-2">Documentation</a></li>
         <li><a href="#" class="nav-link px-2">About</a></li>
@@ -17,21 +18,21 @@
         <button type="button" class="btn btn-primary" *ngIf="!isLogged()" (click)="login()">Login</button>
       </div>
       
-      <div class="d-flex align-items-center" *ngIf="isLogged()"> {{userData['name']}} </div>       
-
-      <div class="flex-shrink-0 dropdown" *ngIf="isLogged()">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="d-flex align-items-center" *ngIf="isLogged()"> {{userData['name']}} </div> 
+      
+      <c-dropdown *ngIf="isLogged()">
+        <a cButton cDropdownToggle aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
-        <ul class="dropdown-menu text-small">
-          <li><a class="dropdown-item" href="#">Submit Metadata</a></li>
-          <li><a class="dropdown-item" href="#">Submit Data</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
-        </ul> 
-      </div>
-      
+        <ul cDropdownMenu>
+          <li><a [routerLink]="['projects']" cDropdownItem>My projects</a></li>
+          <li><a [routerLink]="['metadata-details']" cDropdownItem>My metadata</a></li>
+          <li><a [routerLink]="[]" cDropdownItem>Profile</a></li>
+          <li><hr cDropdownDivider></li>
+          <li><button cDropdownItem (click)="logout()">Sign out</button></li>
+        </ul>
+      </c-dropdown>
+
     </header>
   </div>
 

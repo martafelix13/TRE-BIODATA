@@ -1,0 +1,19 @@
+<!-- My projects page -->
+<div class="container">
+  <div class="row">
+        <div class="col-md-12">
+            <h1>My Projects</h1>
+        </div>
+        <div class="col-md-12">
+            <a routerLink="/project/new" class="btn btn-primary">Create New Project</a>
+        </div>
+    </div>
+  </div>
+<div class="row">
+    <div class="col-md-12">
+        <app-project-list [projects]="projects"></app-project-list>
+    </div>
+</div>
+
+
+

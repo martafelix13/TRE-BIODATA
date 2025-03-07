@@ -1,8 +1,12 @@
-from flask import Flask, json, request, redirect, jsonify, make_response
+import datetime
+import io
+from flask import Flask, json, request, redirect, jsonify, make_response, send_file, send_from_directory
+import gridfs
 import requests
 import jwt
 from flask_cors import CORS
 from pymongo import MongoClient
+import os
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -15,12 +19,27 @@ AUTHORIZATION_URL = 'https://kc.portal.gdi.biodata.pt/oidc/token'
 USER_INFO_URL = 'https://kc.portal.gdi.biodata.pt/oidc/userinfo'
 FRONTEND_URL = 'http://localhost:4200'
 
+TEMPLATES_FOLDER = "templates"
+SIGNED_FOLDER = "signed_files"
+os.makedirs(TEMPLATES_FOLDER, exist_ok=True)
+os.makedirs(SIGNED_FOLDER, exist_ok=True)
 
 client = MongoClient("mongodb://localhost:27017/")  # Change to your MongoDB connection URI
-db = client["metadata"]
-catalogDB = db["catalog"]
-datasetDB = db["dataset"]
-distributionDB = db["distribution"]
+dbMetadada = client["metadata"]
+catalogDB = dbMetadada["catalog"]
+datasetDB = dbMetadada["dataset"]
+distributionDB = dbMetadada["distribution"]
+
+dbProject = client["project"]
+projectDB = dbProject["project_details"]
+
+templateDB = dbProject["templates"]
+
+dbFiles = client["files_system"]
+fs = gridfs.GridFS(dbFiles)
+
+
+#fs = gridfs.GridFS(signedDocumentsDB)
 
 
 id_token = None
@@ -28,6 +47,29 @@ access_token = None
 token_type = None
 user = None
 
+def get_user_id(): 
+    id_token = request.cookies.get('id_token')
+    print ('id_token: ' + id_token)
+    if not id_token:
+        print ('id_token not found')
+        return None
+    
+    try:
+        user = jwt.decode(id_token, CLIENT_SECRET, options={"verify_signature": False, "verify": False}).get("sub")  # Use the correct signing algorithm
+        print(user)
+        return user
+
+    except jwt.ExpiredSignatureError:
+        print ('ExpiredSignatureError')
+        return None
+    
+    except jwt.InvalidTokenError:
+        print('InvalidTokenError')
+        return None
+
+
+
+## Authentication and Authorization ##
 @app.route('/login')
 def login():
     """Redirect user to the OAuth login page"""
@@ -100,6 +142,7 @@ def get_user():
     return response.json()
 
 
+## Metadata API ##
 @app.route('/submit-form', methods=['POST'])
 def submit_form():
     """Submit form data to the server"""
@@ -125,41 +168,190 @@ def submit_form():
     
     return jsonify({"message": "Form data submitted successfully"})
 
+
 @app.route('/catalogs', methods=['GET'])
 def get_catalogs():
+    # TODO: Add user authentication
     """Return all catalogs"""
     data = list(catalogDB.find({}, {"_id": 0}))  # Fetch data from MongoDB
     json_data = json.dumps(data, default=str)
     print('Catalogs:', json_data)
     return jsonify(json_data), 200
 
+@app.route('/catalog/<string:catalog_id>/datasets', methods=['GET'])
+def get_datasets_by_catalog(catalog_id):
+    datasets = list(datasetDB.find({"isPartOf": catalog_id}, {"_id": 0}))
+    json_data = json.dumps(datasets, default=str)
+    print('Datasets from catalog ', catalog_id, ' :', json_data)
+    return jsonify(json_data), 200
+
 @app.route('/datasets', methods=['GET'])
 def get_datasets():
+    #TODO: Add user authentication
     """Return all datasets"""
     datasets = list(datasetDB.find({}, {"_id": 0}))
     json_data = json.dumps(datasets, default=str)
     print('Datasets:', json_data)
     return jsonify(json_data), 200
 
+@app.route('/dataset/<string:dataset_id>/distributions', methods=['GET'])
+def get_distributions_by_dataset(dataset_id):
+    distributions = list(distributionDB.find({"isPartOf": dataset_id}, {"_id": 0}))
+    json_data = json.dumps(distributions, default=str)
+    print('Distributions from Dataset ', dataset_id, ' :', json_data)
+    return jsonify(json_data), 200
+
+
 @app.route('/distributions', methods=['GET'])
 def get_distributions():
+    #TODO: Add user authentication
     """Return all distributions"""
     distributions = list(distributionDB.find({}, {"_id": 0}))
     json_data = json.dumps(distributions, default=str)
     print('Distributions:', json_data)
     return jsonify(json_data), 200
 
+
+
 @app.route('/catalog/<string:catalog_id>', methods=['GET'])
 def get_catalog(catalog_id):
+    #TODO: Add user authentication
     """Return a specific catalog"""
     catalog = catalogDB.find_one({"_id": catalog_id})
     return jsonify(catalog), 200
 
 @app.route('/dataset/<string:dataset_id>', methods=['GET'])
 def get_dataset(dataset_id):
+    #TODO: Add user authentication
     """Return a specific dataset"""
     dataset = datasetDB.find_one({"_id": dataset_id})
     return jsonify(dataset), 200
+
+
+
+## Project API ##
+@app.route('/projects', methods=['GET'])
+def get_projects():
+    """Return all user's projects"""
+
+    user_id = get_user_id()
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    projects = list(projectDB.find({'owner': user_id}, {"_id": 0}))  
+    json_data = json.dumps(projects, default=str)
+    print('Projects:', json_data)
+    return jsonify(json_data), 200
+
+
+@app.route('/project/<string:project_id>', methods=['GET'])
+def get_project(project_id):
+    #TODO: Add user authentication
+    """Return a specific project"""
+
+    user_id = get_user_id()
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    print('User ID:', user_id)
+    print('Project ID:', project_id)
+    project = projectDB.find_one({'owner': user_id, "id": project_id},  {"_id": 0})
+    return jsonify(project), 200
+
+@app.route('/submit-project', methods=['POST'])
+def submit_project():
+    """Submit project data to the server"""
+    project_data = request.json
+
+    if (not project_data):
+        return jsonify({"error": "Project data missing"}), 400 
+    
+    print("Project Data:", project_data)
+    projectDB.insert_one(project_data)
+    
+    return jsonify({"message": "Project data submitted successfully"})
+
+@app.route('/update-project/<string:project_id>', methods=['PUT'])
+
+def update_project(project_id):
+    """Update project data"""
+    project_data = request.json
+
+    if (not project_data):
+        return jsonify({"error": "Project data missing"}), 400
+
+    projectDB.update_one({"id": project_id}, {"$set": project_data})
+    return jsonify({"message": "Project data updated successfully"})
+
+@app.route('/delete-project/<string:project_id>', methods=['DELETE'])
+
+def delete_project(project_id):
+    """Delete a project"""
+    
+    user_id = get_user_id()
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    projectDB.delete_one({'owner': user, "id": project_id})
+    return jsonify({"message": "Project deleted successfully"})
+
+@app.route('/project/update-status/<string:project_id>', methods=['PUT'])
+def update_project_status(project_id):
+    """Update project status"""
+    project_status = request.json
+    projectDB.update_one({"id": project_id}, {"$set": {"status": project_status}})
+    return jsonify({"message": "Project status updated successfully"})
+
+
+## File Handling ##
+@app.route('/files', methods=['GET'])
+def get_files():
+    """Return all files"""
+    files = list(templateDB.find({}, {"_id": 0}))
+    return jsonify(files), 200
+
+
+@app.route('/download/<string:filename>', methods=['GET'])
+def download_file(filename):
+    print("Downloading file:", filename)
+    response = templateDB.find_one({"filename": filename}, {"_id": 0})
+    if not response:
+        return jsonify({"error": "File not found"}), 404
+    
+    print(response)
+
+    return jsonify(response), 200
+
+@app.route('/upload', methods=['POST'])
+def upload_signed_file():
+    """Receive signed files from users"""
+
+    if 'file' not in request.files:  # Check if 'file' key exists
+        return jsonify({"error": "No file part in request"}), 400
+    file = request.files['file']
+    
+    if 'project_id' not in request.form:
+        return jsonify({"error": "Project ID missing"}), 400
+    
+    if 'file_type' not in request.form:
+        return jsonify({"error": "Document type missing"}), 400
+
+    project_id = request.form.get('project_id')
+    file_type = request.form.get('file_type')
+
+    user_id = get_user_id()
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    
+    file.filename = file_type
+    fs.put(file , owner=user_id, project_id=project_id, type=file_type)
+    return jsonify({"message": "File uploaded successfully!" })
+
+
 
 
 if __name__ == '__main__':

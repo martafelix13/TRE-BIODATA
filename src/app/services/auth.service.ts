@@ -81,5 +81,10 @@ export class AuthService {
     return this.userSubject.value.sub;
   }
 
+  redirectIfNotLoggedIn(): void {
+    if (!this.isLogged()) {
+      this.login();
+    }
+  }
   
 }
