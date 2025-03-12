@@ -65,12 +65,21 @@
   </ng-template>
 
   <ng-template #metadataTemplate>
-    <h2>Metadata Submission</h2>
-    <p>Form for metadata submission goes here.</p>
+    <app-metadata-form *ngIf="project" [project]="project"></app-metadata-form>
   </ng-template>
 
   <ng-template #dataTemplate>
     <h2>Data Submission</h2>
     <p>Guide for data submission goes here.</p>
+
+    <h2>REMS Update</h2>
+    <button mat-raised-button color="primary" (click)="createResource()">
+      Create Resource
+    </button>
+
+    <!--Button to Redirect to REMS-->
+    <button mat-raised-button color="primary" (click)="redirectToRems()">
+      Go to REMS
+    </button>
   </ng-template>
 </div>

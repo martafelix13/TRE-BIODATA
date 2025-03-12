@@ -7,39 +7,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProjectsService {
 
-  projects = [
-    {
-      id: '1',
-      title: 'Project 1',
-      description: 'Description of Project 1',
-      last_update: '2025-01-01',
-      organization: 'Organization 1',
-      status: 'P-E',
-      owner: 'marta.felix@lifescience-ri.eu',
-      internal_storage: true
-    },
-    {
-      id: '2',
-      title: 'Project 2',
-      description: 'Description of Project 2',
-      last_update: '2025-02-05',
-      organization: 'Organization 1',
-      status: 'P-E',
-      owner: 'marta.felix@lifescience-ri.eu',
-      internal_storage: false
-    },
-    {
-      id: '3',
-      title: 'Project 3',
-      description: 'Description of Project 3',
-      last_update: '2024-12-20',
-      organization: 'Organization 1',
-      status: 'P-E',
-      owner: 'marta.felix@lifescience-ri.eu',
-      internal_storage: true
-    }
-  ];
-
   user_id = '';
   private backendUrl = 'http://localhost:8080';
 
@@ -47,7 +14,6 @@ export class ProjectsService {
   constructor(private authService : AuthService, private http: HttpClient) { 
     this.authService.user$.subscribe(user => {
       if (user) {
-        this.projects = this.projects.filter((project: { owner: string; }) => project.owner === user.sub);
         this.user_id = user.sub;     
       } else {
         console.error('No user logged in');
@@ -72,7 +38,7 @@ export class ProjectsService {
     project.status = 'P-AR';
 
     if (project.id === 'new') {
-      project.id = this.projects.length + 1;
+      //project.id = this.projects.length + 1;
     }
 
     return this.http.post(this.backendUrl + '/submit-project', project)
@@ -82,7 +48,5 @@ export class ProjectsService {
     return this.http.delete(this.backendUrl + '/projects/' + id);
   }
 
-    
-  
 
 }

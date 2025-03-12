@@ -10,15 +10,14 @@
         <li><a routerLink="/" class="nav-link px-2 link-secondary">Home</a></li>
         <li><a routerLink="/metadata-list" class="nav-link px-2">Data Discovery</a></li>
         <li><a routerLink="/metadata-details" class="nav-link px-2">Guides</a></li>
-        <li><a href="#" class="nav-link px-2">Documentation</a></li>
         <li><a href="#" class="nav-link px-2">About</a></li>
       </ul>
 
-      <div  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+      <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
         <button type="button" class="btn btn-primary" *ngIf="!isLogged()" (click)="login()">Login</button>
       </div>
       
-      <div class="d-flex align-items-center" *ngIf="isLogged()"> {{userData['name']}} </div> 
+      <div class="d-flex align-items-center" *ngIf="isLogged()"> {{userData['name']}} 
       
       <c-dropdown *ngIf="isLogged()">
         <a cButton cDropdownToggle aria-expanded="false">
@@ -31,7 +30,8 @@
           <li><hr cDropdownDivider></li>
           <li><button cDropdownItem (click)="logout()">Sign out</button></li>
         </ul>
-      </c-dropdown>
+      </c-dropdown> 
+    </div>
 
     </header>
   </div>

@@ -38,6 +38,9 @@ templateDB = dbProject["templates"]
 dbFiles = client["files_system"]
 fs = gridfs.GridFS(dbFiles)
 
+dbUser = client["users"]
+userDB = dbUser["users_info"]
+
 
 #fs = gridfs.GridFS(signedDocumentsDB)
 
@@ -138,6 +141,15 @@ def get_user():
         return jsonify({"error": "Failed to fetch user info"}), response.status_code
     
     print(response.json())
+    
+    # save user data in the database as user.sub -> user.info
+    user = {
+        "id": response.json().get("sub"),
+        "user_info": response.json()
+    }
+
+    if not userDB.find_one({"id": user.get("id")}):
+        userDB.insert_one(user)
 
     return response.json()
 
@@ -350,6 +362,50 @@ def upload_signed_file():
     file.filename = file_type
     fs.put(file , owner=user_id, project_id=project_id, type=file_type)
     return jsonify({"message": "File uploaded successfully!" })
+
+
+@app.route('/redirect-rems', methods=['GET'])
+def redirect_rems():
+    # open new window with rems
+    return open('http://localhost:3000')
+
+
+@app.route('/rems/create_resource', methods=['POST'])
+def create_resource():
+    # TODO: Adapt to other organizations and add process to add user to the organization
+    organization_id = "organization_example"
+    resource_id = "pt:biodata.pt:tre:website_resource" 
+
+    # Add user to the organization
+
+    # Create resource
+
+    rems_api_url = "http://localhost:3000/api/resources/create"
+    api_key = "bgs6o1u81gasz6x5812bvtg"
+    user_id = "robot-org-owner"
+
+    #"content-type: application/json" \
+    #-H "x-rems-api-key: $API_KEY" \
+    #-H "x-rems-user-id: $USER_ID" \
+
+    headers = {
+        "content-type": "application/json",
+        "x-rems-api-key": api_key,
+        "x-rems-user-id": user_id
+    }
+
+    response =  requests.post(rems_api_url, headers=headers, json={
+            "resid": resource_id,
+            "organization": {
+                "organization/id": organization_id
+            },
+            "licenses": [1]
+        })
+    
+    print(response.json())
+            
+
+    return jsonify(response.json())
 
 
 

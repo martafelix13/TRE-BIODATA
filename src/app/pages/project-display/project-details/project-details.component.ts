@@ -7,10 +7,13 @@ import {MatIconModule} from '@angular/material/icon';
 import {ReactiveFormsModule } from '@angular/forms';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { FileManagementComponent } from "../../file-management/file-management.component";
+import { MetadataFormComponent } from "../../metadata/metadata-form/metadata-form.component";
+import { AuthService } from '../../../services/auth.service';
+import { RemsService } from '../../../services/rems.service';
 
 @Component({
   selector: 'app-project-details',
-  imports: [CommonModule, ReactiveFormsModule, MatStepperModule, ProjectFormComponent, MatIconModule, FileManagementComponent, FileManagementComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatStepperModule, ProjectFormComponent, MatIconModule, FileManagementComponent, FileManagementComponent, MetadataFormComponent, MetadataFormComponent],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.scss'
 })
@@ -48,7 +51,8 @@ export class ProjectDetailsComponent {
 
   
   constructor( 
-    private projectService: ProjectsService, 
+    private projectService: ProjectsService,
+    private remsService : RemsService,
     private router : ActivatedRoute){}
 
 
@@ -103,6 +107,16 @@ export class ProjectDetailsComponent {
     if (this.project) {
       this.projectService.deleteProject(this.project.id);
     }
+  }
+
+  redirectToRems(){
+    this.remsService.redirectToRemsAdmin();
+  }
+
+  createResource(){
+    this.remsService.createResource().subscribe((res) => {
+      console.log('Resource created: ', res);
+    });
   }
 
 }

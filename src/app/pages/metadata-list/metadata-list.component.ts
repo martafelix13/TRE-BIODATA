@@ -9,10 +9,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatChipsModule } from '@angular/material/chips';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
+import { RemsService } from '../../services/rems.service';
+
 
 @Component({
   selector: 'app-metadata-list',
-  imports: [MatCardModule, MatFormFieldModule, CommonModule, FormsModule, MatExpansionModule, MatTableModule, MatIconModule,  MatInputModule, MatListModule],
+  imports: [MatCardModule, MatFormFieldModule, CommonModule, FormsModule, MatExpansionModule, MatTableModule, MatIconModule,  MatInputModule, MatListModule, MatToolbarModule, MatChipsModule],
   templateUrl: './metadata-list.component.html',
   styleUrl: './metadata-list.component.scss'
 })
@@ -23,8 +29,13 @@ export class MetadataListComponent {
   searchText: string = '';
   datasets : any[] = [];
   distributions : any[] = [];
+  selectedItem: any = null;
+  selectedItemType: string = '';
 
-  constructor(private metadataService: MetadataUploadService){
+  breadcrumbs: string[] = [];
+
+
+  constructor(private metadataService: MetadataUploadService, private sanitizer: DomSanitizer, private remsService: RemsService){
   }
 
 
@@ -35,29 +46,31 @@ export class MetadataListComponent {
           console.log("Catalog: ");
           console.log(this.catalogs);
           this.filteredCatalogs = this.catalogs;
-          this.catalogs.map((catalog: any) => {
-            this.metadataService.getDatasetByCatalog(catalog.id).subscribe({
-              next: (data: any) => {
-                console.log(data);
-                catalog.datasets = JSON.parse(data);
-              },
-              error: (error) => {
-                console.log(error);
-              }
-            });
-          });
         },
         error: (error) => {
           console.log(error);
         }
-      })
+    });
   }
 
-  loadDistributions(dataset: any){
-    this.metadataService.getDatasetByCatalog(dataset.id).subscribe({
+  getSafeUrl(url: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  filterCatalogs(){
+    console.log(this.searchText);
+    this.filteredCatalogs = this.catalogs.filter(
+      (catalog: { title: string; }) => catalog.title.includes(this.searchText)
+    );
+  }
+
+  loadDatasets(catalog: any){
+    this.breadcrumbs.push(catalog.title);
+    this.metadataService.getDatasetByCatalog(catalog.id).subscribe({
       next: (data: any) => {
-        console.log(data);
-        dataset.distributions = JSON.parse(data);
+        this.datasets = JSON.parse(data);
+        console.log("Datasets: ");
+        console.log(this.datasets);
       },
       error: (error) => {
         console.log(error);
@@ -65,9 +78,53 @@ export class MetadataListComponent {
     });
   }
 
-  filterCatalogs(){
-    this.filteredCatalogs = this.catalogs.filter(
-      (catalog: { title: string; }) => catalog.title.includes(this.searchText)
-    );
+  loadDistributions(dataset: any){
+    this.breadcrumbs.push(dataset.title);
+    this.metadataService.getDistributionByDataset(dataset.id).subscribe({
+      next: (data: any) => {
+        this.distributions = JSON.parse(data);
+        console.log("Distributions: ");
+        console.log(this.distributions);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
+
+  onSelectItem(item: any, type:string) {
+    console.log(item);
+    this.selectedItem = item;
+    this.selectedItemType = type;
+    if (this.selectedItemType === 'catalog') {
+      this.selectedItemType = 'catalog';
+      this.loadDatasets(item);
+    } if (this.selectedItemType === 'dataset') {
+      this.loadDistributions(item);
+    } else if ( this.selectedItemType === 'distribution') {
+      this.breadcrumbs.push(item.title);
+    }
+  }
+
+  onBack() {
+    this.breadcrumbs.pop();
+    if (this.breadcrumbs.length === 0) {
+      this.selectedItem = null;
+      this.selectedItemType = '';
+      this.searchText = '';
+      this.datasets = [];
+      this.distributions = [];
+    } if (this.breadcrumbs.length === 1) {
+      this.selectedItemType = 'catalog';
+      this.distributions = [];
+    } else if (this.breadcrumbs.length === 2) {
+      this.selectedItemType = 'dataset';
+    }
+  }
+
+  redirectToRems(){
+    this.remsService.redirectToRemsCatalog();
+  }
+
+
 }

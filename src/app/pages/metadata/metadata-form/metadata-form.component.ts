@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as uuid from 'uuid';
 import { MetadataUploadService } from '../../../services/metadata-upload.service';
@@ -14,6 +14,7 @@ import { ObjectId } from 'mongodb';
   styleUrl: './metadata-form.component.scss'
 })
 export class MetadataFormComponent {
+  @Input() project: any;
   
   savedCatalogs: any[] = [];
   savedDatasets: any[] = [];
@@ -42,7 +43,8 @@ export class MetadataFormComponent {
         license: [''],
         language: [''],
         description: [''],
-        user_id: ['']
+        user_id: [''],
+        project_id: ['']
       });
 
       this.datasetForm = this.fb.group({
@@ -85,11 +87,10 @@ export class MetadataFormComponent {
   
 
   saveForm(type:string) {
-
-
     if (type === 'catalog') {
       this.catalogForm.patchValue({id: uuid.v4()});
       this.catalogForm.patchValue({user_id: this.user_id});
+      this.distributionForm.patchValue({project_id: this.project.id});
       console.log(this.catalogForm.value)
       this.metadataUploadService.submitForm(this.catalogForm.value, 'catalog').subscribe(
         (data) => {
@@ -102,6 +103,7 @@ export class MetadataFormComponent {
     } else if (type === 'dataset') {
       this.datasetForm.patchValue({id: uuid.v4()});
       this.datasetForm.patchValue({user_id: this.user_id});
+      this.datasetForm.patchValue({project_id: this.project.id});
       console.log(this.datasetForm.value)
       this.metadataUploadService.submitForm(this.datasetForm.value, 'dataset').subscribe(
         (data) => {
@@ -114,6 +116,7 @@ export class MetadataFormComponent {
     } else if (type === 'distribution') {
       this.distributionForm.patchValue({id: uuid.v4()});
       this.distributionForm.patchValue({user_id: this.user_id});
+      this.distributionForm.patchValue({project_id: this.project.id});
       console.log(this.distributionForm.value)
       this.metadataUploadService.submitForm(this.distributionForm.value, 'distribution').subscribe(
         (data) => {
