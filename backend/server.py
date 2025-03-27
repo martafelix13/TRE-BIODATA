@@ -1,29 +1,14 @@
-import datetime
-import io
-from flask import Flask, json, request, redirect, jsonify, make_response, send_file, send_from_directory
+from flask import Flask, json, request, redirect, jsonify, make_response
 import gridfs
 import requests
 import jwt
 from flask_cors import CORS
 from pymongo import MongoClient
 import os
+from settings import *
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}}, supports_credentials=True)
-
-CLIENT_ID = 'metadados-tre'
-CLIENT_SECRET = 'esparguete'
-REDIRECT_URI = 'http://localhost:8080/oidc-callback'
-LOGIN_URL = 'https://kc.portal.gdi.biodata.pt/oidc/auth/authorize'
-AUTHORIZATION_URL = 'https://kc.portal.gdi.biodata.pt/oidc/token'
-USER_INFO_URL = 'https://kc.portal.gdi.biodata.pt/oidc/userinfo'
-FRONTEND_URL = 'http://localhost:4200'
-TES_URL = 'http://localhost:12900/v1/tasks'
-
-TEMPLATES_FOLDER = "templates"
-SIGNED_FOLDER = "signed_files"
-os.makedirs(TEMPLATES_FOLDER, exist_ok=True)
-os.makedirs(SIGNED_FOLDER, exist_ok=True)
+CORS(app, supports_credentials=True)
 
 client = MongoClient("mongodb://localhost:27017/")  # Change to your MongoDB connection URI
 dbMetadada = client["metadata"]
@@ -45,8 +30,6 @@ userDB = dbUser["users_info"]
 dbPipeline = client["pipeline"]
 pipelineDB = dbPipeline["pipeline_details"] #Pipeline_id | PayloadJson
 
-
-#fs = gridfs.GridFS(signedDocumentsDB)
 
 
 id_token = None
@@ -256,7 +239,6 @@ def get_projects():
     
     projects = list(projectDB.find({'owner': user_id}, {"_id": 0}))  
     json_data = json.dumps(projects, default=str)
-    print('Projects:', json_data)
     return jsonify(json_data), 200
 
 
@@ -269,23 +251,33 @@ def get_project(project_id):
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
-    print('User ID:', user_id)
-    print('Project ID:', project_id)
     project = projectDB.find_one({'owner': user_id, "id": project_id},  {"_id": 0})
     return jsonify(project), 200
 
 @app.route('/submit-project', methods=['POST'])
 def submit_project():
     """Submit project data to the server"""
+    print("Request:", request)
     project_data = request.json
 
     if (not project_data):
         return jsonify({"error": "Project data missing"}), 400 
     
-    print("Project Data:", project_data)
-    projectDB.insert_one(project_data)
+    project_id = project_data['id']
     
-    return jsonify({"message": "Project data submitted successfully"})
+    if not project_id:
+        return jsonify({"error": "Project ID missing"}), 400
+    
+    existing_id = projectDB.find_one({"id": project_id})
+
+    if existing_id:
+        projectDB.update_one({"id": project_id}, {"$set": project_data})
+        return jsonify({"message": "Project data updated successfully"})
+    
+    else:
+        projectDB.insert_one(project_data)
+        return jsonify({"message": "Project data submitted successfully"})
+
 
 @app.route('/update-project/<string:project_id>', methods=['PUT'])
 
@@ -443,6 +435,8 @@ def runTask():
         payload_str = payload_str.replace(key, value)
 
     payload = json.loads(payload_str)
+
+    print (payload)
 
     response = requests.post(TES_URL, headers={"Accept": "application/json", "Content-Type": "application/json"}, data=payload)
     
