@@ -1,0 +1,21 @@
+<div class="task-runner">
+    <h2>Run Task</h2>
+    
+    <label>File ID:</label>
+    <input type="text" [(ngModel)]="file_id" placeholder="Enter File ID">
+  
+    <label>Pipeline ID:</label>
+    <input type="text" [(ngModel)]="pipeline_id" placeholder="Enter Pipeline ID">
+  
+    <button (click)="submitTask()" [disabled]="is_processing">Submit Task</button>
+  
+    <div *ngIf="status_message">
+      <p [ngClass]="{'processing': is_processing, 'error': status_message.includes('Error')}">{{ status_message }}</p>
+    </div>
+  
+    <div *ngIf="output_message">
+      <h3>Task Output:</h3>
+      <pre>{{ output_message }}</pre>
+    </div>
+  </div>
+  

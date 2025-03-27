@@ -1,0 +1,28 @@
+.task-runner {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+  }
+  
+  button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .processing {
+    color: orange;
+  }
+  
+  .error {
+    color: red;
+  }
+  
