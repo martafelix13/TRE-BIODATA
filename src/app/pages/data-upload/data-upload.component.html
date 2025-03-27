@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>Data Submission</h1>
+        </div>
+      </div>
+
+    <h2>Submit data</h2>
+
+    <p>Follow the steps below to submit your data to the TRE:</p>
+
+        <ol class="guide-list">
+          <li>
+            <p>Create the TRE’s public key file with the following content:</p>
+            <app-code-display code="ssh-ed25519 [...]"></app-code-display>
+          </li>
+          <li>
+            <p>Encrypt your files with the crypt4gh algorithm using the TRE's public key:</p>
+            <app-code-display code="crypt4gh encrypt --recipient_pk TRE.pub < filename > filename.c4gh"></app-code-display>
+          </li>
+          <li>
+            <p>Connect to the SFTP server:</p>
+            <app-code-display code="sftp -o User=$username -P 2222 -i $privkey_file $tre_ip"></app-code-display>
+          </li>
+          <li>
+            <p>Upload your encrypted files using the <code>put</code> command:</p>
+            <app-code-display code="put < filename >"></app-code-display>
+          </li>
+        </ol>
+
+        <mat-divider></mat-divider>
+
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-md-12 text-center">
+            <h2>Create a REMS resource</h2>
+          </div>
+        </div>
+    
+        <div *ngIf="embedded">
+          <p>After submitting your data, please create a REMS resource with an ID to enable your data on REMS for discovery.</p>
+          <p>Click the button below to create a new resource:</p>
+
+          <!-- Resource id -->
+          <mat-form-field appearance="outline">
+            <mat-label>Resource ID</mat-label>
+            <input
+              matInput
+              placeholder="Enter resource ID"
+              [(ngModel)]="resource_id"
+              required
+            />
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" (click)="createResource()">Create Resource</button>
+        </div>
+
+        <div *ngIf="!embedded">
+          <p>After submiting your data please create a REMS resource with an id to enable your data on REMS for discovery.</p>
+          <p>Check your project details and fill the id of your REMS resource there after the upload of the data.</p>
+          <p>After we handle the data ingestion and validation, your data will be stored in our database associated with the dataset after the REMS resource</p>
+        </div>
+
+  </div>
+<!-- 
+  <mat-card class="card">
+    <mat-card-title>REMS Update</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="createResource()" #resourceForm="ngForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Resource Name</mat-label>
+          <input
+            matInput
+            placeholder="Enter resource name"
+            [(ngModel)]="resource_name"
+            (ngModelChange)="validateResourceName()"
+            #resourceInput="ngModel"
+            required
+          />
+          <mat-hint>Use an ID-like name: only letters, numbers, and underscores (_) allowed. No spaces.</mat-hint>
+          <mat-error *ngIf="validationMessage">
+            {{ validationMessage }}
+          </mat-error>
+        </mat-form-field>
+        <div class="button-container">
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="validationMessage || resourceForm.invalid"
+          >
+            Create Resource
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card> -->

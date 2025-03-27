@@ -10,7 +10,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private backendUrl = 'http://localhost:8080';
   private userSubject = new BehaviorSubject<any>(null);
-  private remsUrl = 'http://localhost:3000';
   public user$ = this.userSubject.asObservable();
 
   constructor(

@@ -7,6 +7,8 @@ import { ProjectDisplayComponent } from './pages/project-display/project-display
 import { ProjectDetailsComponent } from './pages/project-display/project-details/project-details.component';
 import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
 import { MetadataListComponent } from './pages/metadata-list/metadata-list.component';
+import { DataUploadComponent } from './pages/data-upload/data-upload.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
 
 export const routes: Routes = [
         { path: '', component: HomeComponent, title: 'Home' },
@@ -16,7 +18,10 @@ export const routes: Routes = [
         { path: 'metadata-details/new-form',  component:MetadataFormComponent, title: 'Metadata Form', canDeactivate: [UnsavedChangesGuard]},
         { path: 'oidc-callback', component: CallbackComponent },
         { path: 'projects', component: ProjectDisplayComponent, title: 'Projects' },
-        { path: 'projects/:id', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] }
+        { path: 'projects/:id', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] },
+        { path: 'data-upload', component: DataUploadComponent, title: 'Data Upload' },
+        { path: 'tasks', component: TasksComponent, title: 'Tasks' },
+        { path: '**', redirectTo: '/home' }
 
 ];
 

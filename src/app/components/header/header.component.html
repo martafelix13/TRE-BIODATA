@@ -9,13 +9,20 @@
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 center-nav">
         <li><a routerLink="/" class="nav-link px-2 link-secondary">Home</a></li>
         <li><a routerLink="/metadata-list" class="nav-link px-2">Data Discovery</a></li>
-        <li><a routerLink="/metadata-details" class="nav-link px-2">Guides</a></li>
+        <li><a routerLink="/" fragment="guides-section"  class="nav-link px-2">Guides</a></li>
         <li><a href="#" class="nav-link px-2">About</a></li>
       </ul>
 
       <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <button type="button" class="btn btn-primary" *ngIf="!isLogged()" (click)="login()">Login</button>
+          <img 
+          src="assets/img/LsLoginLogo.png" 
+          alt="Login" 
+          class="login-button" 
+          *ngIf="!isLogged()" 
+          (click)="login()"
+          />
       </div>
+      
       
       <div class="d-flex align-items-center" *ngIf="isLogged()"> {{userData['name']}} 
       
@@ -25,7 +32,7 @@
         </a>
         <ul cDropdownMenu>
           <li><a [routerLink]="['projects']" cDropdownItem>My projects</a></li>
-          <li><a [routerLink]="['metadata-details']" cDropdownItem>My metadata</a></li>
+          <li><a [routerLink]="['tasks']" cDropdownItem>My Tasks</a></li>
           <li><a [routerLink]="[]" cDropdownItem>Profile</a></li>
           <li><hr cDropdownDivider></li>
           <li><button cDropdownItem (click)="logout()">Sign out</button></li>

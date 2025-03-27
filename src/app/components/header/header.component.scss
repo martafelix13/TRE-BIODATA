@@ -91,3 +91,14 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.login-button {
+  cursor: pointer;
+  width: auto;  /* Adjust size as needed */
+  height: 35px;
+  transition: opacity 0.3s ease;
+}
+
+.login-button:hover {
+  opacity: 0.8;
+}

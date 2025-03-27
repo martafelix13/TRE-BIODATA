@@ -4,16 +4,31 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProjectsService } from '../../../services/projects.service';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatIconModule} from '@angular/material/icon';
-import {ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { FileManagementComponent } from "../../file-management/file-management.component";
 import { MetadataFormComponent } from "../../metadata/metadata-form/metadata-form.component";
-import { AuthService } from '../../../services/auth.service';
 import { RemsService } from '../../../services/rems.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { CodeDisplayComponent } from "../../../components/code-display/code-display.component";
+import { DataUploadComponent } from "../../data-upload/data-upload.component";
 
 @Component({
   selector: 'app-project-details',
-  imports: [CommonModule, ReactiveFormsModule, MatStepperModule, ProjectFormComponent, MatIconModule, FileManagementComponent, FileManagementComponent, MetadataFormComponent, MetadataFormComponent],
+  imports: [CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatStepperModule,
+    ProjectFormComponent,
+    MatIconModule,
+    FileManagementComponent,
+    FileManagementComponent,
+    MetadataFormComponent,
+    MetadataFormComponent,
+    MatInputModule,
+    MatCardModule, 
+    DataUploadComponent],
   templateUrl: './project-details.component.html',
   styleUrl: './project-details.component.scss'
 })
@@ -48,6 +63,9 @@ export class ProjectDetailsComponent {
       data: ['D-E', 'D-AR','D-R'],
       done: ['DONE']
     };
+
+    resource_name: string = '';
+    validationMessage: string = '';
 
   
   constructor( 
@@ -113,10 +131,5 @@ export class ProjectDetailsComponent {
     this.remsService.redirectToRemsAdmin();
   }
 
-  createResource(){
-    this.remsService.createResource().subscribe((res) => {
-      console.log('Resource created: ', res);
-    });
-  }
 
 }

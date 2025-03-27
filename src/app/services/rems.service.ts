@@ -20,7 +20,7 @@ export class RemsService {
     window.location.href = `${this.remsUrl}/administration/catalogue-items`;
   }
 
-  createResource() {
-    return this.http.post(`${this.backendUrl}/rems/create_resource`,{});
+  createResource(name: string) {
+    return this.http.post(`${this.backendUrl}/rems/create_resource`,{filename: name});
   }
 }

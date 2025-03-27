@@ -9,7 +9,7 @@ from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "http://localhost:4200"}}, supports_credentials=True)
 
 CLIENT_ID = 'metadados-tre'
 CLIENT_SECRET = 'esparguete'
@@ -18,6 +18,7 @@ LOGIN_URL = 'https://kc.portal.gdi.biodata.pt/oidc/auth/authorize'
 AUTHORIZATION_URL = 'https://kc.portal.gdi.biodata.pt/oidc/token'
 USER_INFO_URL = 'https://kc.portal.gdi.biodata.pt/oidc/userinfo'
 FRONTEND_URL = 'http://localhost:4200'
+TES_URL = 'http://localhost:12900/v1/tasks'
 
 TEMPLATES_FOLDER = "templates"
 SIGNED_FOLDER = "signed_files"
@@ -40,6 +41,9 @@ fs = gridfs.GridFS(dbFiles)
 
 dbUser = client["users"]
 userDB = dbUser["users_info"]
+
+dbPipeline = client["pipeline"]
+pipelineDB = dbPipeline["pipeline_details"] #Pipeline_id | PayloadJson
 
 
 #fs = gridfs.GridFS(signedDocumentsDB)
@@ -408,7 +412,48 @@ def create_resource():
     return jsonify(response.json())
 
 
+@app.route("/run-task", methods=['POST'])
+def runTask():
+    print (request.json)
+    file_id = request.json['file_id']
+    pipeline_id = request.json['pipeline_id']
+
+    print (file_id)
+    print (pipeline_id)
 
 
+
+    #get payload associated to the pipeline
+    resp = pipelineDB.find_one({"id": pipeline_id}, {"_id": 0})
+    if not resp:
+        return jsonify({"error": "Pipeline not found"}), 404
+
+    #get cookies to get the access token
+    access_token = request.cookies.get('access_token')
+    
+    template = resp['payload']
+    payload_str = json.dumps(template)
+
+    values = {
+    "$FILE_ID": file_id,
+    "$TOKEN": access_token
+    }
+
+    for key, value in values.items():
+        payload_str = payload_str.replace(key, value)
+
+    payload = json.loads(payload_str)
+
+    response = requests.post(TES_URL, headers={"Accept": "application/json", "Content-Type": "application/json"}, data=payload)
+    
+    return jsonify(response.json())
+
+@app.route("/run-task/<string:taskId>", methods=['GET'])
+def getTask(taskId):
+    print ("Task_id: " + taskId)
+
+    response = requests.get(f"{TES_URL}/{taskId}?view=FULL", headers={"Accept": "application/json", "Content-Type": ""})
+    return jsonify(response.json())
+    
 if __name__ == '__main__':
     app.run(port=8080, debug=True)

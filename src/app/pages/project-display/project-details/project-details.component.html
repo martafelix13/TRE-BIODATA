@@ -69,17 +69,13 @@
   </ng-template>
 
   <ng-template #dataTemplate>
-    <h2>Data Submission</h2>
-    <p>Guide for data submission goes here.</p>
+    
+    <div class="container">
+      <mat-card class="card">
+        <app-data-upload></app-data-upload>
+      </mat-card>
+    </div>
+    
 
-    <h2>REMS Update</h2>
-    <button mat-raised-button color="primary" (click)="createResource()">
-      Create Resource
-    </button>
-
-    <!--Button to Redirect to REMS-->
-    <button mat-raised-button color="primary" (click)="redirectToRems()">
-      Go to REMS
-    </button>
   </ng-template>
 </div>
