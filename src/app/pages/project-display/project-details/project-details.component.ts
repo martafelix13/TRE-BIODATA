@@ -40,7 +40,7 @@ export class ProjectDetailsComponent {
     { label: 'Project Awaiting Review', status: 'P-AR', content: null },
     { label: 'Project Rejected', status: 'P-R', content: null },
     
-    { label: 'Agreement Editing', status: 'A-E', form:  null, content: 'agreementForm' },
+     { label: 'Agreement Editing', status: 'A-E', form:  null, content: 'agreementForm' },
     { label: 'Agreement Awaiting Review', status: 'A-AR', content: null },
     { label: 'Agreement Rejected', status: 'A-R', content: null },
 
@@ -58,8 +58,8 @@ export class ProjectDetailsComponent {
     // Mapping of statuses to their respective main steps
     mainSteps = {
       project: ['P-E', 'P-AR', 'P-R'],
-      agreement: ['A-E', 'A-AR','A-R'],
-      metadata: ['M-E', 'M-AR','M-R'],
+       agreement: ['A-E', 'A-AR','A-R'],
+       metadata: ['M-E', 'M-AR','M-R'],
       data: ['D-E', 'D-AR','D-R'],
       done: ['DONE']
     };
@@ -77,8 +77,19 @@ export class ProjectDetailsComponent {
 
   ngOnInit(): void {
     this.router.params.subscribe((params) => {
-      if (params['id'] !== 'new') {
-        this.projectService.getProject(params['id']).subscribe((project) =>{
+      if (params['id'] === 'new') {
+        this.project = {
+          id: 'new',
+          title: '',
+          description: '',
+          deadline: '',
+          organization: '',
+          responsable:'',
+          internal_storage: true,
+          status: 'P-E'
+        };
+      } else {
+        this.projectService.getProject(params['id']).subscribe((project) => {
           if (!project) {
             console.error('Project not found');
             return;
@@ -94,10 +105,10 @@ export class ProjectDetailsComponent {
 
   getMainStepIndex(): number {
     if (this.mainSteps.project.includes(this.project.status)) return 0;
-    if (this.mainSteps.agreement.includes(this.project.status)) return 1;
+     if (this.mainSteps.agreement.includes(this.project.status)) return 1;
     if (this.mainSteps.metadata.includes(this.project.status)) return 2;
     if (this.mainSteps.data.includes(this.project.status)) return 3;
-    if (this.mainSteps.done.includes(this.project.status)) return 4;
+    if (this.mainSteps.done.includes(this.project.status)) return 4; 
     return 0;
   }
 
@@ -120,16 +131,8 @@ export class ProjectDetailsComponent {
     }
   }
 
-  // NOTE: This method is not implemented in the project-details.component.html file
-  deleteProject() {
-    if (this.project) {
-      this.projectService.deleteProject(this.project.id);
-    }
-  }
-
   redirectToRems(){
     this.remsService.redirectToRemsAdmin();
   }
-
 
 }

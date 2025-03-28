@@ -19,6 +19,7 @@ export const routes: Routes = [
         { path: 'oidc-callback', component: CallbackComponent },
         { path: 'projects', component: ProjectDisplayComponent, title: 'Projects' },
         { path: 'projects/:id', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] },
+        { path: 'projects/new', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] },
         { path: 'data-upload', component: DataUploadComponent, title: 'Data Upload' },
         { path: 'tasks', component: TasksComponent, title: 'Tasks' },
         { path: '**', redirectTo: '/home' }

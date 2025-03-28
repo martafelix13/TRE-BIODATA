@@ -22,4 +22,8 @@ export class FileService {
     console.log('Uploading file: ', formData);
     return this.http.post(`${this.baseUrl}/upload`, formData, {withCredentials: true});
   }
+
+  getFilesByProject(project_id: string) {
+    return this.http.get(`${this.baseUrl}/file/`+ project_id);
+  }
 }

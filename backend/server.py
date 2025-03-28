@@ -1,4 +1,6 @@
-from flask import Flask, json, request, redirect, jsonify, make_response
+import io
+from bson import ObjectId
+from flask import Flask, json, request, redirect, jsonify, make_response, send_file
 import gridfs
 import requests
 import jwt
@@ -8,9 +10,10 @@ import os
 from settings import *
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-client = MongoClient("mongodb://localhost:27017/")  # Change to your MongoDB connection URI
+
+client = MongoClient(MONGO_URI)  
 dbMetadada = client["metadata"]
 catalogDB = dbMetadada["catalog"]
 datasetDB = dbMetadada["dataset"]
@@ -242,7 +245,7 @@ def get_projects():
     return jsonify(json_data), 200
 
 
-@app.route('/project/<string:project_id>', methods=['GET'])
+@app.route('/projects/<string:project_id>', methods=['GET'])
 def get_project(project_id):
     #TODO: Add user authentication
     """Return a specific project"""
@@ -279,36 +282,21 @@ def submit_project():
         return jsonify({"message": "Project data submitted successfully"})
 
 
-@app.route('/update-project/<string:project_id>', methods=['PUT'])
 
+@app.route('/projects/<string:project_id>', methods=['PATCH'])
 def update_project(project_id):
     """Update project data"""
     project_data = request.json
 
     if (not project_data):
         return jsonify({"error": "Project data missing"}), 400
-
-    projectDB.update_one({"id": project_id}, {"$set": project_data})
-    return jsonify({"message": "Project data updated successfully"})
-
-@app.route('/delete-project/<string:project_id>', methods=['DELETE'])
-
-def delete_project(project_id):
-    """Delete a project"""
     
     user_id = get_user_id()
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
-    projectDB.delete_one({'owner': user, "id": project_id})
-    return jsonify({"message": "Project deleted successfully"})
-
-@app.route('/project/update-status/<string:project_id>', methods=['PUT'])
-def update_project_status(project_id):
-    """Update project status"""
-    project_status = request.json
-    projectDB.update_one({"id": project_id}, {"$set": {"status": project_status}})
-    return jsonify({"message": "Project status updated successfully"})
+    projectDB.update_one({"id": project_id, "owner": user_id}, {"$set": project_data})
+    return jsonify({"message": "Project updated successfully"})
 
 
 ## File Handling ##
@@ -319,16 +307,54 @@ def get_files():
     return jsonify(files), 200
 
 
-@app.route('/download/<string:filename>', methods=['GET'])
-def download_file(filename):
-    print("Downloading file:", filename)
-    response = templateDB.find_one({"filename": filename}, {"_id": 0})
-    if not response:
-        return jsonify({"error": "File not found"}), 404
-    
-    print(response)
+@app.route('/file/<string:project_id>', methods=['GET'])
+def get_files_by_project(project_id):
+    """Return all files for a specific project"""
+    files = fs.find({"project_id": project_id})
+    file_list = []
+    for file in files:
+        existing_file = next((f for f in file_list if f["filename"] == file.type), None)
+        if existing_file:
+            if file.uploadDate > existing_file["upload_date"]:
+                file_list.remove(existing_file)
+                file_list.append({
+                    "filename": file.type,
+                    "download_url": f"download/{file._id}",
+                    "upload_date": file.uploadDate,
+                })
+        else:
+            file_list.append({
+                "filename": file.type,
+                "download_url": f"download/{file._id}",
+                "upload_date": file.uploadDate,
+            })
 
-    return jsonify(response), 200
+    for item in file_list:
+        item['download_url'] = request.host_url + item['download_url']
+    print('Files from project ', project_id)
+    print(file_list)
+    return jsonify(file_list), 200
+
+@app.route('/download/<file_id>', methods=['GET'])
+def download_file(file_id):
+    """Download a specific file."""
+
+    file_obj_id = ObjectId(file_id)
+
+    try:
+        file_data = fs.get(file_obj_id)
+        if not file_data:
+            return "File not found", 404
+
+        return send_file(
+            io.BytesIO(file_data.read()),
+            as_attachment=True,
+            download_name=file_data.type,
+            mimetype="application/pdf"
+        )
+    except Exception as e:
+        return str(e), 500
+
 
 @app.route('/upload', methods=['POST'])
 def upload_signed_file():

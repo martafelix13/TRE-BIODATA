@@ -6,7 +6,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RegisteredMessage } from '@angular/cdk/a11y';
 import { RemsService } from '../../services/rems.service';
 
 @Component({
@@ -16,7 +15,7 @@ import { RemsService } from '../../services/rems.service';
   styleUrl: './data-upload.component.scss'
 })
 export class DataUploadComponent {
-  @Input() embedded: boolean = false;
+  @Input() withREMS: boolean = false;
 
   resource_id : string = '';
   validation_message : string = '';
@@ -24,14 +23,20 @@ export class DataUploadComponent {
   constructor(private remsService : RemsService) { }
 
   ngOnInit() {
+    console.log('Data Upload Component initialized.');
+    console.log('Embedded: ', this.withREMS);
   }
 
 
   createResource(){
-    if (!this.validation_message) {
-      this.remsService.createResource(this.resource_id).subscribe((res) => {
-        console.log('Resource created: ', res);
-      });
+    if (!this.resource_id) {
+      this.validation_message = "Resource Name is required.";
+    } else {
+      if (!this.validation_message) {
+        this.remsService.createResource(this.resource_id).subscribe((res) => {
+          console.log('Resource created: ', res);
+        });
+      }
     }
   }
 

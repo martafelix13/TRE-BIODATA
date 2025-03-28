@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectsService } from '../../services/projects.service';
-import { JsonPipe } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-display',
@@ -13,12 +13,21 @@ export class ProjectDisplayComponent {
 
   projects: any[] = []
 
-  constructor(private projectsService: ProjectsService) {
+  constructor(private projectsService: ProjectsService, private router: Router) {
     this.projectsService.getProjects().subscribe((data: any) => {
       console.log(JSON.parse(data))
       this.projects = JSON.parse(data);
     }
     );
   }
+
+  
+  ngOnInit() {
+  }
+
+  createProject() {
+    this.router.navigate(['projects', 'new']);
+  }
+    
 
 }

@@ -15,15 +15,15 @@
         </mat-step>
 
         <!-- Data Processing Agreement Step -->
-        <mat-step
+         <mat-step
           label="Data Processing Agreement Signature"
           [editable]="false"
         >
           <ng-template matStepLabel> Legal Agreements </ng-template>
           <ng-container *ngIf="isCurrentPhase('agreement')">
-            <ng-container [ngTemplateOutlet]="dpaTemplate"></ng-container>
+            <ng-container [ngTemplateOutlet]="dpaTemplate"></ng-container>   
           </ng-container>
-        </mat-step>
+        </mat-step> 
 
         <!-- Metadata Submission Step -->
         <mat-step label="Metadata Submission" [editable]="false">
@@ -58,11 +58,11 @@
     </app-project-form>
   </ng-template>
 
-  <ng-template #dpaTemplate>
-    <app-file-management
-      [project_id]="project.id"
+   <ng-template #dpaTemplate>
+      <app-file-management
+      [project_id]="project.id" [status]="project.status"
     ></app-file-management>
-  </ng-template>
+  </ng-template> 
 
   <ng-template #metadataTemplate>
     <app-metadata-form *ngIf="project" [project]="project"></app-metadata-form>
@@ -72,7 +72,7 @@
     
     <div class="container">
       <mat-card class="card">
-        <app-data-upload></app-data-upload>
+        <app-data-upload [withREMS]="false"></app-data-upload>
       </mat-card>
     </div>
     

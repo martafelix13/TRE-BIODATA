@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <div class="card shadow-lg p-4">
+  <div class="card shadow-lg p-4" *ngIf="status === 'A-E'">
     <h2 class="text-center mb-4">Download & Upload Signed Files</h2>
 
     <!-- Files List -->
@@ -27,4 +27,30 @@
     </div>
 
   </div>
-</div>
+
+    <div class="alert alert-info d-flex align-items-center" *ngIf="status === 'A-AR'">
+      <mat-icon class="me-2">info</mat-icon>
+      <span> Our team is currently reviewing your legal documents. Please wait or contact the administrator if you need assistance.</span>
+    </div>
+
+    <div class="card shadow-lg">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><mat-icon class="me-2">folder</mat-icon> Documents</h5>
+      </div>
+      <div class="card-body">
+        <!-- Documents -->
+        <mat-card *ngFor="let file of fileList" class="file-card">
+          <mat-card-content>
+            <mat-icon>description</mat-icon>
+            <span class="filename">{{ file["filename"] }}</span>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="downloadFile(file['download_url'])">
+              <mat-icon>cloud_download</mat-icon> Download
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        
+      </div>
+    </div>
+  </div>

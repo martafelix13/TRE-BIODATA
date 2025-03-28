@@ -14,7 +14,7 @@ To start a local development server go back to the TRE-BIODATA folder and run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, open your browser and navigate to `http://localhost:80/`. The application will automatically reload whenever you modify any of the source files.
 
 
 ## Building

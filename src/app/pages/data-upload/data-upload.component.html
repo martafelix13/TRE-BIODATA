@@ -36,25 +36,18 @@
           </div>
         </div>
     
-        <div *ngIf="embedded">
+        <div *ngIf="!withREMS">
           <p>After submitting your data, please create a REMS resource with an ID to enable your data on REMS for discovery.</p>
           <p>Click the button below to create a new resource:</p>
 
           <!-- Resource id -->
-          <mat-form-field appearance="outline">
-            <mat-label>Resource ID</mat-label>
-            <input
-              matInput
-              placeholder="Enter resource ID"
-              [(ngModel)]="resource_id"
-              required
-            />
-          </mat-form-field>
+          <label for="resource_id">Resource ID</label>
+          <input placeholder="Enter resource ID" [(ngModel)]="resource_id" required/>       
 
           <button mat-raised-button color="primary" (click)="createResource()">Create Resource</button>
         </div>
 
-        <div *ngIf="!embedded">
+        <div *ngIf="withREMS">
           <p>After submiting your data please create a REMS resource with an id to enable your data on REMS for discovery.</p>
           <p>Check your project details and fill the id of your REMS resource there after the upload of the data.</p>
           <p>After we handle the data ingestion and validation, your data will be stored in our database associated with the dataset after the REMS resource</p>

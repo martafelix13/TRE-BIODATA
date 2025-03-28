@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
+import { UUID } from 'mongodb';
 
 @Injectable({
   providedIn: 'root'
@@ -27,26 +28,21 @@ export class ProjectsService {
   }
 
   getProject(id: string) {
-    return this.http.get(this.backendUrl + '/project/' + id, { withCredentials: true });
+    return this.http.get(this.backendUrl + '/projects/' + id, { withCredentials: true });
   }
 
   saveProject(project: any) {
-    console.log('Project to save: ', project);
-
     project.last_update = new Date().toISOString().split('T')[0];
+    project.id = Math.random().toString(36).substring(2, 8);
     project.owner = this.user_id;
+    project.responsable='';
     project.status = 'P-AR';
-
-    if (project.id === 'new') {
-      //project.id = this.projects.length + 1;
-    }
-
+    console.log('Project to save: ', project);
     return this.http.post(this.backendUrl + '/submit-project', project)
   }
 
-  deleteProject(id: string) {
-    return this.http.delete(this.backendUrl + '/projects/' + id);
+  updateProjectStatus(id: string, newStatus: string) {
+    const updateData = { status: newStatus };
+    return this.http.patch(this.backendUrl + '/projects/' + id, updateData, { withCredentials: true });
   }
-
-
 }

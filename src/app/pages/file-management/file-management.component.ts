@@ -4,16 +4,19 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
-import { StrictMatchKeysAndValues } from 'mongodb';
+import { GSSAPICanonicalizationValue, StrictMatchKeysAndValues } from 'mongodb';
+import { ProjectsService } from '../../services/projects.service';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-file-management',
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, MatCardModule],
   templateUrl: './file-management.component.html',
   styleUrls: ['./file-management.component.css'],
 })
 export class FileManagementComponent implements OnInit {
   @Input() project_id = '';
+  @Input() status = '';
 
 
   files: any;
@@ -23,10 +26,13 @@ export class FileManagementComponent implements OnInit {
 
   selectedFiles: Map<string, File> = new Map();
 
+  fileList = [];
+
   constructor(
     private fileService: FileService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private projectService: ProjectsService
   ) {
     // check if the user is logged in
     authService.user$.subscribe((user) => {
@@ -39,10 +45,16 @@ export class FileManagementComponent implements OnInit {
 
   ngOnInit() {
     console.log('Project ID: ', this.project_id);
-    this.fileService.getFiles().subscribe((data) => {
+    console.log("Status: " + this.status)
+
+    if (this.status == 'A-E') {
+         this.fileService.getFiles().subscribe((data) => {
       this.files = data;
       console.log('Files: ', this.files);
-    });
+      });
+    } else if (this.status == 'A-AR') {
+      this.getFilesByProjectId();
+    }
   }
 
   download(filename: string) {
@@ -77,9 +89,36 @@ export class FileManagementComponent implements OnInit {
       formData.append('project_id', this.project_id);
       formData.append('file_type', key);
       this.fileService.uploadSignedFile(formData).subscribe({
-        next: (res) => { console.log('Response: ', res); },
-        error: (err) => { console.error('Error: ', err); }
+        next: (res) => { 
+          console.log('Response: ', res); 
+            this.projectService.updateProjectStatus(this.project_id, "A-AR").subscribe({
+              next: (res) => {alert('File uploaded successfully!');},
+              error:(err) => {console.error("Error: ", err);}
+            })
+        },
+        error: (err) => { console.error('Error: ', err);
+          alert('Upload Failed.');
+         }
       });
     }); 
   }
+
+
+  getFilesByProjectId() {
+    console.log("Inside getFilesByProjectId")
+    this.fileService.getFilesByProject(this.project_id).subscribe({
+      next: (res: any) => {
+        console.log("Get Files by project Id: ")
+        console.log(res)
+        this.fileList = res;
+      },
+      error: (err) => { console.error("Error: " + err) }
+    })
+  }
+
+  downloadFile(url: string) {
+    window.open(url, '_blank'); 
+  }
+
+
 }

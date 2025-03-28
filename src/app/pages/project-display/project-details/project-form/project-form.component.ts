@@ -26,14 +26,11 @@ export class ProjectFormComponent {
   user_id = '';
   showDeleteModal = false;
 
-
   constructor(private fb : FormBuilder, 
     private projectService: ProjectsService, 
     private route : Router, 
-    private authService: AuthService, 
-    private router: ActivatedRoute ) {
+    private authService: AuthService) {
   }
-
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -46,22 +43,32 @@ export class ProjectFormComponent {
       id: new FormControl('new'),
       title: new FormControl('', Validators.required, ),
       description: new FormControl('', Validators.required),
-      deadline: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')]),
+      deadline: new FormControl('', [Validators.required]),
       organization: new FormControl( '', Validators.required),
       status: new FormControl('P-E'),
+      responsable: new FormControl('', Validators.required),
       internal_storage: new FormControl(true, Validators.required),
     });
 
-    console.log('Project: ', this.project);
     if (this.project) {
       this.projectForm.patchValue(this.project);
+      this.projectForm.get('deadline')?.setValue(new Date(this.project.deadline));
+      this.projectForm.get('internal_storage')?.setValue(this.project.internal_storage === 'true');
     }
   }
 
   onSubmit() {
     if (this.projectForm.valid) {
-      this.projectService.saveProject(this.projectForm.value);
-      this.route.navigate(['/projects']);
+        this.projectService.saveProject(this.projectForm.value).subscribe({
+          next: (data: any) => {
+            console.log('Project created!');
+            this.isSaved = true;
+            this.route.navigate(['/projects']);
+          },
+          error: (error: any) => {
+            console.error('Error creating project: ', error);
+          }
+      });
     }
   }
 
@@ -89,13 +96,6 @@ export class ProjectFormComponent {
     this.showDeleteModal = true;
   }
 
-  deleteProject() {
-    console.log('Project deleted!');
-    this.showDeleteModal = false;
-    this.projectService.deleteProject(this.project.id);
-    // Perform deletion logic (API call, navigate away, etc.)
-  }
-
   closeModal() {
     this.showDeleteModal = false;
   }
@@ -108,3 +108,4 @@ export class ProjectFormComponent {
 
 
 }
+

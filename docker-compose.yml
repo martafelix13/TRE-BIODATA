@@ -1,0 +1,30 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: src/Dockerfile
+    ports:
+      - "80:80"  # Expor a aplicação Angular na porta 80
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Expor o Flask na porta 8080
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/  # URL do MongoDB
+    depends_on:
+      - mongo  # Aguardar o MongoDB estar pronto
+
+  mongo:
+    image: mongo:8.0
+    ports:
+      - "27017:27017"  # Expor o MongoDB na porta 27017
+    volumes:
+      - mongo_data:/data/tre  # Persistir dados do MongoDB
+
+volumes:
+  mongo_data:  # Volume para persistência de dados do MongoDB
+

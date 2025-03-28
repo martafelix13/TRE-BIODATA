@@ -1,11 +1,13 @@
-# Use an official Nginx image as the base image
-#FROM nginx:alpine
+FROM python:3.9-slim
 
-# Copy built Angular files to Nginx HTML folder
-#COPY dist/tre-biodata/browser /usr/share/nginx/html
+WORKDIR /app
 
-# Expose port 80
-#EXPOSE 80
+COPY backend/requirements.txt .
+COPY backend/ .
 
-# Start Nginx when the container starts
-#CMD ["nginx", "-g", "daemon off;"]
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8080
+
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "server:app"]

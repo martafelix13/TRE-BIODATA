@@ -16,9 +16,9 @@ export class TaskService {
   }
 
   pollTaskStatus(taskId: string): Observable<any> {
-    return interval(5000).pipe(
+    return interval(8080).pipe(
       switchMap(() => this.http.get(`${this.backendUrl}/run-task/${taskId}`)),
-      takeWhile((response: any) => response.state !== 'COMPLETE' && response.state !== 'SYSTEM_ERROR' &&  response.state !== 'EXECUTION_ERROR', true) // Stop when done
+      takeWhile((response: any) => response.state !== 'COMPLETE' && response.state !== 'SYSTEM_ERROR' &&  response.state !== 'EXECUTOR_ERROR', true) // Stop when done
     );
   }
 }
