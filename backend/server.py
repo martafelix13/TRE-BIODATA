@@ -8,10 +8,13 @@ from flask_cors import CORS
 from pymongo import MongoClient
 import os
 from settings import *
+from pathlib import Path
+import json
+from rdflib import Graph
 
+import utils
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
-
 
 client = MongoClient(MONGO_URI)  
 dbMetadada = client["metadata"]
@@ -32,41 +35,16 @@ userDB = dbUser["users_info"]
 
 dbPipeline = client["pipeline"]
 pipelineDB = dbPipeline["pipeline_details"] #Pipeline_id | PayloadJson
-
-
-
 id_token = None
 access_token = None
 token_type = None
 user = None
 
-def get_user_id(): 
-    id_token = request.cookies.get('id_token')
-    print ('id_token: ' + id_token)
-    if not id_token:
-        print ('id_token not found')
-        return None
-    
-    try:
-        user = jwt.decode(id_token, CLIENT_SECRET, options={"verify_signature": False, "verify": False}).get("sub")  # Use the correct signing algorithm
-        print(user)
-        return user
-
-    except jwt.ExpiredSignatureError:
-        print ('ExpiredSignatureError')
-        return None
-    
-    except jwt.InvalidTokenError:
-        print('InvalidTokenError')
-        return None
-
-
-
 ## Authentication and Authorization ##
 @app.route('/login')
 def login():
     """Redirect user to the OAuth login page"""
-    login_url = f"{LOGIN_URL}?response_type=code&client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope=openid%20profile%20email"
+    login_url = f"{LOGIN_URL}?response_type=code&client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope=openid%20profile%20email%20ga4gh_passport_v1"
     print(f"Redirecting user to: {login_url}")
     return redirect(login_url)
 
@@ -82,7 +60,7 @@ def oidc_callback():
         "code": code,
         "client_id": CLIENT_ID,
         "client_secret": CLIENT_SECRET,
-        "scope": "openid profile email",
+        "scope": "openid profile email ga4gh_passport_v1",
         "redirect_uri": REDIRECT_URI,
         "requested_token_type": "urn:ietf:params:oauth:token-type:refresh_token",
         "grant_type": "authorization_code"
@@ -149,6 +127,14 @@ def get_user():
 def submit_form():
     """Submit form data to the server"""
     form_data = request.json
+    print("Form Data:", form_data)
+
+    g = utils.convert_json_to_dcat(form_data)
+    print(g.serialize(format="turtle"))
+    # Save the RDF graph to a file
+    with open("output.ttl", "w", encoding='utf-8') as f:
+        f.write(g.serialize(format="turtle"))
+    
 
     if (not form_data):
         return jsonify({"error": "Form data missing"}), 400
@@ -169,7 +155,6 @@ def submit_form():
         return jsonify({"error": "Invalid form type"}), 400
     
     return jsonify({"message": "Form data submitted successfully"})
-
 
 @app.route('/catalogs', methods=['GET'])
 def get_catalogs():
@@ -236,7 +221,8 @@ def get_dataset(dataset_id):
 def get_projects():
     """Return all user's projects"""
 
-    user_id = get_user_id()
+    id_token = request.cookies.get('id_token')
+    user_id = utils.get_user_id(id_token)
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
     
@@ -250,7 +236,8 @@ def get_project(project_id):
     #TODO: Add user authentication
     """Return a specific project"""
 
-    user_id = get_user_id()
+    id_token = request.cookies.get('id_token')
+    user_id = utils.get_user_id(id_token)
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
@@ -291,7 +278,8 @@ def update_project(project_id):
     if (not project_data):
         return jsonify({"error": "Project data missing"}), 400
     
-    user_id = get_user_id()
+    id_token = request.cookies.get('id_token')
+    user_id = utils.get_user_id(id_token)
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
@@ -307,7 +295,7 @@ def get_files():
     return jsonify(files), 200
 
 
-@app.route('/file/<string:project_id>', methods=['GET'])
+@app.route('/files/<string:project_id>', methods=['GET'])
 def get_files_by_project(project_id):
     """Return all files for a specific project"""
     files = fs.find({"project_id": project_id})
@@ -373,7 +361,8 @@ def upload_signed_file():
     project_id = request.form.get('project_id')
     file_type = request.form.get('file_type')
 
-    user_id = get_user_id()
+    id_token = request.cookies.get('id_token')
+    user_id = utils.get_user_id(id_token)
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
     
@@ -472,8 +461,31 @@ def runTask():
 def getTask(taskId):
     print ("Task_id: " + taskId)
 
-    response = requests.get(f"{TES_URL}/{taskId}?view=FULL", headers={"Accept": "application/json", "Content-Type": ""})
-    return jsonify(response.json())
+    response = requests.get(f"{TES_URL}/{taskId}?view=FULL", headers={"Accept": "application/json", "Content-Type": ""}).json()
+    print(response)
+    if response["state"] == 'COMPLETE':
+        output = response['logs'][0]['logs'][0]['stdout']
+        print (output)
+
+        return jsonify({"message": "Task completed successfully", "output": output, "state":"COMPLETE"}), 200
     
+
+        # Download the file
+        """ download_url = response['outputs'][0]['stdout']
+        file_response = requests.get(download_url, stream=True)
+
+        if file_response.status_code == 200:
+            # Save the file locally
+            with open('output_file', 'wb') as f:
+                for chunk in file_response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            return jsonify({"message": "File downloaded successfully"}), 200
+        else:
+            return jsonify({"error": "Failed to download file"}), file_response.status_code """
+    return jsonify(response), 200
+    
+
+
+
 if __name__ == '__main__':
-    app.run(port=8080, debug=True)
+    app.run(port=API_PORT, debug=True)
