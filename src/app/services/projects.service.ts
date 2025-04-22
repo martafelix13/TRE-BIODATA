@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { UUID } from 'mongodb';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { UUID } from 'mongodb';
 export class ProjectsService {
 
   user_id = '';
-  private backendUrl = 'http://localhost:8080';
+  private backendUrl = environment.serverUrl;
 
   
   constructor(private authService : AuthService, private http: HttpClient) { 

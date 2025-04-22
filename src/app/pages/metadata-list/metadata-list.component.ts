@@ -24,28 +24,23 @@ import { RemsService } from '../../services/rems.service';
 })
 export class MetadataListComponent {
 
-  catalogs : any[] = [];
-  filteredCatalogs: any[] = [];
+  datasets: any[] = [];
+  filteredDatasets: any[] = [];
+  distributions: any[] = [];
   searchText: string = '';
-  datasets : any[] = [];
-  distributions : any[] = [];
   selectedItem: any = null;
   selectedItemType: string = '';
-
   breadcrumbs: string[] = [];
 
+  constructor(private metadataService: MetadataUploadService, private sanitizer: DomSanitizer, private remsService: RemsService) {}
 
-  constructor(private metadataService: MetadataUploadService, private sanitizer: DomSanitizer, private remsService: RemsService){
-  }
-
-
-  ngOnInit() {
-      this.metadataService.getCatalogs().subscribe({
+   ngOnInit() {
+      this.metadataService.getDatasets().subscribe({
         next: (data: any) => {
-          this.catalogs = JSON.parse(data);
-          console.log("Catalog: ");
-          console.log(this.catalogs);
-          this.filteredCatalogs = this.catalogs;
+          this.datasets = JSON.parse(data);
+          console.log("Datasets: ");
+          console.log(this.datasets);
+          this.filteredDatasets = this.datasets;
         },
         error: (error) => {
           console.log(error);
@@ -53,31 +48,18 @@ export class MetadataListComponent {
     });
   }
 
+  /*
   getSafeUrl(url: string): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-  filterCatalogs(){
+  filterDatasets(){
     console.log(this.searchText);
-    this.filteredCatalogs = this.catalogs.filter(
-      (catalog: { title: string; }) => catalog.title.includes(this.searchText)
+    this.filteredDatasets = this.datasets.filter(
+      (dataset: { title: string; }) => dataset.title.includes(this.searchText)
     );
   }
-
-  loadDatasets(catalog: any){
-    this.breadcrumbs.push(catalog.title);
-    this.metadataService.getDatasetByCatalog(catalog.id).subscribe({
-      next: (data: any) => {
-        this.datasets = JSON.parse(data);
-        console.log("Datasets: ");
-        console.log(this.datasets);
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
-  }
-
+*/
   loadDistributions(dataset: any){
     this.breadcrumbs.push(dataset.title);
     this.metadataService.getDistributionByDataset(dataset.id).subscribe({
@@ -96,10 +78,7 @@ export class MetadataListComponent {
     console.log(item);
     this.selectedItem = item;
     this.selectedItemType = type;
-    if (this.selectedItemType === 'catalog') {
-      this.selectedItemType = 'catalog';
-      this.loadDatasets(item);
-    } if (this.selectedItemType === 'dataset') {
+    if (this.selectedItemType === 'dataset') {
       this.loadDistributions(item);
     } else if ( this.selectedItemType === 'distribution') {
       this.breadcrumbs.push(item.title);
@@ -112,12 +91,8 @@ export class MetadataListComponent {
       this.selectedItem = null;
       this.selectedItemType = '';
       this.searchText = '';
-      this.datasets = [];
       this.distributions = [];
-    } if (this.breadcrumbs.length === 1) {
-      this.selectedItemType = 'catalog';
-      this.distributions = [];
-    } else if (this.breadcrumbs.length === 2) {
+    } else if (this.breadcrumbs.length === 1) {
       this.selectedItemType = 'dataset';
     }
   }
@@ -125,6 +100,5 @@ export class MetadataListComponent {
   redirectToRems(){
     this.remsService.redirectToRemsCatalog();
   }
-
 
 }

@@ -2,7 +2,7 @@
   <!-- Project Form Header -->
   <h1>Submit your project details</h1>
   <!-- Project Form -->
-  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="projectForm" (change)="onFormChange()" (ngSubmit)="onSubmit()">
     <!-- Title -->
     <div class="mb-3">
       <mat-form-field class="w-100">
@@ -37,9 +37,9 @@
       <div class="mb-3">
         <mat-form-field class="w-100">
           <mat-label>Responsable (email)</mat-label>
-          <input matInput formControlName="organization"  required>
+          <input matInput formControlName="responsable" required>
           <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="isInvalid('organization')">Responsable is required.</mat-error>
+          <mat-error *ngIf="isInvalid('responsable')">Responsable is required.</mat-error>
         </mat-form-field>
       </div>
 
@@ -70,7 +70,6 @@
         </label>
         <small class="text-muted d-block">You will manage the data independently and only provide metadata.</small>
       </div>
-      <mat-error *ngIf="isInvalid('internal_storage')">Please select a storage option.</mat-error>
     </div>
 
     <!-- Submit Button -->

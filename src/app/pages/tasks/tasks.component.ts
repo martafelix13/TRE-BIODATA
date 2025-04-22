@@ -47,8 +47,8 @@ export class TasksComponent {
     this.taskService.pollTaskStatus(taskId).subscribe(
       (response: any) => {
         if (response.state === 'COMPLETE') {
-          this.output_message = response.logs?.[0]?.logs?.[0]?.stdout || 'No output found.';
-          this.status_message = 'Task completed!';
+          this.output_message = response.output || 'No output found.';
+          this.status_message = response.message;
           console.log(response)
           this.is_processing = false;
         } else if (response.state === 'SYSTEM_ERROR' || response.state === 'EXECUTOR_ERROR') {

@@ -15,54 +15,10 @@
   <!-- Search Bar -->
   <mat-form-field class="w-100">
     <mat-label>Search Catalogs</mat-label>
-    <input matInput [(ngModel)]="searchText" (keyup)="filterCatalogs()" />
+    <input matInput [(ngModel)]="searchText" />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
-  <!-- Button to redirect to REMS -->
-   <button mat-raised-button color="primary" (click)="redirectToRems()">
-    Go to REMS
-  </button>
-
-  <!-- No Catalogs Found -->
-  <div *ngIf="filteredCatalogs.length === 0" class="text-center mt-5">
-    <mat-card class="empty-card">
-      <mat-card-content>
-        <h3>No catalogs found</h3>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- Catalogs List -->
-  <mat-table
-    *ngIf="filteredCatalogs.length > 0 && !selectedItem"
-    [dataSource]="filteredCatalogs"
-    class="mat-elevation-z8"
-  >
-    <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
-      <mat-cell *matCellDef="let catalog">{{ catalog.title }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-      <mat-cell *matCellDef="let catalog">{{ catalog.description }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="organization">
-      <mat-header-cell *matHeaderCellDef> Owner </mat-header-cell>
-      <mat-cell *matCellDef="let catalog">{{ catalog.organization }}</mat-cell>
-    </ng-container>
-
-    <mat-header-row
-      *matHeaderRowDef="['title', 'description', 'organization']"
-    ></mat-header-row>
-    <mat-row
-      *matRowDef="let row; columns: ['title', 'description', 'organization']"
-      (click)="onSelectItem(row, 'catalog')"
-      class="row-hover"
-    ></mat-row>
-  </mat-table>
 
   <div *ngIf="selectedItem">
     <!-- Catalog Details -->
@@ -80,9 +36,9 @@
           <p><strong>Publisher:</strong> {{ selectedItem.publisher }}</p>
           <p *ngIf="selectedItem?.homepage">
             <strong>Homepage:</strong>
-            <a [href]="getSafeUrl(selectedItem.homepage)" target="_blank" rel="noopener noreferrer">
+           <!--  <a [href]="getSafeUrl(selectedItem.homepage)" target="_blank" rel="noopener noreferrer">
               {{ selectedItem.homepage }}
-            </a>
+            </a> -->
           </p>
           <p><strong>Rights:</strong> {{ selectedItem.rights }}</p>
           <p><strong>License:</strong> {{ selectedItem.license }}</p>

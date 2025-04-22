@@ -7,3 +7,4 @@ pyjwt==2.4.0
 werkzeug==2.0.3
 Flask-Cors==3.0.10
 gunicorn
+rdflib

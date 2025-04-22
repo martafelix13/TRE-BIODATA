@@ -58,10 +58,9 @@ export class FileManagementComponent implements OnInit {
   }
 
   download(filename: string) {
-    this.fileService.downloadFile(filename).subscribe((data: any) => {
-      const url = data.path
-      window.open(url);
-    });
+    const temp_url = "https://drive.tecnico.ulisboa.pt/download/288548788261169"
+
+    window.open(temp_url, '_blank');
   }
 
   

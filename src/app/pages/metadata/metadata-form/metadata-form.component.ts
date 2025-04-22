@@ -4,7 +4,10 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import * as uuid from 'uuid';
 import { MetadataUploadService } from '../../../services/metadata-upload.service';
 import { AuthService } from '../../../services/auth.service';
-import { ObjectId } from 'mongodb';
+import { ProjectsService } from '../../../services/projects.service';
+
+const DATASET = 'dataset';
+const DISTRIBUTION = 'distribution';
 
 
 @Component({
@@ -16,37 +19,44 @@ import { ObjectId } from 'mongodb';
 export class MetadataFormComponent {
   @Input() project: any;
   
-  savedCatalogs: any[] = [];
+  //savedCatalogs: any[] = [];
   savedDatasets: any[] = [];
   savedDistributions: any[] = [];
 
-  catalogForm: FormGroup;
+  //catalogForm: FormGroup;
   datasetForm: FormGroup;
   distributionForm: FormGroup;
 
   selectItem: any;
 
-  type = 'catalog';
-  type_options = ['catalog', 'dataset', 'distribution'];
-
   user_id = '';
 
-    constructor(private fb: FormBuilder, private metadataUploadService: MetadataUploadService, private authService: AuthService) {
+  selectedType = DATASET;
+
+  formOptions = [
+    { label: 'Dataset', value: DATASET },
+    { label: 'Distribution', value: DISTRIBUTION }
+  ]
+
+    constructor(private fb: FormBuilder, private metadataUploadService: MetadataUploadService, private authService: AuthService, private projectService: ProjectsService) {
       
-      this.catalogForm = this.fb.group({
+/*       this.catalogForm = this.fb.group({
         id: [''],
         title: ['', Validators.required],
         version: ['', Validators.required],
         publisher: ['', Validators.required],
+        publisher_email: ['',  Validators.required],
         homePage: [''],
         rights: [''],
         license: [''],
         language: [''],
         description: [''],
+        themeTaxonomy: [''],
+        isPartOf: [''],
         user_id: [''],
         project_id: ['']
       });
-
+ */
       this.datasetForm = this.fb.group({
         id: [uuid.v4()],
         title: ['', Validators.required],
@@ -77,30 +87,65 @@ export class MetadataFormComponent {
   }
   
   ngOnInit(): void {
-      this.getCatalogs();
+     // this.getCatalogs();
       this.getDatasets();
       this.getDistributions();
 
       this.user_id =  this.authService.getIdToken();
   }
 
-  
-
-  saveForm(type:string) {
-    if (type === 'catalog') {
-      this.catalogForm.patchValue({id: uuid.v4()});
-      this.catalogForm.patchValue({user_id: this.user_id});
-      this.distributionForm.patchValue({project_id: this.project.id});
-      console.log(this.catalogForm.value)
-      this.metadataUploadService.submitForm(this.catalogForm.value, 'catalog').subscribe(
+  saveDataset(){
+    this.datasetForm.patchValue({id: uuid.v4()});
+      this.datasetForm.patchValue({user_id: this.user_id});
+      this.datasetForm.patchValue({project_id: this.project.id});
+      console.log(this.datasetForm.value)
+      this.metadataUploadService.submitDataset(this.datasetForm.value).subscribe(
         (data) => {
-          this.getCatalogs();
+          this.getDatasets();
         },
         (error) => {
           console.error('Error saving form:', error);
         }
       )
-    } else if (type === 'dataset') {
+  }
+
+  /* saveCatalog(){
+    this.catalogForm.patchValue({id: uuid.v4()});
+    this.catalogForm.patchValue({user_id: this.user_id});
+    this.catalogForm.patchValue({project_id: this.project.id});
+
+    const catalog_json = {
+      id: `http://localhost/${this.catalogForm.value.id}`,
+      title: this.catalogForm.value.title,
+      issued: new Date().toISOString(),
+      modified: new Date().toISOString(),
+      homepage: this.catalogForm.value.homePage || '',
+      themeTaxonomy: this.catalogForm.value.themeTaxonomy || 'http://example.org/theme',
+      isPartOf: "http://localhost/",
+      publisher: {
+          name: this.catalogForm.value.publisher,
+          mbox: `mailto:${this.catalogForm.value.publisher_email}`
+      },
+      rights: this.catalogForm.value.rights || 'http://creativecommons.org/licenses/by/4.0/',
+      license: this.catalogForm.value.license || 'http://example.org/license',
+      language: 'http://id.loc.gov/vocabulary/iso639-1/en',
+      version: this.catalogForm.value.version
+    };
+
+    console.log(catalog_json);
+    this.metadataUploadService.submitCatalog(catalog_json).subscribe(
+      (data) => {
+        this.getCatalogs();
+      },
+      (error) => {
+        console.error('Error saving form:', error);
+      }
+    )
+  } */
+  
+
+ /*  saveForm(type:string) {
+    if (type === 'dataset') {
       this.datasetForm.patchValue({id: uuid.v4()});
       this.datasetForm.patchValue({user_id: this.user_id});
       this.datasetForm.patchValue({project_id: this.project.id});
@@ -138,7 +183,7 @@ export class MetadataFormComponent {
       console.log(this.savedCatalogs)
     });
   }
-
+ */
   getDatasets() {
     this.metadataUploadService.getDatasets().subscribe((data: any) => {
       console.log("loaded datasets:") 
@@ -157,31 +202,29 @@ export class MetadataFormComponent {
 
 
   resetForm(){
-    this.catalogForm.reset();
+    //this.catalogForm.reset();
     this.datasetForm.reset();
     this.distributionForm.reset();
   }
 
-  isInvalid(field: string) {
-    if (this.type === 'catalog') {
-      if (this.catalogForm.get(field)){
-        return this.catalogForm.get(field)?.invalid && this.catalogForm.get(field)?.touched;
-      }
-    }
 
-    if (this.type === 'dataset') {
-      if (this.datasetForm.get(field)){
-        return this.datasetForm.get(field)?.invalid && this.datasetForm.get(field)?.touched;
-      }
-    }
-
-    if (this.type === 'distribution') {
-      if (this.distributionForm.get(field)){
-        return this.distributionForm.get(field)?.invalid && this.distributionForm.get(field)?.touched;
-      }
-    }
-
-    return false;
+  goToNextPage(){
+    this.projectService.updateProjectStatus(this.project.id, 'D-E').subscribe({
+      next: () => { console.log('updated'); }
+    });
   }
 
+  isInvalid(controlName: string) {
+    if(this.selectedType === DATASET) {
+      const control = this.datasetForm.get(controlName);
+      return control ? control.invalid && (control.dirty || control.touched) : false;
+
+    }
+    else if(this.selectedType === DISTRIBUTION) {
+      const control = this.distributionForm.get(controlName);
+      return control ? control.invalid && (control.dirty || control.touched) : false;
+    }
+    return false;
+  }
 }
+  

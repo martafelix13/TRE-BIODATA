@@ -43,10 +43,10 @@ export class ProjectFormComponent {
       id: new FormControl('new'),
       title: new FormControl('', Validators.required, ),
       description: new FormControl('', Validators.required),
-      deadline: new FormControl('', [Validators.required]),
+      deadline: new FormControl('', Validators.required),
       organization: new FormControl( '', Validators.required),
       status: new FormControl('P-E'),
-      responsable: new FormControl('', Validators.required),
+      responsable: new FormControl('', [Validators.required]),
       internal_storage: new FormControl(true, Validators.required),
     });
 
@@ -104,6 +104,16 @@ export class ProjectFormComponent {
     this.isSaved = false;
     this.project.status = 'P-E';
     this.projectForm.patchValue(this.project);    
+  }
+
+  // On change print the invalid values of the form
+  onFormChange() {
+    this.projectForm.valueChanges.subscribe(() => {
+      const invalidControls = Object.keys(this.projectForm.controls).filter(controlName => 
+        this.projectForm.controls[controlName].invalid
+      );
+      console.log('Invalid controls:', invalidControls);
+    });
   }
 
 

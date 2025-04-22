@@ -33,9 +33,9 @@ export class DataUploadComponent {
       this.validation_message = "Resource Name is required.";
     } else {
       if (!this.validation_message) {
-        this.remsService.createResource(this.resource_id).subscribe((res) => {
+       /*  this.remsService.createResource(this.resource_id).subscribe((res) => {
           console.log('Resource created: ', res);
-        });
+        }); */
       }
     }
   }

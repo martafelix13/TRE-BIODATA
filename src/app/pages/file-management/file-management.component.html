@@ -33,7 +33,7 @@
       <span> Our team is currently reviewing your legal documents. Please wait or contact the administrator if you need assistance.</span>
     </div>
 
-    <div class="card shadow-lg">
+    <div class="card shadow-lg" *ngIf="status === 'A-AR'">
       <div class="card-header bg-primary text-white">
         <h5 class="mb-0"><mat-icon class="me-2">folder</mat-icon> Documents</h5>
       </div>

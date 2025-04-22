@@ -2,16 +2,16 @@
   <h2>Metadata Form</h2>
   <p>Select the type of data you want to add and fill in the details.</p>
 
-  <!-- Type Selection -->
+  <!--"selectedType Selection -->
   <div class="mb-3">
-    <label for="type" class="form-label">Type:</label>
-    <select id="type" class="form-select" [(ngModel)]="type" (change)="resetForm()">
-      <option *ngFor="let option of type_options" [value]="option">{{ option }}</option>
+    <label for="selectedType" class="form-label:">Type</label>
+    <select id="selectedType" class="form-select" [(ngModel)]="selectedType" (change)="resetForm()">
+      <option *ngFor="let option of formOptions" [value]="option.value">{{ option.label }}</option>
     </select>
   </div>
 
   <!-- Catalog Form -->
-  <form [formGroup]="catalogForm" *ngIf="type === 'catalog'" (ngSubmit)="saveForm('catalog')">
+<!--   <form [formGroup]="catalogForm" *ngIf="selectedType === 'catalog'" (ngSubmit)="saveForm('catalog')">
     <div class="mb-3">
       <label for="title" class="form-label">Title</label><span class="text-danger">*</span>  
       <input id="title" formControlName="title" class="form-control" required>
@@ -25,9 +25,11 @@
     </div>
     
     <div class="mb-3">
-      <label for="publisher" class="form-label">Publisher Name</label><span class="text-danger">*</span>
+      <label for="publisherName" class="form-label">Publisher</label><span class="text-danger">*</span>  
       <input id="publisher" formControlName="publisher" class="form-control" required>
       <div *ngIf="isInvalid('publisher')" class="text-danger">Publisher name is required.</div>
+      <input id="publisher_email" formControlName="publisher_email" class="form-control" required>
+      <div *ngIf="isInvalid('publisher_email')" class="text-danger">Publisher email is required.</div>
     </div>
 
     <div class="mb-3">
@@ -50,17 +52,22 @@
       <textarea id="description" formControlName="description" class="form-control"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="catalogForm.invalid">Save Catalog</button>
-  </form>
+    <div class="mb-3">
+      <label for="themeTaxonomy" class="form-label">Theme Taxonomy</label>
+      <input id="themeTaxonomy" formControlName="themeTaxonomy" class="form-control">
+    </div>
+
+    <button class="btn btn-primary" [disabled]="catalogForm.invalid" (click)="saveCatalog()">Save Catalog</button>
+  </form> -->
 </div>
 
 
 <!-- Dataset Form -->
-<form [formGroup]="datasetForm" *ngIf="type === 'dataset'" (ngSubmit)="saveForm('dataset')">
-  <label for="isPartOf">Associated Catalog<span class="text-danger">*</span></label>
+<form [formGroup]="datasetForm" *ngIf="selectedType === 'dataset'">
+<!--   <label for="isPartOf">Associated Catalog<span class="text-danger">*</span></label>
   <select id="isPartOf" formControlName="isPartOf" required>
     <option *ngFor="let catalog of savedCatalogs" [value]="catalog.id">{{ catalog.title }}</option>
-  </select>
+  </select> -->
 
   <div class="mb-3">
     <label for="title" class="form-label">Title</label><span class="text-danger">*</span>
@@ -98,12 +105,12 @@
   <label for="description">Description</label>
   <textarea id="description" formControlName="description"></textarea>
   
-  <button type="submit" class="btn btn-primary" [disabled]="datasetForm.invalid">Save Dataset</button>
+  <button (click)="saveDataset()" class="btn btn-primary" [disabled]="datasetForm.invalid">Save Dataset</button>
 </form>
 
 <!-- Distribution Form -->
  
-<form [formGroup]="distributionForm" *ngIf="type === 'distribution'" (ngSubmit)="saveForm('distribution')">
+<form [formGroup]="distributionForm" *ngIf="selectedType === 'distribution'">
   <label for="isPartOf">Associated Dataset<span class="text-danger">*</span></label>
   <select id="isPartOf" formControlName="isPartOf" required>
     <option *ngFor="let dataset of savedDatasets" [value]="dataset.id">{{ dataset.title }}</option>
@@ -117,8 +124,8 @@
 
   <div class="mb-3">
     <label for="mediaType" class="form-label">Media Type</label> <span class="text-danger">*</span>
-    <input id="mediaType" formControlName="mediaType" class="form-control" required>
-    <div *ngIf="isInvalid('mediaType')" class="text-danger">Media Type is required.</div>
+    <input id="media" formControlName="medi" class="form-control" required>
+    <div *ngIf="isInvalid('medi')" class="text-danger">Media Type is required.</div>
   </div>
 
   <div class="mb-3">
@@ -144,3 +151,7 @@
   
   <button type="submit" class="btn btn-primary" [disabled]="distributionForm.invalid">Save Distribution</button>
 </form>
+
+<!-- Button to next page -->
+  <button class="btn btn-secondary mt-3" (click)="goToNextPage()">Next</button>
+

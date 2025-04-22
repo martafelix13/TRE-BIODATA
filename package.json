@@ -26,6 +26,7 @@
     "@popperjs/core": "~2.11.8",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "dotenv": "^16.4.7",
     "mongodb": "^6.13.1",
     "ngx-bootstrap": "^19.0.2",
     "ngx-cookie-service": "^19.1.0",

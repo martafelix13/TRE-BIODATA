@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { interval, Observable, switchMap, takeWhile } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  private backendUrl = 'http://localhost:8080';
+  private backendUrl = environment.serverUrl;
 
   constructor(private http:HttpClient) { }
 
