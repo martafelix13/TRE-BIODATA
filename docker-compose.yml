@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: src/Dockerfile
     ports:
+
+      # Mig: tens de mudar este port (lado esquerdo)
       - "80:80"  # Expor a aplicação Angular na porta 80
 
   backend:
@@ -21,7 +23,7 @@ services:
   mongo:
     image: mongo:8.0
     ports:
-      - "27017:27017"  # Expor o MongoDB na porta 27017
+      - "28017:27017"  # Expor o MongoDB na porta 27017
     volumes:
       - mongo_data:/data/tre  # Persistir dados do MongoDB
 
