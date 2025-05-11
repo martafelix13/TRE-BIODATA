@@ -10,6 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ProjectsService } from '../../../../services/projects.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class ProjectFormComponent {
   projectForm: FormGroup = new FormGroup({});
   isSaved = false;
   user_id = '';
+  user_email = '';
   showDeleteModal = false;
 
   constructor(private fb : FormBuilder, 
@@ -36,39 +38,42 @@ export class ProjectFormComponent {
     this.authService.user$.subscribe(user => {
       if (user) {
         this.user_id = user.sub;
+        this.user_email = user.email;
       }
     });
+
+    const defaultDeadline = new Date();
+    defaultDeadline.setFullYear(defaultDeadline.getFullYear() + 1);
 
     this.projectForm = this.fb.group({
       id: new FormControl('new'),
       title: new FormControl('', Validators.required, ),
       description: new FormControl('', Validators.required),
-      deadline: new FormControl('', Validators.required),
+      deadline: new FormControl(defaultDeadline.toISOString().substring(0, 10), Validators.required),
       organization: new FormControl( '', Validators.required),
       status: new FormControl('P-E'),
-      responsable: new FormControl('', [Validators.required]),
+      responsable: new FormControl(this.user_email, [Validators.required, Validators.email]),
       internal_storage: new FormControl(true, Validators.required),
     });
 
-    if (this.project) {
-      this.projectForm.patchValue(this.project);
-      this.projectForm.get('deadline')?.setValue(new Date(this.project.deadline));
-      this.projectForm.get('internal_storage')?.setValue(this.project.internal_storage === 'true');
-    }
   }
 
   onSubmit() {
     if (this.projectForm.valid) {
-        this.projectService.saveProject(this.projectForm.value).subscribe({
-          next: (data: any) => {
-            console.log('Project created!');
-            this.isSaved = true;
-            this.route.navigate(['/projects']);
-          },
-          error: (error: any) => {
-            console.error('Error creating project: ', error);
-          }
+      console.log('Form Data:', this.projectForm.value); // Log the form data
+      if (this.projectForm.value.responsable !== '') {
+        
+      this.projectService.saveProject(this.projectForm.value).subscribe({
+        next: (data: any) => {
+          console.log('Project created!');
+          this.isSaved = true;
+          this.route.navigate(['/projects']);
+        },
+        error: (error: any) => {
+          console.error('Error creating project: ', error);
+        }
       });
+    }
     }
   }
 
@@ -108,6 +113,8 @@ export class ProjectFormComponent {
 
   // On change print the invalid values of the form
   onFormChange() {
+
+    console.log('Responsable value:', this.projectForm.value.responsable); 
     this.projectForm.valueChanges.subscribe(() => {
       const invalidControls = Object.keys(this.projectForm.controls).filter(controlName => 
         this.projectForm.controls[controlName].invalid

@@ -86,7 +86,8 @@ export class ProjectDetailsComponent {
           organization: '',
           responsable:'',
           internal_storage: true,
-          status: 'P-E'
+          status: 'P-E',
+          owner: '',          
         };
       } else {
         this.projectService.getProject(params['id']).subscribe((project) => {
@@ -105,7 +106,7 @@ export class ProjectDetailsComponent {
 
   getMainStepIndex(): number {
     if (this.mainSteps.project.includes(this.project.status)) return 0;
-     if (this.mainSteps.agreement.includes(this.project.status)) return 1;
+    if (this.mainSteps.agreement.includes(this.project.status)) return 1;
     if (this.mainSteps.metadata.includes(this.project.status)) return 2;
     if (this.mainSteps.data.includes(this.project.status)) return 3;
     if (this.mainSteps.done.includes(this.project.status)) return 4; 
@@ -116,23 +117,5 @@ export class ProjectDetailsComponent {
     return this.mainSteps[phase].includes(this.project.status);
   }
 
-  changeBackProjectStatus() {
-    const currentIndex = this.steps.findIndex((step) => step.status === this.project.status);
-    if (currentIndex > 0) {
-      this.project.status = this.steps[currentIndex - 1].status;
-    }
-  }
-
-  changeNextProjectStatus() {
-    const currentIndex = this.steps.findIndex((step) => step.status === this.project.status);
-    if (currentIndex < this.steps.length - 1) {
-      
-      this.project.status = this.steps[currentIndex + 1].status;
-    }
-  }
-
-  redirectToRems(){
-    this.remsService.redirectToRemsAdmin();
-  }
 
 }

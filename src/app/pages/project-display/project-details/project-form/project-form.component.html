@@ -37,9 +37,9 @@
       <div class="mb-3">
         <mat-form-field class="w-100">
           <mat-label>Responsable (email)</mat-label>
-          <input matInput formControlName="responsable" required>
+          <input matInput type="email" formControlName="responsable" required>
           <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="isInvalid('responsable')">Responsable is required.</mat-error>
+          <mat-error *ngIf="isInvalid('responsable')">Responsable EMAIL is required.</mat-error>
         </mat-form-field>
       </div>
 
@@ -131,6 +131,12 @@
       <div class="mb-3">
         <strong><mat-icon class="me-2">event</mat-icon> Deadline:</strong>
         <p class="form-control-plaintext">{{ project.deadline || 'N/A' }}</p>
+      </div>
+
+      <!-- Data Storage Option -->
+      <div class="mb-3">
+        <strong><mat-icon class="me-2">storage</mat-icon> Data Storage Option:</strong>
+        <p class="form-control-plaintext">{{ project.internal_storage ? 'Use TRE Database (Submit Data)' : 'Keep Data Externally' }}</p>
       </div>
 
       <!-- Status -->

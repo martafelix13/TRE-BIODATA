@@ -12,15 +12,17 @@ from pathlib import Path
 import json
 from rdflib import Graph
 
+from routes.fdp_routes import fdp_bp
+
 import utils
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-client = MongoClient(MONGO_URI)  
-dbMetadada = client["metadata"]
-catalogDB = dbMetadada["catalog"]
-datasetDB = dbMetadada["dataset"]
-distributionDB = dbMetadada["distribution"]
+client = MongoClient(MONGO_URI)
+dbMetadata = client["metadata"]
+catalogDB = dbMetadata["catalog"]
+datasetDB = dbMetadata["dataset"]
+distributionDB = dbMetadata["distribution"]
 
 dbProject = client["project"]
 projectDB = dbProject["project_details"]
@@ -39,6 +41,8 @@ id_token = None
 access_token = None
 token_type = None
 user = None
+
+app.register_blueprint(fdp_bp, url_prefix='/fdp')  # Optional prefix
 
 ## Authentication and Authorization ##
 @app.route('/login')
@@ -226,7 +230,12 @@ def get_projects():
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
     
-    projects = list(projectDB.find({'owner': user_id}, {"_id": 0}))  
+    projects = list(projectDB.find({'owner': user_id}))  
+    
+    # Convert ObjectId to string
+    for i in range(len(projects)):
+        projects[i] = utils.serialize_doc(projects[i])
+
     json_data = json.dumps(projects, default=str)
     return jsonify(json_data), 200
 
@@ -241,7 +250,14 @@ def get_project(project_id):
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
-    project = projectDB.find_one({'owner': user_id, "id": project_id},  {"_id": 0})
+    project = projectDB.find_one({'owner': user_id, "_id": ObjectId(project_id)})
+
+    if not project:
+        return jsonify({"error": "Project not found"}), 404
+    
+    # Convert ObjectId to string
+    project = utils.serialize_doc(project)
+
     return jsonify(project), 200
 
 @app.route('/submit-project', methods=['POST'])
@@ -254,20 +270,19 @@ def submit_project():
         return jsonify({"error": "Project data missing"}), 400 
     
     project_id = project_data['id']
+    del project_data['id']
     
     if not project_id:
         return jsonify({"error": "Project ID missing"}), 400
     
-    existing_id = projectDB.find_one({"id": project_id})
-
-    if existing_id:
-        projectDB.update_one({"id": project_id}, {"$set": project_data})
-        return jsonify({"message": "Project data updated successfully"})
-    
-    else:
+    if project_id == 'new':
         projectDB.insert_one(project_data)
         return jsonify({"message": "Project data submitted successfully"})
-
+    
+    else:
+        projectDB.update_one({"_id": ObjectId(project_id)}, {"$set": project_data})
+        return jsonify({"message": "Project data updated successfully"})
+    
 
 
 @app.route('/projects/<string:project_id>', methods=['PATCH'])
@@ -283,7 +298,7 @@ def update_project(project_id):
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
-    projectDB.update_one({"id": project_id, "owner": user_id}, {"$set": project_data})
+    projectDB.update_one({"_id": ObjectId(project_id), "owner": user_id}, {"$set": project_data})
     return jsonify({"message": "Project updated successfully"})
 
 
@@ -408,9 +423,9 @@ def create_resource():
     response =  requests.post(rems_api_url, headers=headers, json={
             "resid": resource_id,
             "organization": {
-                "organization/id": organization_id
+                "organization/id": organization_id # example organization
             },
-            "licenses": [1]
+            "licenses": [1] # license id = 1 => Data processing agreement
         })
     
     print(response.json())

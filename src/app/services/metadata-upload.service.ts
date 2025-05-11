@@ -12,17 +12,12 @@ export class MetadataUploadService {
   
   private backendUrl = environment.serverUrl;
 
-  submitForm(data: any, type:string) {
-    data.type = type;
-    return this.http.post(this.backendUrl + '/submit-form', data);
-  }
-
-  submitDataset(data: any) {
-    return this.http.post(this.backendUrl + '/fdp/upload-dataset', data)
-  }
-
-  submitCatalog(data:any){
-    return this.http.post(this.backendUrl + '/fdp/upload-catalog', data)
+  uploadMetadata(dataset: any, distributions: any[]) {
+    const data = {
+      dataset: dataset,
+      distributions: distributions
+    };
+    return this.http.post(this.backendUrl + '/fdp/upload', data);
   }
 
   getCatalogs() {

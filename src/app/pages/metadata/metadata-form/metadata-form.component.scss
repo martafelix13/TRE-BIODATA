@@ -37,3 +37,93 @@ form {
     }
   }
   
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+  
+    .card-title {
+      font-weight: 600;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+  
+    .btn-outline-danger {
+      font-size: 0.875rem;
+      padding: 0.3rem 0.75rem;
+    }
+  }
+  
+  label {
+    font-weight: 500;
+  }
+  
+  input,
+  textarea {
+    transition: border-color 0.2s ease;
+    &:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+  }
+  
+  .text-danger {
+    font-size: 0.875rem;
+  }
+  
+  button[type='submit'],
+  .btn-success {
+    font-weight: 500;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+  }
+  
+  button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    .btn {
+      width: 100%;
+    }
+  
+    .d-flex.justify-content-between {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  
+    .d-flex.justify-content-end {
+      justify-content: center;
+    }
+  }
+  
+
+  .card {
+    transition: all 0.2s ease;
+    .btn-sm {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+    }
+  }
+  

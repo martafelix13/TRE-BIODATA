@@ -34,9 +34,7 @@ export class ProjectsService {
 
   saveProject(project: any) {
     project.last_update = new Date().toISOString().split('T')[0];
-    project.id = Math.random().toString(36).substring(2, 8);
     project.owner = this.user_id;
-    project.responsable='';
     project.status = 'P-AR';
     console.log('Project to save: ', project);
     return this.http.post(this.backendUrl + '/submit-project', project)

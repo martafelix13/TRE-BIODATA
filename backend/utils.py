@@ -2,6 +2,16 @@ import requests
 import settings
 import jwt
 from datetime import datetime
+from bson import ObjectId
+
+from typing import List, Union
+
+# Helper to convert ObjectId to string
+def serialize_doc(doc):
+    doc["id"] = str(doc["_id"])
+    del doc["_id"]
+    return doc
+
 
 def get_fdp_token():
     print("DEBUG: Attempting to retrieve token")
