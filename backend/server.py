@@ -13,6 +13,7 @@ import json
 from rdflib import Graph
 
 from routes.fdp_routes import fdp_bp
+from routes.si_routes import si_bp
 
 import utils
 app = Flask(__name__)
@@ -43,6 +44,7 @@ token_type = None
 user = None
 
 app.register_blueprint(fdp_bp, url_prefix='/fdp')  # Optional prefix
+app.register_blueprint(si_bp, url_prefix='/si')  
 
 ## Authentication and Authorization ##
 @app.route('/login')
@@ -434,6 +436,26 @@ def create_resource():
     return jsonify(response.json())
 
 
+@app.route('/pipelines', methods=['GET'])
+def get_pipelines():
+
+    raw_pipelines = list(pipelineDB.find({}, {"_id": 0}) )
+    print('Pipelines:', raw_pipelines)
+
+    pipelines = []
+    for pipeline in raw_pipelines:
+        print('Pipeline:', pipeline)
+        payload = json.loads(pipeline.get('payload', '{}'))
+        pipelines.append({
+            "id": pipeline.get('id'),
+            "name": payload.get('name'),
+            "description": payload.get('description'),
+        })
+
+    print('Pipelines:', pipelines)
+
+    return jsonify({"pipelines": pipelines}), 200
+
 @app.route("/run-task", methods=['POST'])
 def runTask():
     print (request.json)
@@ -442,8 +464,6 @@ def runTask():
 
     print (file_id)
     print (pipeline_id)
-
-
 
     #get payload associated to the pipeline
     resp = pipelineDB.find_one({"id": pipeline_id}, {"_id": 0})
