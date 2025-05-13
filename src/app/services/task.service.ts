@@ -22,4 +22,12 @@ export class TaskService {
       takeWhile((response: any) => response.state !== 'COMPLETE' && response.state !== 'SYSTEM_ERROR' &&  response.state !== 'EXECUTOR_ERROR', true) // Stop when done
     );
   }
+
+  getUserFiles(id: string): Observable<any> {
+    return this.http.get(`${this.backendUrl}/si/files`, { params: { id }, withCredentials: true });
+  }
+
+  getPipelines(): Observable<any> {
+    return this.http.get(`${this.backendUrl}/pipelines`,);
+  }
 }

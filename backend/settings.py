@@ -14,6 +14,7 @@ AUTHORIZATION_URL = os.getenv("AUTHORIZATION_URL")
 FRONTEND_URL = os.getenv("FRONTEND_URL")
 TES_URL = os.getenv("TES_URL")
 SI_DB_URL = os.getenv("SI_DB_URL")  
+DOWNLOAD_S3 = os.getenv("DOWNLOAD_S3")
 
 FDP_URL = os.getenv("FDP_URL")
 

@@ -2,10 +2,17 @@ import { Component } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatTable, MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-tasks',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, MatToolbarModule, MatButtonModule, MatCardModule, MatInputModule, MatTableModule],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss'
 })
@@ -17,10 +24,90 @@ export class TasksComponent {
   is_processing:boolean = false;
   output_message: string = '';
   
+  user : any;
+  user_passports: string[] = [];
 
-  constructor(private taskService: TaskService) { }
+  datasets: any[] = [];
+  availableFiles: { [dataset_id: string]: any[] } = {};
+
+  selectedDataset: string = '';
+  selectedFile: string = '';
+
+
+
+  pipelines: any = [];
+
+  constructor(private taskService: TaskService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.user_passports = user.ga4gh_passport_v1 || [];
+      this.user_passports.forEach(passport => {
+        console.log('Passport:', passport);
+        this.getFile(passport);
+        this.getPipelines();
+      });
+    });
+  }
+
+
+getPipelines(){
+  this.taskService.getPipelines().subscribe({
+    next: (response: any) => {
+      console.log('Response:', response);
+
+      if (response.error) {
+        return;
+      }
+      this.pipelines = response.pipelines;
+      console.log('Pipelines:', this.pipelines);
+    },
+    error: (err) => {
+      this.status_message = `Failed to retrieve pipelines: ${err.message || 'Unknown error'}`;
+    }
+  });
+}
+
+
+getFile(passport: string): void {
+  this.taskService.getUserFiles(passport).subscribe({
+    next: (response: any) => {
+      if (response.error) {
+        return;
+      }
+
+      if (!response.dataset || !Array.isArray(response.files) || response.files.length === 0) {
+        return;
+      }
+
+      this.availableFiles[response.dataset] = response.files;
+
+
+      if (!this.datasets.some(ds => ds === response.dataset)) {
+        const dataset = { id: response.dataset, name: response.dataset };
+        this.datasets.push(dataset);
+      }
+
+      console.log('Datasets:', this.datasets);
+      console.log('Files:', this.availableFiles);
+    },
+    error: (err) => {
+      this.status_message = `Failed to retrieve files: ${err.message || 'Unknown error'}`;
+    }
+  });
+}
+  onDatasetChange() {
+    this.selectedFile = '';
+    this.file_id = '';
+  }
+
+  selectPipeline(pipeline: any) {
+    this.pipeline_id = pipeline.id;
+  }
+  
+  selectFile(file: any) {
+    this.file_id = file.id;
   }
 
   submitTask() {
