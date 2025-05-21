@@ -40,5 +40,12 @@ export class MetadataUploadService {
     return this.http.get(this.backendUrl + '/dataset/' + dataset_id + "/distributions");
   }
 
+  fetchSkosLabel(uri: string)  { 
+    return this.http.get(this.backendUrl + '/skos/label?uri=' + uri);
+  }
+
+  getContactInfo(uri: string) {
+    return this.http.get(this.backendUrl + '/contact-info?uri=' + uri);
+  }
 
 }

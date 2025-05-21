@@ -27,32 +27,6 @@
             <app-code-display code="put < filename >"></app-code-display>
           </li>
         </ol>
-
-        <mat-divider></mat-divider>
-
-        <div class="row" style="margin-top: 20px;">
-          <div class="col-md-12 text-center">
-            <h2>Create a REMS resource</h2>
-          </div>
-        </div>
-    
-        <div *ngIf="!withREMS">
-          <p>After submitting your data, please create a REMS resource with an ID to enable your data on REMS for discovery.</p>
-          <p>Click the button below to create a new resource:</p>
-
-          <!-- Resource id -->
-          <label for="resource_id">Resource ID</label>
-          <input placeholder="Enter resource ID" [(ngModel)]="resource_id" required/>       
-
-          <button mat-raised-button color="primary" (click)="createResource()">Create Resource</button>
-        </div>
-
-        <div *ngIf="withREMS">
-          <p>After submiting your data please create a REMS resource with an id to enable your data on REMS for discovery.</p>
-          <p>Check your project details and fill the id of your REMS resource there after the upload of the data.</p>
-          <p>After we handle the data ingestion and validation, your data will be stored in our database associated with the dataset after the REMS resource</p>
-        </div>
-
   </div>
 <!-- 
   <mat-card class="card">
@@ -86,3 +60,38 @@
       </form>
     </mat-card-content>
   </mat-card> -->
+
+  <!-- Crypt4GH Information Section -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3>About Crypt4GH</h3>
+      <p>
+        <strong>Crypt4GH</strong> is a secure file format and encryption tool designed for genomic data sharing, developed by the Global Alliance for Genomics and Health (GA4GH). It enables you to encrypt genomic files so they can be safely transferred and stored, ensuring only authorized users can decrypt and access the data.
+      </p>
+      <p>
+        For more details, see the <a href="https://github.com/EGA-archive/crypt4gh" target="_blank">official Crypt4GH repository</a>.
+      </p>
+      <h4 class="mt-4">How to Install Crypt4GH</h4>
+      <ol>
+        <li>
+          <strong>Install via pip (recommended):</strong>
+          <pre><code>pip install crypt4gh</code></pre>
+        </li>
+        <li>
+          <strong>Or install from source:</strong>
+          <pre><code>
+            git clone https://github.com/EGA-archive/crypt4gh.git
+            cd crypt4gh
+            pip install .
+          </code></pre>
+        </li>
+        <li>
+          <strong>Verify installation:</strong>
+          <pre><code>crypt4gh --help</code></pre>
+        </li>
+      </ol>
+      <p>
+        Crypt4GH requires Python 3.6 or higher. For more advanced usage and troubleshooting, refer to the <a href="https://github.com/EGA-archive/crypt4gh" target="_blank">GitHub documentation</a>.
+      </p>
+    </div>
+  </div>

@@ -1,62 +1,97 @@
 from typing import List, Union, Dict, Any
-from pydantic import ConfigDict, Field
-from rdflib import DCAT, DCTERMS, XSD, Literal, Namespace, URIRef
+import json
+import uuid
+from pydantic import ConfigDict, Field, ValidationError
+from rdflib import DCAT, DCTERMS, SKOS, Namespace, URIRef, RDF, RDFS, Literal
 from rdflib.namespace import DefinedNamespace
 from sempyro.dcat import DCATDataset
 from sempyro.rdf_model import LiteralField
+from pydantic import field_validator
+from rdflib import RDF, RDFS, Literal
+
+from sempyro.dcat.dcat_distribution import DCATDistribution
+from sempyro.utils.validator_functions import force_literal_field
+
 from sempyro.dcat.dcat_distribution import DCATDistribution
 from sempyro.foaf.agent import Agent
 from sempyro.vcard.vcard import VCard
-from sempyro.utils.validator_functions import force_literal_field
-import datetime
+
 import fairclient.fdpclient
-from pydantic import field_validator
+import settings
+from datetime import datetime
+from rdflib.namespace import XSD
+from bson import ObjectId
+from pymongo import MongoClient 
+from settings import *
+
+client = MongoClient(MONGO_URI)
+dbMetadata = client["metadata"]
+catalogDB = dbMetadata["catalog"]
+datasetDB = dbMetadata["dataset"]
+distributionDB = dbMetadata["distribution"]
+
+
 
 BASE_URL = "http://localhost:8667"
 
 # Define HealthDCAT-AP namespace with some properties
 class HEALTHDCAT(DefinedNamespace):
-    minTypicalAge: int
-    maxTypicalAge: int
-    numberOfUniqueIndividuals: int
-    numberOfRecords: int
-    populationCoverage: List[LiteralField]
 
+    # FIXME: This is a placeholder until official HealthDCAT-AP namespace is defined
     _NS = Namespace("http://example.com/ns/healthdcat#")
+
 
 class TREDataset(DCATDataset):
     model_config = ConfigDict(
-        json_schema_extra={
-            "$ontology": "https://healthdcat-ap.github.io/",
-            "$namespace": str(HEALTHDCAT),
-            "$IRI": DCAT.Dataset,
-            "$prefix": "healthdcatap"
-        }
+                              json_schema_extra={
+                                  "$ontology": "https://healthdcat-ap.github.io/",
+                                  "$namespace": str(HEALTHDCAT),
+                                  "$IRI": DCAT.Dataset,
+                                  "$prefix": "healthdcatap"
+                              }
+                              )
+
+    has_version: LiteralField = Field(
+        description="This resource has a more specific, versioned resource",
+        rdf_term=DCTERMS.hasVersion,
+        rdf_type="rdfs_literal",
     )
-    min_typical_age: int = Field(
-        description="Minimum typical age of the population within the dataset",
-        rdf_term=HEALTHDCAT.minTypicalAge,
-        rdf_type="xsd:nonNegativeInteger",
+
+    issued_date: LiteralField = Field(
+        description="Date of issue of the resource",
+        rdf_term=DCTERMS.issued,
+        rdf_type="rdfs_literal",
     )
-    max_typical_age: int = Field(
-        description="Maximum typical age of the population within the dataset",
-        rdf_term=HEALTHDCAT.maxTypicalAge,
-        rdf_type="xsd:nonNegativeInteger",
+
+    modified_date: LiteralField = Field(
+        description="Date of last modification of the resource",
+        rdf_term=DCTERMS.modified,
+        rdf_type="rdfs_literal",
     )
-    no_unique_individuals: int = Field(
-        description="Number of participants in study",
-        rdf_term=HEALTHDCAT.numberOfUniqueIndividuals,
-        rdf_type="xsd:nonNegativeInteger",
-    )
-    no_records: int = Field(
-        description="Size of the dataset in terms of the number of records.",
-        rdf_term=HEALTHDCAT.numberOfRecords,
-        rdf_type="xsd:nonNegativeInteger",
-    )
-    population_coverage: List[Union[str, LiteralField]] = Field(
-        default=None,
-        description="A definition of the population within the dataset",
-        rdf_term=HEALTHDCAT.populationCoverage,
+
+
+    @field_validator("has_version", mode="before")
+    @classmethod
+    def convert_to_literal(cls, value: Union[str, LiteralField]) -> List[LiteralField]:
+        return force_literal_field(value)
+    
+    @field_validator("issued_date", "modified_date", mode="before")
+    @classmethod
+    def parse_issued_date(cls, value: Union[str, LiteralField]) -> List[LiteralField]:
+        if isinstance(value, str) and len(value) == 10:
+            # e.g., '2025-05-17'
+            dt = datetime.strptime(value, "%Y-%m-%d")
+            return LiteralField(value=dt.isoformat() + "Z", datatype=XSD.dateTime)
+        elif isinstance(value, datetime):
+            return LiteralField(value=value.isoformat() + "Z", datatype=XSD.dateTime)
+        return value
+    
+
+class TREDistribution(DCATDistribution):
+
+    media_type: LiteralField = Field(
+        description="This resource has a more specific, versioned resource",
+        rdf_term=DCAT.mediaType,
         rdf_type="rdfs_literal",
     )
 
@@ -66,102 +101,116 @@ class TREDataset(DCATDataset):
         rdf_type="rdfs_literal",
     )
 
-    identifier: List[Union[str, LiteralField]] = Field(
-        description="A unique identifier of the resource being described or catalogued.",
-        rdf_term=DCTERMS.identifier,
-        rdf_type="rdfs_literal",
-    )
-
-    @field_validator("has_version", mode="before")
+    @field_validator("media_type", "has_version", mode="before")
     @classmethod
     def convert_to_literal(cls, value: Union[str, LiteralField]) -> List[LiteralField]:
         return force_literal_field(value)
 
-def create_and_publish_metadata(dataset_data: Dict[str, Any], distribution_data: List[Dict[str, Any]]):
-    # Parse dataset information
-    dataset_definition = dataset_data
-    dataset_subject = URIRef(BASE_URL + "/tre/dataset")
-    example_dataset = TREDataset(**dataset_definition)
-    example_dataset_graph = example_dataset.to_graph(dataset_subject)
 
-    # Parse distribution information
-    distribution_graphs = []
-    for dist_data in distribution_data:
-        distribution_subject = URIRef(BASE_URL + f"/tre/distribution/{dist_data.get('id', '1')}")
-        example_distribution = DCATDistribution(**dist_data)
-        example_distribution_graph = example_distribution.to_graph(distribution_subject)
-        distribution_graphs.append((distribution_subject, example_distribution_graph))
+def create_and_publish_metadata(dataset_info: Dict[str, Any], distributions_info: List[Dict[str, Any]]) -> None:
 
-    # Add contact point to the dataset graph
-    contact_uri = URIRef(BASE_URL + "/tre/contact/martafelix")
-    contact = VCard(
-        hasEmail=["mailto:marta.felix@tecnico.ulisboa.pt"],
-        full_name=["Marta Félix"],
-        hasUID="https://ror.org/000000"
-    )
-    example_contact_graph = contact.to_graph(contact_uri)
-    example_dataset_graph += example_contact_graph
+    # Prepare contact point if present
+    contact_uri = None
+    contact = None
+    if "contact_point" in dataset_info and isinstance(dataset_info["contact_point"], list):
+        contact_uri = URIRef(dataset_info["contact_point"])
+        # Optionally, you can parse more contact info from JSON if available
+        contact = VCard(
+            hasEmail=[dataset_info.get("contact_email", "mailto:unknown@example.com")],
+            full_name=[dataset_info.get("contact_name", "Unknown")],
+            hasUID=dataset_info.get("contact_uid", "https://ror.org/")
+        )
 
-    # Add parent catalog reference
-    fdp_parent_catalog = BASE_URL + "/catalog/bc43e54f-56d8-4c26-bd49-df3b9218ef0a"
-    example_dataset_graph.add((dataset_subject, DCTERMS.isPartOf, URIRef(fdp_parent_catalog)))
+    publisher = Agent(name=[dataset_info.get("publisher.name", "BioData.pt")], identifier=dataset_info.get("publisher.identifier", "https://ror.org/02q7abn51"))
 
-    example_dataset_graph.set((dataset_subject, DCTERMS.issued,Literal("2024-01-01T00:00:00Z", datatype=XSD.dateTime)))
-    example_dataset_graph.set((dataset_subject, DCTERMS.modified, Literal("2025-01-01T00:00:00Z", datatype=XSD.dateTime)))
-
-
-    print("Dataset graph:")
-    print(example_dataset_graph.serialize(format="turtle"))
-
-    # Serialize and publish dataset
-    fdp_baseurl = BASE_URL
-    fdp_user = "albert.einstein@example.com"
-    fdp_pass = "password"
-
-    fdpclient = fairclient.fdpclient.FDPClient(base_url=fdp_baseurl, username=fdp_user, password=fdp_pass)
-    new_dataset = fdpclient.create_and_publish("dataset", example_dataset_graph)
-
-    # Publish distributions
-    for distribution_subject, distribution_graph in distribution_graphs:
-        distribution_graph.add((distribution_subject, DCTERMS.isPartOf, URIRef(f"{new_dataset}")))
-        fdpclient.create_and_publish(resource_type="distribution", metadata=distribution_graph)
-
-    return new_dataset
-
-""" # Example usage
-if __name__ == "__main__":
-    # Example dataset and distribution data from frontend
-    dataset_data = {
-        "contact_point": [URIRef(BASE_URL + "/tre/contact/martafelix")],
-        "creator": [Agent(name=["BioData.pt"], identifier="https://ror.org/02q7abn51")],
-        "description": [LiteralField(value="Synthetic dataset for testing.")],
-        "distribution": [BASE_URL + "/tre/distribution"],
-        "release_date": datetime.datetime(2024, 7, 7, 11, 11, 11, tzinfo=datetime.timezone.utc),
-        "keyword": [LiteralField(value="COVID")],
-        "identifier": ["GDID-becadf5a-a1b2"],
-        "update_date": datetime.datetime(2024, 11, 4, 10, 20, 5, tzinfo=datetime.timezone.utc),
-        "publisher": [Agent(name=["BioData.pt"], identifier="https://ror.org/02q7abn51")],
-        "theme": [URIRef("http://publications.europa.eu/resource/authority/data-theme/HEAL")],
-        "title": [LiteralField(value="COVID-19 Dataset")],
-        "license": URIRef("https://creativecommons.org/licenses/by-sa/4.0/"),
-        "no_unique_individuals": 41514,
-        "no_records": 18382376,
-        "population_coverage": ["Synthetic population coverage."],
-        "min_typical_age": 18,
-        "max_typical_age": 64,
-        "has_version": "0.1",
+    # Prepare dataset definition
+    dataset_definition = {
+        "contact_point": [BASE_URL + "/tre/contact" + str(contact_uri)] if contact_uri else [],
+        "description": [LiteralField(value=dataset_info["description"])],
+        "distribution": dataset_info.get("distribution", []),
+        "issued_date":LiteralField(value=datetime.strptime(dataset_info.get("issued_date", "2025-05-17"), "%Y-%m-%d").isoformat() + 'Z', datatype=XSD.dateTime),
+        "modified_date": LiteralField(value=datetime.strptime(dataset_info.get("modified_date", "2024-05-17"), "%Y-%m-%d").isoformat() + 'Z', datatype=XSD.dateTime),
+        "keyword": [LiteralField(value=kw) for kw in dataset_info.get("keywords", [])],
+        "publisher": [publisher],
+        "title": [LiteralField(value=dataset_info["title"])],
+        "license": URIRef(dataset_info["license"]),
+        "has_version": LiteralField(value=dataset_info.get("has_version", "1.0"))
     }
 
-    distribution_data = [
-        {
-            "publisher": [Agent(name=["BioData.pt"], identifier="https://ror.org/02q7abn51")],
-            "title": ["GWAS Data Distribution"],
-            "description": ["Synthetic GWAS data distribution."],
-            "access_url": ["https://example.com/dataset/GDI-MS8-COVID19.vcf"],
-            "media_type": "vcf",
-            "has_version": "0.1",
-        }
-    ]
+    dataset_subject = URIRef(BASE_URL + "/dataset/" + str(uuid.uuid4()))
+    try:
+        dataset = TREDataset(**dataset_definition)
+    except ValidationError as e:
+        print("Dataset validation error:", e)
+        return
 
-    new_dataset = create_and_publish_dataset(dataset_data, distribution_data)
-    print(f"Dataset published at: {new_dataset}") """
+    dataset_graph = dataset.to_graph(dataset_subject)
+    dataset_graph.add((dataset_subject, RDF.type, DCAT.Dataset))
+    # Add theme if present
+    if "theme" in dataset_info:
+        theme = dataset_info["theme"]
+        theme_uri = URIRef(theme["uri"])
+        dataset_graph.add((dataset_subject, DCAT.theme, theme_uri))
+        dataset_graph.add((theme_uri, RDF.type, SKOS.Concept))
+        pref_labels = theme.get("prefLabel", {})
+        for lang, label in pref_labels.items():
+            dataset_graph.add((theme_uri, SKOS.prefLabel, Literal(label, lang=lang)))
+
+        if "en" in pref_labels:
+            dataset_graph.add((theme_uri, RDFS.label, Literal(pref_labels["en"])))
+
+
+    # Add contact point if present
+    if contact and contact_uri:
+        contact_graph = contact.to_graph(contact_uri)
+        dataset_graph += contact_graph
+
+    fdp_parent_catalog = BASE_URL + "/catalog/bc43e54f-56d8-4c26-bd49-df3b9218ef0a"
+    fdp_baseurl = BASE_URL
+    fdp_user = settings.FDP_ADMIN_USERNAME
+    fdp_pass = settings.FDP_ADMIN_PASSWORD
+
+    fdpclient = fairclient.fdpclient.FDPClient(base_url=fdp_baseurl, username=fdp_user, password=fdp_pass)
+
+
+    # Upload dataset last, after distributions are created
+    fdp_parent_catalog = BASE_URL + "/catalog/bc43e54f-56d8-4c26-bd49-df3b9218ef0a"
+    dataset_graph.add((dataset_subject, DCTERMS.isPartOf, URIRef(fdp_parent_catalog)))
+    print(dataset_graph.serialize(format="turtle"))
+    new_dataset = fdpclient.create_and_publish("dataset", dataset_graph)
+    print("Dataset FDP ID:", new_dataset)
+    # Save dataset to MongoDB
+
+    # Prepare and upload distributions
+    distribution_fdp_ids = []
+    for dist_info in distributions_info:
+        distribution_subject = URIRef(BASE_URL + "/distribution/" + str(uuid.uuid4()))
+        dist_definition = {
+            "publisher": [publisher],
+            "title": [LiteralField(value=dist_info["title"])],
+            "description": [LiteralField(value=dist_info["description"])],
+            "access_url": [dist_info.get("access_url", "http://example.com/dataset")],
+            "media_type": LiteralField(value=dist_info["media_type"]),
+            "has_version": dist_info.get("has_version", "1.0"),
+        }
+        try:
+            distribution = TREDistribution(**dist_definition)
+        except ValidationError as e:
+            print("Distribution validation error:", e)
+            continue
+
+        distribution_graph = distribution.to_graph(distribution_subject)
+        # Add isPartOf link to dataset
+        distribution_graph.add((distribution_subject, DCTERMS.isPartOf, new_dataset))
+        # Upload distribution
+        print(distribution_graph.serialize(format="turtle"))
+        distribution_fdp_id = fdpclient.create_and_publish(resource_type="distribution", metadata=distribution_graph)
+        print("Distribution FDP ID:", distribution_fdp_id)
+        # Save distribution to MongoDB
+
+        distribution_fdp_ids.append(distribution_fdp_id)
+
+
+    print("Distribution FDP IDs:", distribution_fdp_ids)
+    return new_dataset, distribution_fdp_ids
+

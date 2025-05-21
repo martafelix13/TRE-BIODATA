@@ -5,8 +5,8 @@ import * as uuid from 'uuid';
 import { MetadataUploadService } from '../../../services/metadata-upload.service';
 import { AuthService } from '../../../services/auth.service';
 import { ProjectsService } from '../../../services/projects.service';
+import { identity, Observable } from 'rxjs';
 import { ThemeDirective } from '@coreui/angular';
-
 
 @Component({
   selector: 'app-metadata-form',
@@ -25,13 +25,10 @@ export class MetadataFormComponent implements OnInit {
   datasetData: any = {};
   distributionsData: any[] = [];
 
-  user_id = '';
+  user: Observable<any> | undefined;
+  helpField: string = '';
 
-  selectedType = 'dataset';
-  formOptions = [
-    { label: 'Dataset', value: 'dataset' },
-    { label: 'Distribution', value: 'distribution' }
-  ];
+  theme: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -39,111 +36,109 @@ export class MetadataFormComponent implements OnInit {
     private authService: AuthService,
     private projectService: ProjectsService
   ) {
-// Initialize dataset form with sample values
-this.datasetForm = this.fb.group({
-  title: ['STROKE Patient Dataset', Validators.required],
-  theme: ['http://example.org/themes/neurology', Validators.required],
-  publisher: ['National Health Data Platform (NHDP)', Validators.required],
-  version: ['1.0', Validators.required],
-  release_date: ['2024-01-01', Validators.required],
-  update_date: ['2025-01-01', Validators.required],
-  license: ['https://creativecommons.org/licenses/by/4.0/', Validators.required],
-  description: [
-    'A curated dataset containing anonymized stroke patient data, including clinical, imaging, and outcome variables. Designed for predictive modeling and public health research.',
-    Validators.required
-  ],
-  no_unique_individuals: [1200, Validators.required],
-  no_records: [1500, Validators.required],
-  population_coverage: ['90%', Validators.required],
-  min_typical_age: [45, Validators.required],
-  max_typical_age: [85, Validators.required],
-  keyword: ['stroke, neurology, dataset', Validators.required],
-  contact_point: ['https://contact@nhdp.org', Validators.required] // TODO: add validator in form
-});
+        // Initialize dataset form with fields from the HTML
+    this.datasetForm = this.fb.group({
+      title: ['Test Dataset Title', Validators.required],
+      description: ['This is a test description of the dataset.', Validators.required],
+      theme_uri: ['https://publications.europa.eu/resource/authority/data-theme/HEAL', Validators.required],
+      theme_label: ['Health', Validators.required],
+      publisher_name: ['Test Publisher Org', Validators.required],
+      publisher_identifier: ['https://ror.org/02q7abn51', Validators.required],
+      version: ['1.0', Validators.required],
+      issued_date: ['2024-01-01', Validators.required],
+      modified_date: ['2024-05-01'],
+      license: ['https://creativecommons.org/licenses/by/4.0/', Validators.required],
+      contact_email: ['contact@example.org', [Validators.required, Validators.email]],
+      contact_name: ['John Doe', Validators.required],
+      contact_uid: ['https://orcid.org/0000-0002-1825-0097'],
+      keywords: ['health, genomics, COVID-19'],
+    });
 
-// Initialize distribution form with sample values
-this.distributionForm = this.fb.group({
-  title: ['STROKE Data (CSV)', Validators.required],
-  publisher: ['National Health Data Platform (NHDP)', Validators.required],
-  media_type: ['cvs/text', Validators.required],
-  has_version: ['1.0', Validators.required],
-  access_url: ['https://data.nhdp.org/stroke/1.0/data.csv', Validators.required],
-  description: [
-    'Downloadable CSV file containing structured STROKE patient data, including diagnosis, treatment, and outcomes.',
-    Validators.required
-  ]
-});
+    // Initialize distribution form with default test values
+    this.distributionForm = this.fb.group({
+      title: ['CSV Format'],
+      media_type: ['text/csv', Validators.required],
+      publisher_name: ['Test Publisher Org', Validators.required],
+      publisher_identifier: ['https://ror.org/02q7abn51', Validators.required],
+      version: ['1.0'],
+      description: ['This is a test CSV file for the dataset.']
+    });
   }
 
   ngOnInit(): void {
-    this.user_id = this.authService.getIdToken();
+    this.user = this.authService.user$;
+    this.user.subscribe((user) => { 
+      console.log('User:', user);
+      if (user) {
+        this.datasetForm.patchValue({
+          contact_name: user.name,
+          contact_email: user.email
+        });
+      }
+    });
   }
-  
+
 
   // Save dataset data
   saveDataset(): void {
     this.datasetData = {
-      contact_point: [this.datasetForm.value.contact_point],
-      creator: [{ name: ['BioData.pt'], identifier: 'https://ror.org/02q7abn51' }],
-      description: [{ value: this.datasetForm.value.description }],
-      distribution: ['http://localhost:8667/tre/distribution'],
-      release_date: this.datasetForm.value.release_date,
-      keyword: [{ value: this.datasetForm.value.keyword }],
-      identifier: [uuid.v4()],
-      update_date: this.datasetForm.value.update_date,
-      publisher: [{ name: [this.datasetForm.value.publisher], identifier: 'https://ror.org/02q7abn51' }],
-      theme: [this.datasetForm.value.theme],
-      title: [{ value: this.datasetForm.value.title }],
+      // TODO: Add personalized identifier to the dataset
+      contact_point: this.datasetForm.value.contact_name?.toLowerCase().replace(/\s+/g, ''),
+      contact_email: this.datasetForm.value.contact_email,
+      contact_name: this.datasetForm.value.contact_name,
+      contact_uid: this.datasetForm.value.contact_uid,
+      description: this.datasetForm.value.description,
+      distribution: [],
+      issued_date: this.datasetForm.value.issued_date,
+      keyword: [{ value: this.datasetForm.value.keywords }],
+      modified_date: this.datasetForm.value.modified_date,
+      publisher: { name: [this.datasetForm.value.publisher_name], identifier: this.datasetForm.value.publisher_identifier},
+      theme: this.theme,
+      title: this.datasetForm.value.title,
       license: this.datasetForm.value.license,
-      no_unique_individuals: this.datasetForm.value.no_unique_individuals,
-      no_records: this.datasetForm.value.no_records,
-      population_coverage: [this.datasetForm.value.population_coverage],
-      min_typical_age: this.datasetForm.value.min_typical_age,
-      max_typical_age: this.datasetForm.value.max_typical_age,
-      has_version: this.datasetForm.value.version, 
+      has_version: this.datasetForm.value.version,
     };
     console.log('Dataset Data:', this.datasetData);
   }
 
   transformDistributionData(distribution: any): any {
     const distributionsData = {
-      title: [distribution.title],
-      publisher: [{ name: [distribution.publisher], identifier: 'https://ror.org/02q7abn51' }],
-      description: [{ value: distribution.description }],
-      access_url: [distribution.access_url],
+      // TODO: Add personalized identifier to the distribution
+      title: distribution.title,
+      publisher: { name: [distribution.publisher_name], identifier: distribution.publisher_identifier },
+      description: distribution.description,
+      access_url: "https://example.com/dataset.csv",
       media_type: distribution.media_type,
-      has_version: distribution.version,
-      // "identifier": ["GDIF-12345678-90ab-defg"]
+      has_version: distribution.version
     };
 
-  return distributionsData;
-}
+    return distributionsData;
+  }
 
   addDistribution(): void {
-    const form = this.fb.group(this.distributionForm.value); 
+    const form = this.fb.group(this.distributionForm.value);
     form.addControl('collapsed', this.fb.control(false));
     this.distributionsForms.push(form);
   }
-  
+
   saveDistribution(index: number): void {
     const dist = this.distributionsForms[index];
     if (dist.valid) {
       dist.get('collapsed')?.setValue(true);
     } else {
-      dist.markAllAsTouched();  // Show validation errors
+      dist.markAllAsTouched(); // Show validation errors
     }
   }
-  
+
   editDistribution(index: number): void {
     this.distributionsForms[index].get('collapsed')?.setValue(false);
   }
-  
-  submitMetadata(): void{
 
+  submitMetadata(): void {
     this.saveDataset();
 
     console.log('Submitting metadata...');
-    // remove collapsed property from each distribution
+    // Remove collapsed property from each distribution
     this.distributionsForms.forEach((dist) => {
       dist.removeControl('collapsed');
       this.distributionsData.push(this.transformDistributionData(dist.value));
@@ -161,9 +156,8 @@ this.distributionForm = this.fb.group({
   }
 
   removeDistribution(index: number): void {
-    this.distributionsData.splice(index, 1);
+    this.distributionsForms.splice(index, 1);
   }
-
 
   resetForm(): void {
     this.datasetForm.reset();
@@ -172,15 +166,64 @@ this.distributionForm = this.fb.group({
     this.datasetData = {};
   }
 
-  goToNextPage(){
+  goToNextPage(): void {
     this.projectService.updateProjectStatus(this.project.id, 'D-E').subscribe({
-      next: () => { console.log('updated'); }
+      next: () => {
+        console.log('updated');
+      }
     });
   }
 
-  isInvalid(form: FormGroup, controlName: string) {
-      const control = form.get(controlName);
-      return control ? control.invalid && (control.dirty || control.touched) : false;
+  isInvalid(form: FormGroup, controlName: string): boolean {
+    const control = form.get(controlName);
+    return control ? control.invalid && (control.dirty || control.touched) : false;
+  }
+
+  fetchSkosLabel(){
+    console.log('[fetchSkosLabelComponent] Fetching SKOS label...');
+    const uri = this.datasetForm.get('theme_uri')?.value;
+    console.log('[fetchSkosLabelComponent] URI:', uri);
+
+    if (!uri) {
+      console.error('[fetchSkosLabelComponent] URI is null or undefined.');
+      this.datasetForm.get('theme_label')?.setValue('');
+      return;
+    }
+
+    this.metadataUploadService.fetchSkosLabel(uri).subscribe(
+      (response: any) => {
+        console.log('[fetchSkosLabelComponent] Response:', response);
+        if (response) {
+          this.datasetForm.get('theme_label')?.setValue(response.prefLabel.en || response.prefLabel[0]);
+          this.theme = response;
+        } else {
+          console.error('[fetchSkosLabelComponent] No label found in the response.');
+          this.datasetForm.get('theme_label')?.setValue('');
+        }
+      },
+      (error) => {
+        console.error('[fetchSkosLabelComponent] Error fetching SKOS label:', error);
+        this.datasetForm.get('theme_label')?.setValue('');
+      }
+    );
+  }
+
+  getContactInfoFromBackend(form: FormGroup, field: string): void {
+    console.log('Fetching contact info for field:', field);
+    const uri = form.get(field)?.value;
+    this.metadataUploadService.getContactInfo(uri).subscribe(
+      (response: any) => {
+        console.log('Contact Info:', response);
+        if (field === 'publisher_identifier') {
+          form.get('publisher_name')?.setValue(response.name); 
+        } else if (field === 'contact_uid') {
+          form.get('contact_name')?.setValue(response.name);
+          form.get('contact_email')?.setValue(response.email);
+        }
+      },
+      (error:any) => {
+        console.error('Error fetching contact info:', error);
+      }
+    );
   }
 }
-

@@ -14,6 +14,7 @@ from rdflib import Graph
 
 from routes.fdp_routes import fdp_bp
 from routes.si_routes import si_bp
+import xml.etree.ElementTree as ET
 
 import utils
 app = Flask(__name__)
@@ -144,22 +145,10 @@ def submit_form():
 
     if (not form_data):
         return jsonify({"error": "Form data missing"}), 400
-    
-    if (form_data.get("type") == "catalog"):
-        print("Form Data:", form_data)
-        catalogDB.insert_one(form_data)
-    
-    elif (form_data.get("type") == "dataset"):
-        print("Form Data:", form_data)
-        datasetDB.insert_one(form_data)
 
-    elif (form_data.get("type") == "distribution"):
-        print("Form Data:", form_data)
-        distributionDB.insert_one(form_data)
+    datasetDB.insert_one(form_data)
+    distributionDB.insert_one(form_data)
 
-    else:
-        return jsonify({"error": "Invalid form type"}), 400
-    
     return jsonify({"message": "Form data submitted successfully"})
 
 @app.route('/catalogs', methods=['GET'])
@@ -519,6 +508,96 @@ def getTask(taskId):
             return jsonify({"error": "Failed to download file"}), file_response.status_code """
     return jsonify(response), 200
     
+
+@app.route("/skos/label", methods=['GET'])
+def get_skos_labels():
+    uri = request.args.get('uri')
+    if not uri:
+        return jsonify(error="Missing 'uri' parameter"), 400
+
+    try:
+        response = requests.get(uri, headers={"Accept": "application/rdf+xml"})
+        if response.status_code != 200:
+            return jsonify(error="Failed to fetch RDF data"), 502
+
+        xml = response.text
+        root = ET.fromstring(xml)
+
+        ns = {
+            'skos': 'http://www.w3.org/2004/02/skos/core#',
+            'xml': 'http://www.w3.org/XML/1998/namespace'
+        }
+
+        labels = {}
+        for label in root.findall('.//skos:prefLabel', ns):
+            lang = label.attrib.get('{http://www.w3.org/XML/1998/namespace}lang')
+            if lang and label.text:
+                labels[lang] = label.text
+
+        return jsonify({
+            "uri": uri,
+            "prefLabel": labels
+        })
+
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+@app.route('/contact-info')
+def get_contact_info():
+    uri = request.args.get('uri')
+    print("[DEBUG] Received URI:", uri)
+    if not uri:
+        print("[DEBUG] No URI provided in request")
+        return jsonify({"error": "Missing uri"}), 400
+
+    try:
+        if "orcid.org" in uri:
+            print("[DEBUG] Detected ORCID URI")
+            orcid_id = uri.split("/")[-1]
+            print("[DEBUG] ORCID ID:", orcid_id)
+
+            headers = {"Accept": "application/json"}
+            resp = requests.get(f"https://pub.orcid.org/v3.0/{orcid_id}", headers=headers)
+            print("[DEBUG] ORCID API response status:", resp.status_code)
+            data = resp.json()
+            print("[DEBUG] ORCID API response data:", data.get('person', {}))
+
+            name = f"{data['person']['name']['given-names']['value']} {data['person']['name']['family-name']['value']}"
+            print("[DEBUG] Extracted name:", name)
+
+            return jsonify({"name": name})
+
+        elif "ror.org" in uri:
+            print("[DEBUG] Detected ROR URI")
+            ror_id = uri.split("/")[-1]
+            print("[DEBUG] ROR ID:", ror_id)
+            resp = requests.get(f"https://api.ror.org/v2/organizations/{ror_id}")
+            print("[DEBUG] ROR API response status:", resp.status_code)
+            if resp.status_code != 200:
+                print("[DEBUG] Failed to fetch ROR data")
+                return jsonify({"error": "Failed to fetch ROR data"}), 502
+            data = resp.json()
+            print("[DEBUG] ROR API response data:", data)
+            names = data.get('names', 'Unknown')
+            print("[DEBUG] Extracted names:", names)
+
+            for entrie in names:
+                print("[DEBUG] Checking entry:", entrie)
+                if 'label' in entrie.get('types', []):
+                    name = entrie.get('value')
+                    print("[DEBUG] Found English name:", name)
+                    return jsonify({"name": name})
+
+            print("[DEBUG] No English name found, using first entry")
+            return jsonify({"name": names[0].get('value'), "email": None})
+
+        else:
+            print("[DEBUG] Unsupported UID format")
+            return jsonify({"error": "Unsupported UID format"}), 400
+
+    except Exception as e:
+        print("[DEBUG] Exception occurred:", str(e))
+        return jsonify({"error": str(e)}), 500
 
 
 
