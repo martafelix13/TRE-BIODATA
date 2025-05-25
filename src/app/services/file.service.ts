@@ -12,19 +12,19 @@ export class FileService {
   constructor(private http: HttpClient) {}
 
   getFiles() {
-    return this.http.get(`${this.backendUrl}/files`);
+    return this.http.get(`${this.backendUrl}/files`, { withCredentials: true });
   }
 
   downloadFile(filename: string) {
-    return this.http.get(`${this.backendUrl}/files/download/${filename}`);
+    return this.http.get(`${this.backendUrl}/files/download/${filename}`, { withCredentials: true });
   }
 
   uploadSignedFile(formData: FormData): Observable<any> {
     console.log('Uploading file: ', formData);
-    return this.http.post(`${this.backendUrl}/files/upload`, formData, {withCredentials: true});
+    return this.http.post(`${this.backendUrl}/files/upload`, formData, { withCredentials: true });
   }
 
   getFilesByProject(project_id: string) {
-    return this.http.get(`${this.backendUrl}/files/`+ project_id);
+    return this.http.get(`${this.backendUrl}/files/` + project_id, { withCredentials: true });
   }
 }

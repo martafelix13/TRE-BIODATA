@@ -18,7 +18,7 @@ export class TaskService {
 
   pollTaskStatus(taskId: string): Observable<any> {
     return interval(8080).pipe(
-      switchMap(() => this.http.get(`${this.backendUrl}/run-task/${taskId}`)),
+      switchMap(() => this.http.get(`${this.backendUrl}/run-task/${taskId}`, { withCredentials: true })),
       takeWhile((response: any) => response.state !== 'COMPLETE' && response.state !== 'SYSTEM_ERROR' &&  response.state !== 'EXECUTOR_ERROR', true) // Stop when done
     );
   }
@@ -28,6 +28,6 @@ export class TaskService {
   }
 
   getPipelines(): Observable<any> {
-    return this.http.get(`${this.backendUrl}/pipelines`,);
+    return this.http.get(`${this.backendUrl}/pipelines`, { withCredentials: true });
   }
 }

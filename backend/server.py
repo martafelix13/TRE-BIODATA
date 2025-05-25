@@ -1,4 +1,5 @@
 import io
+import logging
 from bson import ObjectId
 from flask import Flask, json, request, redirect, jsonify, make_response, send_file
 import gridfs
@@ -17,6 +18,28 @@ from routes.si_routes import si_bp
 import xml.etree.ElementTree as ET
 
 import utils
+
+# =========================
+# Logging Configuration
+# =========================
+LOG_FILE = os.path.join(os.path.dirname(__file__), '..', 'server.log')
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(name)s %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_FILE, encoding='utf-8'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger("TRE-BIODATA")
+
+AUDIT_LOG_FILE = os.path.join(os.path.dirname(__file__), '..', 'audit.log')
+audit_logger = logging.getLogger("TRE-BIODATA-AUDIT")
+audit_logger.setLevel(logging.INFO)
+audit_handler = logging.FileHandler(AUDIT_LOG_FILE, encoding='utf-8')
+audit_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
+audit_logger.addHandler(audit_handler)
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
@@ -52,7 +75,7 @@ app.register_blueprint(si_bp, url_prefix='/si')
 def login():
     """Redirect user to the OAuth login page"""
     login_url = f"{LOGIN_URL}?response_type=code&client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope=openid%20profile%20email%20ga4gh_passport_v1"
-    print(f"Redirecting user to: {login_url}")
+    audit_logger.info(f"LOGIN | IP={request.remote_addr}")
     return redirect(login_url)
 
 @app.route('/oidc-callback')
@@ -60,7 +83,9 @@ def oidc_callback():
     global id_token, access_token, token_type
 
     code = request.args.get('code')
+    audit_logger.info(f"OIDC_CALLBACK | IP={request.remote_addr} | code={code}")
     if not code:
+        audit_logger.warning(f"OIDC_CALLBACK | MISSING_CODE | IP={request.remote_addr}")
         return jsonify({"error": "Authorization code missing"}), 400
 
     token_request_data = {
@@ -97,6 +122,7 @@ def oidc_callback():
     print("Cookies:", resp.headers)
     print (resp)
 
+    audit_logger.info(f"OIDC_CALLBACK | SUCCESS | IP={request.remote_addr}")
     return resp
 
 
@@ -105,8 +131,10 @@ def get_user():
     """Return user data separately"""
     access_token = request.cookies.get('access_token')
     token_type = request.cookies.get('token_type')
+    user_id = None
 
     if not access_token or not token_type:
+        audit_logger.warning(f"API_USER | UNAUTHORIZED | IP={request.remote_addr}")
         return jsonify({"error": "Unauthorized"}), 401
 
     # Fetch user info
@@ -126,7 +154,11 @@ def get_user():
     if not userDB.find_one({"id": user.get("id")}):
         userDB.insert_one(user)
 
-    return response.json()
+    user_json = response.json()
+    user_id = user_json.get("sub", "unknown")
+    audit_logger.info(f"API_USER | user_id={user_id} | IP={request.remote_addr}")
+
+    return user_json
 
 
 ## Metadata API ##
@@ -134,10 +166,8 @@ def get_user():
 def submit_form():
     """Submit form data to the server"""
     form_data = request.json
-    print("Form Data:", form_data)
-
-    g = utils.convert_json_to_dcat(form_data)
-    print(g.serialize(format="turtle"))
+    user_id = utils.get_user_id(request.cookies.get('id_token'))
+    audit_logger.info(f"SUBMIT_FORM | user_id={user_id} | IP={request.remote_addr} | data={json.dumps(form_data)[:200]}")
     # Save the RDF graph to a file
     with open("output.ttl", "w", encoding='utf-8') as f:
         f.write(g.serialize(format="turtle"))
@@ -218,7 +248,9 @@ def get_projects():
 
     id_token = request.cookies.get('id_token')
     user_id = utils.get_user_id(id_token)
+    audit_logger.info(f"GET_PROJECTS | user_id={user_id} | IP={request.remote_addr}")
     if not user_id:
+        audit_logger.warning(f"GET_PROJECTS | UNAUTHORIZED | IP={request.remote_addr}")
         return jsonify({"error": "Unauthorized"}), 401
     
     projects = list(projectDB.find({'owner': user_id}))  
@@ -335,6 +367,9 @@ def download_file(file_id):
 
     file_obj_id = ObjectId(file_id)
 
+    user_id = utils.get_user_id(request.cookies.get('id_token'))
+    audit_logger.info(f"DOWNLOAD_FILE | user_id={user_id} | file_id={file_id} | IP={request.remote_addr}")
+
     try:
         file_data = fs.get(file_obj_id)
         if not file_data:
@@ -378,6 +413,13 @@ def upload_signed_file():
     
     file.filename = file_type
     fs.put(file , owner=user_id, project_id=project_id, type=file_type)
+
+    user_id = utils.get_user_id(request.cookies.get('id_token'))
+    project_id = request.form.get('project_id')
+    file_type = request.form.get('file_type')
+    filename = request.files['file'].filename if 'file' in request.files else None
+    audit_logger.info(f"UPLOAD_FILE | user_id={user_id} | project_id={project_id} | file_type={file_type} | filename={filename} | IP={request.remote_addr}")
+
     return jsonify({"message": "File uploaded successfully!" })
 
 
@@ -602,4 +644,5 @@ def get_contact_info():
 
 
 if __name__ == '__main__':
+    audit_logger.info("SERVER_START")
     app.run(port=API_PORT, debug=True)

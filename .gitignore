@@ -47,3 +47,6 @@ Thumbs.db
 # Ignore Python cache files
 __pycache__/
 *.py[cod]
+
+# Ignore log files
+/TRE-BIODATA/audit.log

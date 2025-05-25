@@ -37,7 +37,7 @@ export class ProjectsService {
     project.owner = this.user_id;
     project.status = 'P-AR';
     console.log('Project to save: ', project);
-    return this.http.post(this.backendUrl + '/submit-project', project)
+    return this.http.post(this.backendUrl + '/submit-project', project, { withCredentials: true });
   }
 
   updateProjectStatus(id: string, newStatus: string) {

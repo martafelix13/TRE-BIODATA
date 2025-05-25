@@ -17,35 +17,35 @@ export class MetadataUploadService {
       dataset: dataset,
       distributions: distributions
     };
-    return this.http.post(this.backendUrl + '/fdp/upload', data);
+    return this.http.post(this.backendUrl + '/fdp/upload', data, { withCredentials: true });
   }
 
   getCatalogs() {
-    return this.http.get(this.backendUrl + '/fdp/catalogs');
+    return this.http.get(this.backendUrl + '/fdp/catalogs', { withCredentials: true });
   }
 
   getDatasets() {
-    return this.http.get(this.backendUrl + '/fdp/datasets');
+    return this.http.get(this.backendUrl + '/fdp/datasets', { withCredentials: true });
   }
 
   getDistributions() {
-    return this.http.get(this.backendUrl + '/distributions');
+    return this.http.get(this.backendUrl + '/distributions', { withCredentials: true });
   }
 
   getDatasetByCatalog(catalog_id: string) {
-    return this.http.get(this.backendUrl + '/catalog/' + catalog_id + "/datasets");
+    return this.http.get(this.backendUrl + '/catalog/' + catalog_id + "/datasets", { withCredentials: true });
   }
 
   getDistributionByDataset(dataset_id: string) {
-    return this.http.get(this.backendUrl + '/dataset/' + dataset_id + "/distributions");
+    return this.http.get(this.backendUrl + '/dataset/' + dataset_id + "/distributions", { withCredentials: true });
   }
 
   fetchSkosLabel(uri: string)  { 
-    return this.http.get(this.backendUrl + '/skos/label?uri=' + uri);
+    return this.http.get(this.backendUrl + '/skos/label?uri=' + uri, { withCredentials: true });
   }
 
   getContactInfo(uri: string) {
-    return this.http.get(this.backendUrl + '/contact-info?uri=' + uri);
+    return this.http.get(this.backendUrl + '/contact-info?uri=' + uri, { withCredentials: true });
   }
 
 }
