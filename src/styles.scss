@@ -1,4 +1,30 @@
-.bd-placeholder-img {
+:root {
+    /* INESC Color Palette */
+    --inesc-primary: #0055a5;
+    --inesc-secondary: #00b4e3;
+    --inesc-accent: #f9b233;
+    --inesc-success: #3bb273;
+    --inesc-danger: #e94e1b;
+    --inesc-warning: #f9b233;
+    --inesc-info: #00b4e3;
+    --inesc-light: #f4f8fb;
+    --inesc-dark: #002b45;
+    --inesc-gray: #e5e5e5;
+    --inesc-text: #222;
+    --inesc-bg: #f4f8fb;
+
+    /* Bootstrap overrides (optional, for consistency) */
+    --bs-primary: var(--inesc-primary);
+    --bs-secondary: var(--inesc-secondary);
+    --bs-success: var(--inesc-success);
+    --bs-danger: var(--inesc-danger);
+    --bs-warning: var(--inesc-warning);
+    --bs-info: var(--inesc-info);
+    --bs-light: var(--inesc-light);
+    --bs-dark: var(--inesc-dark);
+  }
+
+  .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
     -webkit-user-select: none;

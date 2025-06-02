@@ -40,8 +40,11 @@ export class ProjectsService {
     return this.http.post(this.backendUrl + '/submit-project', project, { withCredentials: true });
   }
 
-  updateProjectStatus(id: string, newStatus: string) {
-    const updateData = { status: newStatus };
-    return this.http.patch(this.backendUrl + '/projects/' + id, updateData, { withCredentials: true });
+  updateProject(id: string, updateData: any) {
+    const data: any = { ...updateData };
+    data.last_update = new Date().toISOString().split('T')[0];
+    console.log('Updating project with ID:', id, 'with data:', data);
+    return this.http.patch(this.backendUrl + '/projects/' + id, data, { withCredentials: true });
   }
+
 }

@@ -6,15 +6,15 @@ import { MetadataFormComponent } from './pages/metadata/metadata-form/metadata-f
 import { ProjectDisplayComponent } from './pages/project-display/project-display.component';
 import { ProjectDetailsComponent } from './pages/project-display/project-details/project-details.component';
 import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
-import { MetadataListComponent } from './pages/metadata-list/metadata-list.component';
 import { DataUploadComponent } from './pages/data-upload/data-upload.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { TutorialComponent } from './pages/tutorial/tutorial.component';
 
 export const routes: Routes = [
         { path: '', component: HomeComponent, title: 'Home' },
         { path: 'home', component: HomeComponent, title: 'Home' },
         { path: 'metadata-details', component: MetadataComponent, title: 'Metadata Details'},
-        { path: 'metadata-list', component: MetadataListComponent, title: 'Metadata'},
         { path: 'metadata-details/new-form',  component:MetadataFormComponent, title: 'Metadata Form', canDeactivate: [UnsavedChangesGuard]},
         { path: 'oidc-callback', component: CallbackComponent },
         { path: 'projects', component: ProjectDisplayComponent, title: 'Projects' },
@@ -22,6 +22,8 @@ export const routes: Routes = [
         { path: 'projects/new', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] },
         { path: 'data-upload', component: DataUploadComponent, title: 'Data Upload' },
         { path: 'tasks', component: TasksComponent, title: 'Tasks' },
+        { path: 'about', component: AboutUsComponent, title: 'About ADELE' },
+        { path: 'tutorials', component: TutorialComponent, title: 'Tutorials' },
         { path: '**', redirectTo: '/home' }
 
 ];

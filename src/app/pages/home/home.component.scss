@@ -20,6 +20,7 @@ body {
   .carousel-caption {
     bottom: 3rem;
     z-index: 10;
+    text-shadow: 0 2px 5px rgb(0, 0, 0);
   }
   
   /* Declare heights because of positioning of img element */
@@ -108,4 +109,76 @@ body {
     height: 3rem;
   }
   
-  
+  // VALUES SECTION
+.values {
+  background-color: #f8f9fa;
+
+  .value-card {
+    background: white;
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+
+    i {
+      color: #0d6efd;
+    }
+
+    h5 {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+// GUIDES SECTION
+.guides {
+  background: #ffffff;
+
+  .guide-card {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+
+    h5 {
+      font-weight: 600;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+    }
+
+    .btn {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.value-card {
+  background: white;
+  padding: 2rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  text-align: center;
+
+  .icon {
+    font-size: 2.5rem;
+    color: #0d6efd;
+    margin-bottom: 1rem;
+  }
+
+  h5 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}

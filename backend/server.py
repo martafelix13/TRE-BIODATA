@@ -22,18 +22,7 @@ import utils
 # =========================
 # Logging Configuration
 # =========================
-LOG_FILE = os.path.join(os.path.dirname(__file__), '..', 'server.log')
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(name)s %(message)s',
-    handlers=[
-        logging.FileHandler(LOG_FILE, encoding='utf-8'),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger("TRE-BIODATA")
-
-AUDIT_LOG_FILE = os.path.join(os.path.dirname(__file__), '..', 'audit.log')
+AUDIT_LOG_FILE = os.path.join(os.path.dirname(__file__), 'audit.log')
 audit_logger = logging.getLogger("TRE-BIODATA-AUDIT")
 audit_logger.setLevel(logging.INFO)
 audit_handler = logging.FileHandler(AUDIT_LOG_FILE, encoding='utf-8')
@@ -321,8 +310,15 @@ def update_project(project_id):
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
+    ALLOWED_FIELDS = {"status", "last_update", "dataset_uri", "distributions_uri"} 
+
+    # Filter out any fields that are not allowed
+    project_data = {k: v for k, v in project_data.items() if k in ALLOWED_FIELDS}
+
     projectDB.update_one({"_id": ObjectId(project_id), "owner": user_id}, {"$set": project_data})
     return jsonify({"message": "Project updated successfully"})
+
+
 
 
 ## File Handling ##
