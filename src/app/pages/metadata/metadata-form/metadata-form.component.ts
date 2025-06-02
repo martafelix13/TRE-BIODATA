@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ProjectsService } from '../../../services/projects.service';
 import { identity, Observable } from 'rxjs';
 import { ThemeDirective } from '@coreui/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-metadata-form',
@@ -34,7 +35,8 @@ export class MetadataFormComponent implements OnInit {
     private fb: FormBuilder,
     private metadataUploadService: MetadataUploadService,
     private authService: AuthService,
-    private projectService: ProjectsService
+    private projectService: ProjectsService,
+    private router: Router
   ) {
         // Initialize dataset form with fields from the HTML
     this.datasetForm = this.fb.group({
@@ -66,6 +68,7 @@ export class MetadataFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.project.status == 'M-E') {
     this.user = this.authService.user$;
     this.user.subscribe((user) => { 
       console.log('User:', user);
@@ -76,6 +79,7 @@ export class MetadataFormComponent implements OnInit {
         });
       }
     });
+    }
   }
 
 
@@ -146,8 +150,11 @@ export class MetadataFormComponent implements OnInit {
     console.log('Dataset Data:', this.datasetData);
     console.log('Distributions Data:', this.distributionsData);
     this.metadataUploadService.uploadMetadata(this.datasetData, this.distributionsData).subscribe(
-      (response) => {
+      (response:any) => {
         console.log('Metadata submitted successfully:', response);
+        const datasetUri = response.dataset_uri;
+        const distributionUris = response.distributions_uri;
+        this.goToNextPage(datasetUri, distributionUris);
       },
       (error) => {
         console.error('Error submitting metadata:', error);
@@ -166,10 +173,17 @@ export class MetadataFormComponent implements OnInit {
     this.datasetData = {};
   }
 
-  goToNextPage(): void {
-    this.projectService.updateProjectStatus(this.project.id, 'D-E').subscribe({
+  goToNextPage(dataset_uri: string, distributions_uri: string[]): void {
+    const updateValue = {
+      status: 'M-AR',
+      dataset_uri: dataset_uri,
+      distributions_uri: distributions_uri
+    };
+
+    this.projectService.updateProject(this.project.id, updateValue).subscribe({
       next: () => {
         console.log('updated');
+        this.router.navigate(['/projects', this.project.id,]);
       }
     });
   }

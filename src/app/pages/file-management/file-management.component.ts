@@ -90,10 +90,11 @@ export class FileManagementComponent implements OnInit {
       this.fileService.uploadSignedFile(formData).subscribe({
         next: (res) => { 
           console.log('Response: ', res); 
-            this.projectService.updateProjectStatus(this.project_id, "A-AR").subscribe({
-              next: (res) => {alert('File uploaded successfully!');},
-              error:(err) => {console.error("Error: ", err);}
-            })
+          const status = {status: 'A-AR'}
+          this.projectService.updateProject(this.project_id, status).subscribe({
+            next: (res) => {alert('File uploaded successfully!');},
+            error:(err) => {console.error("Error: ", err);}
+          })
         },
         error: (err) => { console.error('Error: ', err);
           alert('Upload Failed.');

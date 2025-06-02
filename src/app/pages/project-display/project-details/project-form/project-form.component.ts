@@ -42,14 +42,14 @@ export class ProjectFormComponent {
       }
     });
 
-    const defaultDeadline = new Date();
-    defaultDeadline.setFullYear(defaultDeadline.getFullYear() + 1);
+    const defaultExpirationDate = new Date();
+    defaultExpirationDate.setFullYear(defaultExpirationDate.getFullYear() + 5); // Default to 5 years from now
 
     this.projectForm = this.fb.group({
       id: new FormControl('new'),
       title: new FormControl('', Validators.required, ),
       description: new FormControl('', Validators.required),
-      deadline: new FormControl(defaultDeadline.toISOString().substring(0, 10), Validators.required),
+      expiration_date: new FormControl(defaultExpirationDate.toISOString().substring(0, 10), Validators.required),
       organization: new FormControl( '', Validators.required),
       status: new FormControl('P-E'),
       responsable: new FormControl(this.user_email, [Validators.required, Validators.email]),

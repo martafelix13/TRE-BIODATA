@@ -1,16 +1,18 @@
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <div class="col-md-3 mb-2 mb-md-0">
-        <a  href="https://www.biodata.pt/" class="d-inline-flex link-body-emphasis text-decoration-none">
-          <img class="bi" height="50" src="assets/img/BiodataLogo.svg" alt="">
+        <!-- INESC-ID LOGO AND LINK-->
+        <a  href="https://www.inesc-id.pt/" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <img class="bi" height="100" src="assets/img/INESC-IDLogo.png" alt="">
         </a>
       </div>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 center-nav">
         <li><a routerLink="/" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a routerLink="/metadata-list" class="nav-link px-2">Data Discovery</a></li>
-        <li><a routerLink="/" fragment="guides-section"  class="nav-link px-2">Guides</a></li>
-        <li><a href="#" class="nav-link px-2">About</a></li>
+        <!-- TODO: UPDATE LINK AFTER -->
+        <li><a href="http://localhost:8667/catalog/bc43e54f-56d8-4c26-bd49-df3b9218ef0a" class="nav-link px-2" target="_blank" rel="noopener">Data Discovery</a></li>
+        <li><a routerLink="/tutorials" class="nav-link px-2">Tutorials</a></li>
+        <li><a href="/about" class="nav-link px-2">About</a></li>
       </ul>
 
       <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -24,15 +26,16 @@
       </div>
       
       
-      <div class="d-flex align-items-center" *ngIf="isLogged()"> {{userData['name']}} 
+      <div class="d-flex align-items-center" *ngIf="isLogged()"> 
+        
+      <app-avatar [name]="userData['name']"></app-avatar>
       
       <c-dropdown *ngIf="isLogged()">
         <a cButton cDropdownToggle aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
         </a>
         <ul cDropdownMenu>
           <li><a [routerLink]="['projects']" cDropdownItem>My projects</a></li>
-          <li><a [routerLink]="['tasks']" cDropdownItem>My Tasks</a></li>
+          <li><a [routerLink]="['tasks']" cDropdownItem>My tasks</a></li>
           <li><a [routerLink]="[]" cDropdownItem>Profile</a></li>
           <li><hr cDropdownDivider></li>
           <li><button cDropdownItem (click)="logout()">Sign out</button></li>

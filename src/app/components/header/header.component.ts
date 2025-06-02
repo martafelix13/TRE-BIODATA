@@ -7,10 +7,11 @@ import { DropdownComponent,
   DropdownMenuDirective, 
   DropdownToggleDirective
 } from '@coreui/angular'
+import { AvatarComponent } from "../avatar/avatar.component";
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink, DropdownComponent, DropdownItemDirective, DropdownMenuDirective, DropdownToggleDirective],
+  imports: [CommonModule, RouterLink, DropdownComponent, DropdownItemDirective, DropdownMenuDirective, DropdownToggleDirective, AvatarComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

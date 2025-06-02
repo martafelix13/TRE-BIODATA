@@ -43,17 +43,17 @@
         </mat-form-field>
       </div>
 
-    <!-- Deadline -->
+    <!-- Expiration Date -->
     <div class="mb-3">
       <mat-form-field class="w-100">
-        <mat-label>Deadline</mat-label>
-        <input matInput type="date" formControlName="deadline" required>
+        <mat-label>Expiration Date</mat-label>
+        <input matInput type="date" formControlName="expiration_date" required>
         <mat-icon matSuffix>event</mat-icon>
-        <mat-error *ngIf="isInvalid('deadline')">Deadline is required.</mat-error>
+        <mat-error *ngIf="isInvalid('expiration_date')">Expiration Date is required.</mat-error>
       </mat-form-field>
     </div>
 
-    <!-- Data Storage Selection -->
+    <!-- Data Storage Selection 
     <div class="mb-3">
       <mat-icon class="me-2">storage</mat-icon> Data Storage Option:
       <div class="form-check">
@@ -70,7 +70,7 @@
         </label>
         <small class="text-muted d-block">You will manage the data independently and only provide metadata.</small>
       </div>
-    </div>
+    </div>-->
 
     <!-- Submit Button -->
     <div class="row">
@@ -127,17 +127,17 @@
         <p class="form-control-plaintext">{{ project.responsable || 'N/A' }}</p>
       </div>
 
-      <!-- Deadline -->
+      <!-- Expiration Date -->
       <div class="mb-3">
-        <strong><mat-icon class="me-2">event</mat-icon> Deadline:</strong>
-        <p class="form-control-plaintext">{{ project.deadline || 'N/A' }}</p>
+        <strong><mat-icon class="me-2">event</mat-icon> Expiration Date:</strong>
+        <p class="form-control-plaintext">{{ project.expiration_date || 'N/A' }}</p>
       </div>
 
-      <!-- Data Storage Option -->
+      <!-- Data Storage Option
       <div class="mb-3">
         <strong><mat-icon class="me-2">storage</mat-icon> Data Storage Option:</strong>
         <p class="form-control-plaintext">{{ project.internal_storage ? 'Use TRE Database (Submit Data)' : 'Keep Data Externally' }}</p>
-      </div>
+      </div> -->
 
       <!-- Status -->
       <div class="mb-3">
@@ -196,11 +196,17 @@
         <p class="form-control-plaintext">{{ project.responsable || 'N/A' }}</p>
       </div>
 
-      <!-- Deadline -->
+      <!-- Expiration Date -->
       <div class="mb-3">
-        <strong><mat-icon class="me-2">event</mat-icon> Deadline:</strong>
-        <p class="form-control-plaintext">{{ project.deadline || 'N/A' }}</p>
+        <strong><mat-icon class="me-2">event</mat-icon> Expiration Date:</strong>
+        <p class="form-control-plaintext">{{ project.expiration_date || 'N/A' }}</p>
       </div>
+
+      <!-- Data Storage Option 
+      <div class="mb-3">
+        <strong><mat-icon class="me-2">storage</mat-icon> Data Storage Option:</strong>
+        <p class="form-control-plaintext">{{ project.internal_storage ? 'Use TRE Database (Submit Data)' : 'Keep Data Externally' }}</p>
+      </div>-->
 
       <!-- Status -->
       <div class="mb-3">

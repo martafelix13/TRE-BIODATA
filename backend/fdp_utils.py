@@ -212,5 +212,5 @@ def create_and_publish_metadata(dataset_info: Dict[str, Any], distributions_info
 
 
     print("Distribution FDP IDs:", distribution_fdp_ids)
-    return new_dataset, distribution_fdp_ids
+    return {"dataset_uri": new_dataset, "distribution_uri": distribution_fdp_ids}
 

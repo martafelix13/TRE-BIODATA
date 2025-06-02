@@ -38,15 +38,25 @@ def uploadMetadata():
     for distribution in form_data["distributions"]:
         distributionDB.insert_one(distribution)
 
-    fdp_utils.create_and_publish_metadata(form_data["dataset"], form_data["distributions"])
+    response = fdp_utils.create_and_publish_metadata(form_data["dataset"], form_data["distributions"])
 
     user_ip = request.remote_addr
     user_id = utils.get_user_id(request.cookies.get('id_token')) if hasattr(utils, "get_user_id") else "unknown"
 
     audit_logger.info(f"FDP_UPLOAD | user_id={user_id} | IP={user_ip} | data_keys={list(form_data.keys())}")
-    audit_logger.info(f"FDP_UPLOAD_SUCCESS | user_id={user_id} | IP={user_ip} | dataset_id={form_data['dataset'].get('identifier', 'unknown')}")
 
-    return jsonify({"message": "Metadata uploaded successfully"}), 201
+    if isinstance(response, dict) and "error" in response:
+        print(f"ERROR: Failed to upload metadata: {response['error']}")
+        audit_logger.error(f"FDP_UPLOAD_FAIL | user_id={user_id} | IP={user_ip} | error={response['error']}")
+        return jsonify(response), 500
+    else:
+        formatted_response = {
+            "dataset_uri": str(response["dataset_uri"]),
+            "distributions_uri": [str(uri) for uri in response["distribution_uri"]]
+        }
+        print("DEBUG: Metadata uploaded successfully")
+        audit_logger.info(f"FDP_UPLOAD_COMPLETE | user_id={user_id} | IP={user_ip} | dataset_id={formatted_response.get('dataset_uri', 'unknown')}")
+        return jsonify(formatted_response), 200
 
 
 @fdp_bp.route("/datasets", methods=["GET"])
@@ -67,7 +77,7 @@ def getDataset():
     if response.status_code == 200:
         print("DEBUG: Dataset retrieved successfully")
         audit_logger.info(f"FDP_GET_DATASETS_SUCCESS | user_id={user_id} | IP={user_ip}")
-        return jsonify(response.json()), 200
+        return jsonify(response), 200
     else:
         print(f"ERROR: Failed to retrieve dataset, status code: {response.status_code}")
         audit_logger.error(f"FDP_GET_DATASETS_FAIL | user_id={user_id} | IP={user_ip} | status={response.status_code}")
