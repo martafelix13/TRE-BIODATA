@@ -1,0 +1,730 @@
+2025-06-02 14:50:05,756 INFO SERVER_START
+2025-06-02 14:50:05,756 INFO SERVER_START
+2025-06-02 14:50:06,495 INFO SERVER_START
+2025-06-02 14:50:06,495 INFO SERVER_START
+2025-06-02 14:50:55,340 INFO SERVER_START
+2025-06-02 14:50:55,340 INFO SERVER_START
+2025-06-02 14:50:56,068 INFO SERVER_START
+2025-06-02 14:50:56,068 INFO SERVER_START
+2025-06-02 14:51:52,828 INFO LOGIN | IP=127.0.0.1
+2025-06-02 14:51:52,828 INFO LOGIN | IP=127.0.0.1
+2025-06-02 14:52:14,082 INFO LOGIN | IP=127.0.0.1
+2025-06-02 14:52:14,082 INFO LOGIN | IP=127.0.0.1
+2025-06-02 14:52:16,214 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=0ji6DKzFl4ZRHYQSRrKDNm
+2025-06-02 14:52:16,214 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=0ji6DKzFl4ZRHYQSRrKDNm
+2025-06-02 14:52:16,977 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-02 14:52:16,977 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-02 14:52:17,863 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 14:52:17,863 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 14:52:20,775 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 14:52:20,775 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:01:15,736 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:01:15,736 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:01:16,224 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:01:16,224 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:01:21,171 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:01:21,171 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:07,830 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:07,830 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:09,354 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:09,354 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:09,366 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:09,366 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:12,758 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:03:12,758 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:34,336 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:34,336 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:34,776 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:34,776 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:36,985 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:36,985 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:59,091 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:05:59,091 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:00,588 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:00,588 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:00,970 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:00,970 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:04,420 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:04,420 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:17,361 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-02 15:06:17,361 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-02 15:06:17,361 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:17,361 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:17,361 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:17,361 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:17,723 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-02 15:06:17,723 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-02 15:06:17,723 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:17,723 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 15:06:18,165 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-02 15:06:18,165 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-02 15:06:18,165 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-02 15:06:18,165 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-02 16:05:05,462 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 16:05:05,462 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 16:05:21,769 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-02 16:05:21,769 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 18:30:52,415 INFO SERVER_START
+2025-06-03 18:30:52,415 INFO SERVER_START
+2025-06-03 18:30:53,345 INFO SERVER_START
+2025-06-03 18:30:53,345 INFO SERVER_START
+2025-06-03 18:30:59,518 INFO LOGIN | IP=127.0.0.1
+2025-06-03 18:30:59,518 INFO LOGIN | IP=127.0.0.1
+2025-06-03 18:31:13,249 INFO LOGIN | IP=127.0.0.1
+2025-06-03 18:31:13,249 INFO LOGIN | IP=127.0.0.1
+2025-06-03 18:31:16,083 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=ULDPDyoVIvmcx0NezUei2S
+2025-06-03 18:31:16,083 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=ULDPDyoVIvmcx0NezUei2S
+2025-06-03 18:31:16,686 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-03 18:31:16,686 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-03 18:31:17,199 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 18:31:17,199 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 18:31:19,086 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 18:31:19,086 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 18:48:23,903 INFO SERVER_START
+2025-06-03 18:48:23,903 INFO SERVER_START
+2025-06-03 18:54:14,445 INFO SERVER_START
+2025-06-03 18:54:14,445 INFO SERVER_START
+2025-06-03 19:10:47,607 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:10:47,607 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:10:48,211 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:10:48,211 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:10:50,535 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:10:50,535 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:33,210 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:33,210 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:34,901 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:34,901 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:35,216 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:35,216 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:37,477 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:11:37,477 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:03,936 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:03,936 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:05,803 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:05,803 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:06,170 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:06,170 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:08,230 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:12:08,230 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:14:25,706 INFO SERVER_START
+2025-06-03 19:14:25,706 INFO SERVER_START
+2025-06-03 19:14:49,027 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:14:49,027 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:14:49,392 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:14:49,392 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:14:51,126 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:14:51,126 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:28,984 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:28,984 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:31,432 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:31,432 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:31,627 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:31,627 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:34,532 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:17:34,532 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:18:02,338 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-03 19:18:02,338 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:10:40,861 INFO SERVER_START
+2025-06-04 17:10:40,861 INFO SERVER_START
+2025-06-04 17:10:42,289 INFO SERVER_START
+2025-06-04 17:10:42,289 INFO SERVER_START
+2025-06-04 17:11:06,500 INFO LOGIN | IP=127.0.0.1
+2025-06-04 17:11:06,500 INFO LOGIN | IP=127.0.0.1
+2025-06-04 17:11:12,379 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=bsma9eDWSYHpP4zT3VepIz
+2025-06-04 17:11:12,379 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=bsma9eDWSYHpP4zT3VepIz
+2025-06-04 17:11:13,032 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-04 17:11:13,032 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-04 17:11:14,484 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:11:14,484 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:11:25,743 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:11:25,743 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:11:30,483 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:11:30,483 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:17:30,910 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:17:30,910 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:17:31,365 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:17:31,365 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:17:35,170 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:17:35,170 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:18:45,552 INFO SERVER_START
+2025-06-04 17:18:45,552 INFO SERVER_START
+2025-06-04 17:21:53,468 INFO SERVER_START
+2025-06-04 17:21:53,468 INFO SERVER_START
+2025-06-04 17:23:28,867 INFO SERVER_START
+2025-06-04 17:23:28,867 INFO SERVER_START
+2025-06-04 17:24:01,533 INFO SERVER_START
+2025-06-04 17:24:01,533 INFO SERVER_START
+2025-06-04 17:24:09,400 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:24:09,400 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:24:09,878 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:24:09,878 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:24:11,902 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:24:11,902 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:24:40,459 INFO SERVER_START
+2025-06-04 17:24:40,459 INFO SERVER_START
+2025-06-04 17:25:57,321 INFO SERVER_START
+2025-06-04 17:25:57,321 INFO SERVER_START
+2025-06-04 17:28:26,854 INFO SERVER_START
+2025-06-04 17:28:26,854 INFO SERVER_START
+2025-06-04 17:28:41,782 INFO SERVER_START
+2025-06-04 17:28:41,782 INFO SERVER_START
+2025-06-04 17:30:10,258 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:30:10,258 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:30:12,404 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:30:12,404 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:30:19,538 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:30:19,538 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:32:33,365 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:32:33,365 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:32:35,235 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:32:35,235 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:35:48,750 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:35:48,750 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:35:49,230 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:35:49,230 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:35:51,257 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:35:51,257 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:36:35,307 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:36:35,307 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:36:35,468 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:36:35,468 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:36:38,395 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:36:38,395 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:38:00,349 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:38:00,349 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:38:00,562 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:38:00,562 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:38:02,822 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:38:02,822 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:40:45,257 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:40:45,257 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:40:45,719 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:40:45,719 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:40:47,955 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:40:47,955 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:41:54,287 INFO SERVER_START
+2025-06-04 17:41:54,287 INFO SERVER_START
+2025-06-04 17:42:16,013 INFO SERVER_START
+2025-06-04 17:42:16,013 INFO SERVER_START
+2025-06-04 17:42:17,242 INFO SERVER_START
+2025-06-04 17:42:17,242 INFO SERVER_START
+2025-06-04 17:42:25,295 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:25,295 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:27,762 INFO LOGIN | IP=127.0.0.1
+2025-06-04 17:42:27,762 INFO LOGIN | IP=127.0.0.1
+2025-06-04 17:42:30,629 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:30,629 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:44,931 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:44,931 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:45,296 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:45,296 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:51,092 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:42:51,092 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:43:58,795 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:43:58,795 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:43:59,120 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:43:59,120 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:01,802 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:01,802 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:41,767 INFO SERVER_START
+2025-06-04 17:44:41,767 INFO SERVER_START
+2025-06-04 17:44:56,651 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:56,651 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:56,970 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:56,970 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:58,923 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:44:58,923 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-04 17:45:30,783 INFO SERVER_START
+2025-06-04 17:45:30,783 INFO SERVER_START
+2025-06-04 17:46:32,539 INFO SERVER_START
+2025-06-04 17:46:32,539 INFO SERVER_START
+2025-06-04 17:47:01,222 INFO SERVER_START
+2025-06-04 17:47:01,222 INFO SERVER_START
+2025-06-06 13:49:40,932 INFO SERVER_START
+2025-06-06 13:49:40,932 INFO SERVER_START
+2025-06-06 13:49:42,074 INFO SERVER_START
+2025-06-06 13:49:42,074 INFO SERVER_START
+2025-06-06 14:12:23,074 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:12:23,074 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:12:25,876 INFO LOGIN | IP=127.0.0.1
+2025-06-06 14:12:25,876 INFO LOGIN | IP=127.0.0.1
+2025-06-06 14:12:32,105 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=c9ymZnA6oxMWewoiEs2wqh
+2025-06-06 14:12:32,105 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=c9ymZnA6oxMWewoiEs2wqh
+2025-06-06 14:12:32,788 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-06 14:12:32,788 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-06 14:12:35,072 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:12:35,072 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:12:37,031 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:12:37,031 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:17:21,872 INFO SERVER_START
+2025-06-06 14:17:21,872 INFO SERVER_START
+2025-06-06 14:18:07,886 INFO SERVER_START
+2025-06-06 14:18:07,886 INFO SERVER_START
+2025-06-06 14:19:14,766 INFO SERVER_START
+2025-06-06 14:19:14,766 INFO SERVER_START
+2025-06-06 14:19:37,419 INFO SERVER_START
+2025-06-06 14:19:37,419 INFO SERVER_START
+2025-06-06 14:25:51,027 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:25:51,027 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:25:51,487 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:25:51,487 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:25:57,212 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:25:57,212 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:27:10,576 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:27:10,576 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:27:10,927 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:27:10,927 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:27:12,738 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:27:12,738 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:29:28,939 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:29:28,939 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:29:29,323 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:29:29,323 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:29:32,988 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:29:32,988 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:30:51,912 INFO SERVER_START
+2025-06-06 14:30:51,912 INFO SERVER_START
+2025-06-06 14:33:07,036 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:33:07,036 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:33:07,519 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:33:07,519 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:33:09,690 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:33:09,690 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:34:30,402 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:34:30,402 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:34:30,718 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:34:30,718 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:34:33,271 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:34:33,271 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:35:50,155 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:35:50,155 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:35:50,522 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:35:50,522 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:35:52,192 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:35:52,192 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:36:33,927 INFO SERVER_START
+2025-06-06 14:36:33,927 INFO SERVER_START
+2025-06-06 14:36:40,195 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:36:40,195 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:36:40,580 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:36:40,580 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:36:43,267 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:36:43,267 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:38:30,493 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:38:30,493 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:38:39,185 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:38:39,185 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:11,584 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-06 14:39:11,584 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-06 14:39:11,584 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:11,584 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:11,584 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:11,584 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:11,992 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-06 14:39:11,992 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-06 14:39:11,993 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:11,993 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:13,380 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-06 14:39:13,380 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-06 14:39:13,380 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-06 14:39:13,380 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-06 14:39:27,238 INFO LOGIN | IP=127.0.0.1
+2025-06-06 14:39:27,238 INFO LOGIN | IP=127.0.0.1
+2025-06-06 14:39:30,132 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=eWUwHiPc4ljPCDxmVR3bJP
+2025-06-06 14:39:30,132 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=eWUwHiPc4ljPCDxmVR3bJP
+2025-06-06 14:39:30,776 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-06 14:39:30,776 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-06 14:39:31,571 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:39:31,571 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-06 14:46:10,726 INFO SERVER_START
+2025-06-06 14:46:10,726 INFO SERVER_START
+2025-06-06 14:46:35,286 INFO SERVER_START
+2025-06-06 14:46:35,286 INFO SERVER_START
+2025-06-09 12:16:34,292 INFO SERVER_START
+2025-06-09 12:16:34,292 INFO SERVER_START
+2025-06-09 12:16:35,525 INFO SERVER_START
+2025-06-09 12:16:35,525 INFO SERVER_START
+2025-06-09 12:17:27,744 INFO LOGIN | IP=127.0.0.1
+2025-06-09 12:17:27,744 INFO LOGIN | IP=127.0.0.1
+2025-06-09 12:17:33,351 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=_l0HTDsUZ0Ygd9JpQyqozs
+2025-06-09 12:17:33,351 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=_l0HTDsUZ0Ygd9JpQyqozs
+2025-06-09 12:17:33,968 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-09 12:17:33,968 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-09 12:17:35,022 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 12:17:35,022 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 12:17:36,709 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 12:17:36,709 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 12:17:45,283 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 12:17:45,283 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 12:25:52,649 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 12:25:52,649 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 17:18:24,264 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 17:18:24,264 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 17:18:40,485 INFO FDP_UPLOAD | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1 | data_keys=['dataset', 'distributions']
+2025-06-09 17:18:40,485 INFO FDP_UPLOAD | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1 | data_keys=['dataset', 'distributions']
+2025-06-09 17:18:40,486 INFO FDP_UPLOAD_COMPLETE | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1 | dataset_id=http://localhost:8667/dataset/8c3fdcee-39dc-46cb-9d81-e25ad2eac13e
+2025-06-09 17:18:40,486 INFO FDP_UPLOAD_COMPLETE | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1 | dataset_id=http://localhost:8667/dataset/8c3fdcee-39dc-46cb-9d81-e25ad2eac13e
+2025-06-09 17:18:50,464 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 17:18:50,464 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 17:18:51,945 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-09 17:18:51,945 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-12 16:48:38,461 INFO SERVER_START
+2025-06-12 16:48:38,461 INFO SERVER_START
+2025-06-12 16:48:39,694 INFO SERVER_START
+2025-06-12 16:48:39,694 INFO SERVER_START
+2025-06-12 16:49:16,781 INFO LOGIN | IP=127.0.0.1
+2025-06-12 16:49:16,781 INFO LOGIN | IP=127.0.0.1
+2025-06-12 16:49:22,478 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=0CKtumg3xooN5kEVeFmDjI
+2025-06-12 16:49:22,478 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=0CKtumg3xooN5kEVeFmDjI
+2025-06-12 16:49:23,092 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-12 16:49:23,092 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-12 16:49:28,197 INFO LOGIN | IP=127.0.0.1
+2025-06-12 16:49:28,197 INFO LOGIN | IP=127.0.0.1
+2025-06-12 16:49:31,034 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=JNaLj3XvSqDDexdTgKrC7I
+2025-06-12 16:49:31,034 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=JNaLj3XvSqDDexdTgKrC7I
+2025-06-12 16:49:31,610 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-12 16:49:31,610 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-12 16:49:48,047 INFO LOGIN | IP=127.0.0.1
+2025-06-12 16:49:48,047 INFO LOGIN | IP=127.0.0.1
+2025-06-12 16:49:50,959 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=ccXt_fJFGboERkDBxObI0A
+2025-06-12 16:49:50,959 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=ccXt_fJFGboERkDBxObI0A
+2025-06-12 16:49:51,529 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-12 16:49:51,529 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-13 17:38:51,185 INFO SERVER_START
+2025-06-13 17:38:51,185 INFO SERVER_START
+2025-06-13 17:38:52,385 INFO SERVER_START
+2025-06-13 17:38:52,385 INFO SERVER_START
+2025-06-13 17:38:59,624 INFO LOGIN | IP=127.0.0.1
+2025-06-13 17:38:59,624 INFO LOGIN | IP=127.0.0.1
+2025-06-13 17:39:06,536 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=Ng6hNUTBWKGoXlhPjrBarG
+2025-06-13 17:39:06,536 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=Ng6hNUTBWKGoXlhPjrBarG
+2025-06-13 17:39:07,127 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-13 17:39:07,127 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-13 17:39:19,279 INFO LOGIN | IP=127.0.0.1
+2025-06-13 17:39:19,279 INFO LOGIN | IP=127.0.0.1
+2025-06-13 17:39:22,308 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=XZ7hWVHWgj4OxC8f5w2Lip
+2025-06-13 17:39:22,308 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=XZ7hWVHWgj4OxC8f5w2Lip
+2025-06-13 17:39:22,868 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-13 17:39:22,868 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-16 10:50:59,273 INFO SERVER_START
+2025-06-16 10:50:59,273 INFO SERVER_START
+2025-06-16 10:51:00,512 INFO SERVER_START
+2025-06-16 10:51:00,512 INFO SERVER_START
+2025-06-16 10:51:25,396 INFO LOGIN | IP=127.0.0.1
+2025-06-16 10:51:25,396 INFO LOGIN | IP=127.0.0.1
+2025-06-16 10:51:33,587 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=8EuSFgQU2wd8OTKvMKLDxn
+2025-06-16 10:51:33,587 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=8EuSFgQU2wd8OTKvMKLDxn
+2025-06-16 10:51:34,832 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-16 10:51:34,832 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-16 10:51:35,936 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 10:51:35,936 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 11:00:48,841 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 11:00:48,841 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 11:01:19,940 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 11:01:19,940 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 11:01:42,624 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 11:01:42,624 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 11:04:33,088 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:04:33,088 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:04:44,377 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:04:44,377 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:06:03,157 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:06:03,157 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:12:00,288 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:12:00,288 INFO LOGIN | IP=127.0.0.1
+2025-06-16 11:12:41,448 INFO SERVER_START
+2025-06-16 11:12:41,448 INFO SERVER_START
+2025-06-16 11:12:42,669 INFO SERVER_START
+2025-06-16 11:12:42,669 INFO SERVER_START
+2025-06-16 15:41:12,478 INFO SERVER_START
+2025-06-16 15:41:12,478 INFO SERVER_START
+2025-06-16 15:41:13,672 INFO SERVER_START
+2025-06-16 15:41:13,672 INFO SERVER_START
+2025-06-16 15:41:23,435 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:41:23,435 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:41:56,572 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=q_WWxubeP9H2edWTJ4-j45
+2025-06-16 15:41:56,572 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=q_WWxubeP9H2edWTJ4-j45
+2025-06-16 15:41:57,106 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-16 15:41:57,106 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-16 15:41:57,984 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:41:57,984 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:42:51,654 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:42:51,654 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:43:01,234 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:43:01,234 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:44:37,356 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:44:37,356 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:44:37,380 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:44:37,380 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:44:41,161 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=J70E0Rm4O-yxiEolsga-Fm
+2025-06-16 15:44:41,161 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=J70E0Rm4O-yxiEolsga-Fm
+2025-06-16 15:44:41,806 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-16 15:44:41,806 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-16 15:44:42,917 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:44:42,917 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:18,476 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:18,476 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:20,204 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:20,204 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:22,546 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-16 15:49:22,546 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-16 15:49:22,547 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:22,547 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:22,548 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-16 15:49:22,548 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-16 15:49:22,557 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:22,557 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:22,558 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:22,558 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:24,375 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-16 15:49:24,375 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-16 15:49:24,375 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-16 15:49:24,375 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-16 15:49:59,122 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:49:59,122 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:50:13,949 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:50:13,949 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:44,454 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:44,454 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:46,256 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:46,256 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:46,574 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:46,574 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:48,928 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:51:48,928 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:58:37,217 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:58:37,217 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:58:38,948 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:58:38,948 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:58:58,996 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:58:58,996 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:59:00,325 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:59:00,325 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:59:01,272 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:59:01,272 INFO LOGIN | IP=127.0.0.1
+2025-06-16 15:59:23,528 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:59:23,528 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:59:25,096 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 15:59:25,096 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 16:00:59,747 INFO LOGIN | IP=127.0.0.1
+2025-06-16 16:00:59,747 INFO LOGIN | IP=127.0.0.1
+2025-06-16 16:01:05,183 INFO LOGIN | IP=127.0.0.1
+2025-06-16 16:01:05,183 INFO LOGIN | IP=127.0.0.1
+2025-06-16 16:25:46,138 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-16 16:25:46,138 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:16:45,681 INFO SERVER_START
+2025-06-17 00:16:45,681 INFO SERVER_START
+2025-06-17 00:16:46,841 INFO SERVER_START
+2025-06-17 00:16:46,841 INFO SERVER_START
+2025-06-17 00:19:30,404 INFO LOGIN | IP=127.0.0.1
+2025-06-17 00:19:30,404 INFO LOGIN | IP=127.0.0.1
+2025-06-17 00:19:36,127 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=5EuET6QKD1zdNZ-__G5gY3
+2025-06-17 00:19:36,127 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=5EuET6QKD1zdNZ-__G5gY3
+2025-06-17 00:19:36,709 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-17 00:19:36,709 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-17 00:19:38,015 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:19:38,015 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:19:48,046 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:19:48,046 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:20:28,233 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:20:28,233 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:20:28,233 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:20:28,233 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:20:28,233 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:20:28,233 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:20:28,605 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:20:28,605 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:20:28,606 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:20:28,606 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:20:28,960 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:20:28,960 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:20:28,960 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:20:28,960 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:23:06,111 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:06,111 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:09,455 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:23:09,455 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:23:09,455 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:09,455 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:09,456 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:09,456 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:09,843 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:23:09,843 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:23:09,844 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:09,844 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:23:10,199 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:23:10,199 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:23:10,199 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:23:10,199 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:26:36,818 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:26:36,818 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:26:36,819 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:26:36,819 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:26:36,819 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:26:36,819 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:26:36,827 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:26:36,827 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:26:36,828 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:26:36,828 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:26:37,282 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:26:37,282 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:26:37,282 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:26:37,282 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:28:30,211 INFO SERVER_START
+2025-06-17 00:28:30,211 INFO SERVER_START
+2025-06-17 00:28:55,565 INFO SERVER_START
+2025-06-17 00:28:55,565 INFO SERVER_START
+2025-06-17 00:28:58,435 INFO SERVER_START
+2025-06-17 00:28:58,435 INFO SERVER_START
+2025-06-17 00:29:39,041 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:29:39,041 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:29:42,209 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:29:42,209 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:30:56,919 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:30:56,919 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:30:56,922 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:30:56,923 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:30:56,922 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:30:56,923 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:30:56,924 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:30:56,924 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:30:56,924 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:30:56,924 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:30:57,301 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:30:57,301 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:30:57,301 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:30:57,301 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:35:13,849 INFO SERVER_START
+2025-06-17 00:35:13,849 INFO SERVER_START
+2025-06-17 00:35:16,669 INFO SERVER_START
+2025-06-17 00:35:16,669 INFO SERVER_START
+2025-06-17 00:36:04,634 INFO SERVER_START
+2025-06-17 00:36:04,634 INFO SERVER_START
+2025-06-17 00:36:18,553 INFO SERVER_START
+2025-06-17 00:36:18,553 INFO SERVER_START
+2025-06-17 00:38:19,558 INFO SERVER_START
+2025-06-17 00:38:19,558 INFO SERVER_START
+2025-06-17 00:42:07,494 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:42:07,494 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:42:11,016 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:42:11,016 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:44:58,628 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:44:58,628 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:45:28,917 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:45:28,917 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:05,025 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:05,025 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:17,146 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:17,146 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:20,094 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:20,094 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:43,104 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:43,104 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:43,215 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:43,215 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:48,359 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:48:48,359 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:12,003 INFO SERVER_START
+2025-06-17 00:51:12,003 INFO SERVER_START
+2025-06-17 00:51:21,747 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:21,747 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:25,027 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:25,027 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:54,645 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:51:54,645 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:51:54,647 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:54,647 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:54,648 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:54,648 INFO SI_GET_FILES | NO_CONTROLLED_ACCESS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:54,649 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:51:54,649 INFO SI_GET_FILES | IP=127.0.0.1 | request_data_present=True
+2025-06-17 00:51:54,658 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:54,658 INFO SI_GET_FILES | JWT_DECODED | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 00:51:54,988 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:51:54,988 INFO SI_GET_FILES | FILES_FETCHED | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | status=200
+2025-06-17 00:51:54,989 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 00:51:54,989 INFO SI_GET_FILES | SUCCESS | user_id=marta.felix@lifescience-ri.eu | dataset_id=pt:biodata.pt:tre:dataset-example | IP=127.0.0.1 | files_count=1
+2025-06-17 01:03:06,720 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:03:06,720 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:40,091 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:40,091 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:40,542 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:40,542 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:44,584 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:44,584 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:46,890 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:04:46,890 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:13,127 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:13,127 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:13,133 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:13,133 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:15,219 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:15,219 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:37,884 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:37,884 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:37,964 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:37,964 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:41,323 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:05:41,323 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:08,145 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:08,145 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:08,183 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:08,183 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:18,289 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:18,289 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:43,551 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:43,551 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:43,623 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:43,623 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:46,278 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:46,278 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:48,282 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:48,282 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:49,926 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:06:49,926 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:58:29,631 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 01:58:29,631 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 08:36:39,206 INFO SERVER_START
+2025-06-17 08:36:39,206 INFO SERVER_START
+2025-06-17 08:36:40,367 INFO SERVER_START
+2025-06-17 08:36:40,367 INFO SERVER_START
+2025-06-17 08:44:27,477 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 08:44:27,477 INFO GET_TASKS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:28:07,988 INFO LOGIN | IP=127.0.0.1
+2025-06-17 09:28:07,988 INFO LOGIN | IP=127.0.0.1
+2025-06-17 09:28:13,130 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=fS1cwgKBSPV1RPwF6e-0kn
+2025-06-17 09:28:13,130 INFO OIDC_CALLBACK | IP=127.0.0.1 | code=fS1cwgKBSPV1RPwF6e-0kn
+2025-06-17 09:28:13,722 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-17 09:28:13,722 INFO OIDC_CALLBACK | SUCCESS | IP=127.0.0.1
+2025-06-17 09:28:14,644 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:28:14,644 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:28:28,175 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:28:28,175 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:35:33,728 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:35:33,728 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:36:21,964 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:36:21,964 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:36:22,462 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:36:22,462 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:36:24,822 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:36:24,822 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:39:34,515 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:39:34,515 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:39:42,743 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:39:42,743 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:40:02,640 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:40:02,640 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:41:47,881 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:41:47,881 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:41:48,303 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:41:48,303 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:41:50,183 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:41:50,183 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:12,710 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:12,710 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:14,809 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:14,809 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:15,183 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:15,183 INFO API_USER | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:16,967 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1
+2025-06-17 09:44:16,967 INFO GET_PROJECTS | user_id=marta.felix@lifescience-ri.eu | IP=127.0.0.1

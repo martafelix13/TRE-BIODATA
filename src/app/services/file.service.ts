@@ -11,20 +11,24 @@ export class FileService {
   
   constructor(private http: HttpClient) {}
 
-  getFiles() {
-    return this.http.get(`${this.backendUrl}/files`, { withCredentials: true });
+  // Download a file by its filename and project ID
+  downloadTemplateFile(filename: string, projectId: string): Observable<Blob> {
+    const url = `${this.backendUrl}/files/download/template/${projectId}/${filename}`;
+    return this.http.get(url, { responseType: 'blob' });
   }
 
-  downloadFile(filename: string) {
-    return this.http.get(`${this.backendUrl}/files/download/${filename}`, { withCredentials: true });
+  // Get a signed URL for downloading a file
+  getSignedDownloadUrl(filename: string, projectId: string): Observable<Blob> {
+    const url = `${this.backendUrl}/files/download/signed/${projectId}/${filename}`;
+    return this.http.get(url, { responseType: 'blob' });
   }
 
-  uploadSignedFile(formData: FormData): Observable<any> {
-    console.log('Uploading file: ', formData);
-    return this.http.post(`${this.backendUrl}/files/upload`, formData, { withCredentials: true });
+  // Upload a file to the server
+  uploadFile(file: File, projectId: string): Observable<any> {
+    const url = `${this.backendUrl}/files/upload-signed/${projectId}`;
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(url, formData);
   }
 
-  getFilesByProject(project_id: string) {
-    return this.http.get(`${this.backendUrl}/files/` + project_id, { withCredentials: true });
-  }
 }

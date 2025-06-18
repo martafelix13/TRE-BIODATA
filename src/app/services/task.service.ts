@@ -13,7 +13,7 @@ export class TaskService {
   constructor(private http:HttpClient) { }
 
   submitTask(fileId: string, pipelineId: string): Observable<any> {
-    return this.http.post(`${this.backendUrl}/run-task`, { file_id: fileId, pipeline_id: pipelineId }, { withCredentials: true });
+    return this.http.post(`${this.backendUrl}/run-task`, { file_id: fileId, pipeline_id: pipelineId}, { withCredentials: true });
   }
 
   pollTaskStatus(taskId: string): Observable<any> {
@@ -29,5 +29,9 @@ export class TaskService {
 
   getPipelines(): Observable<any> {
     return this.http.get(`${this.backendUrl}/pipelines`, { withCredentials: true });
+  }
+
+  getUserTasks(): Observable<any> {
+    return this.http.get(`${this.backendUrl}/tasks`, { withCredentials: true });
   }
 }

@@ -7,9 +7,10 @@ import { ProjectDisplayComponent } from './pages/project-display/project-display
 import { ProjectDetailsComponent } from './pages/project-display/project-details/project-details.component';
 import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
 import { DataUploadComponent } from './pages/data-upload/data-upload.component';
-import { TasksComponent } from './pages/tasks/tasks.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { TutorialComponent } from './pages/tutorial/tutorial.component';
+import { TasksComponent } from './pages/tasks/tasks.component';
+import { CreateTasksComponent } from './pages/tasks/create-tasks/create-tasks.component';
 
 export const routes: Routes = [
         { path: '', component: HomeComponent, title: 'Home' },
@@ -21,7 +22,8 @@ export const routes: Routes = [
         { path: 'projects/:id', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] },
         { path: 'projects/new', component: ProjectDetailsComponent, title: 'Project Details', canDeactivate: [UnsavedChangesGuard] },
         { path: 'data-upload', component: DataUploadComponent, title: 'Data Upload' },
-        { path: 'tasks', component: TasksComponent, title: 'Tasks' },
+        { path: 'tasks', component: TasksComponent, title: 'Tasks'        },
+        { path: 'tasks/new', component: CreateTasksComponent, title: 'Create Task' },
         { path: 'about', component: AboutUsComponent, title: 'About ADELE' },
         { path: 'tutorials', component: TutorialComponent, title: 'Tutorials' },
         { path: '**', redirectTo: '/home' }

@@ -8,10 +8,11 @@ import { ProjectsService } from '../../../services/projects.service';
 import { identity, Observable } from 'rxjs';
 import { ThemeDirective } from '@coreui/angular';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-metadata-form',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatIconModule],
   templateUrl: './metadata-form.component.html',
   styleUrls: ['./metadata-form.component.scss']
 })

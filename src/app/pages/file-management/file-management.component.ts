@@ -24,7 +24,7 @@ export class FileManagementComponent implements OnInit {
   user_id: string = '';
   //project_id: string = '';
 
-  selectedFiles: Map<string, File> = new Map();
+  selectedFiles: Map<string, File> = new Map(); 
 
   fileList = [];
 
@@ -45,79 +45,106 @@ export class FileManagementComponent implements OnInit {
 
   ngOnInit() {
     console.log('Project ID: ', this.project_id);
-    console.log("Status: " + this.status)
+    console.log("Status: " + this.status);
 
     if (this.status == 'A-E') {
-         this.fileService.getFiles().subscribe((data) => {
-      this.files = data;
-      console.log('Files: ', this.files);
-      });
-    } else if (this.status == 'A-AR') {
-      this.getFilesByProjectId();
-    }
-  }
-
-  download(filename: string) {
-    const temp_url = "https://drive.tecnico.ulisboa.pt/download/288548788261169"
-
-    window.open(temp_url, '_blank');
-  }
-
-  
-
-  onFileSelected(event: any, file: any) {
-    this.selectedFile = event.target.files[0];
-    console.log('Selected file: ', this.selectedFile);
-    console.log(file);
-    if (this.selectedFile) {
-      this.selectedFiles.set(file.filename, this.selectedFile!);
-    }
-  }
-
-  upload() {
-
-    if (this.selectedFiles.size != this.files.length) {
-      alert('Please sign all files before uploading');
-      return
-    }
-
-    this.selectedFiles.forEach((file, key) => {
-      console.log('Uploading file: ', key);
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('project_id', this.project_id);
-      formData.append('file_type', key);
-      this.fileService.uploadSignedFile(formData).subscribe({
-        next: (res) => { 
-          console.log('Response: ', res); 
-          const status = {status: 'A-AR'}
-          this.projectService.updateProject(this.project_id, status).subscribe({
-            next: (res) => {alert('File uploaded successfully!');},
-            error:(err) => {console.error("Error: ", err);}
-          })
+      // Fetching files to sign
+      this.projectService.getProject(this.project_id).subscribe({
+        next: (res:any) => {
+          console.log('Project Details: ', res);
+          this.files = res.templateFiles;
         },
-        error: (err) => { console.error('Error: ', err);
-          alert('Upload Failed.');
-         }
+        error: (err) => {
+          console.error('Error fetching project details: ', err);
+          alert('Error fetching project details. Please try again later.');
+        },
       });
-    }); 
+        } else if (this.status == 'A-AR') {
+      // Fetching files submitted for approval
+      this.projectService.getProject(this.project_id).subscribe({
+        next: (res:any) => {
+          this.files = res.userSignedFiles;
+          console.log('Project Details: ', this.files);
+        },
+        error: (err) => {
+          console.error('Error fetching project details: ', err);
+          alert('Error fetching project details. Please try again later.');
+        },
+      });
+    }
   }
 
-
-  getFilesByProjectId() {
-    console.log("Inside getFilesByProjectId")
-    this.fileService.getFilesByProject(this.project_id).subscribe({
-      next: (res: any) => {
-        console.log("Get Files by project Id: ")
-        console.log(res)
-        this.fileList = res;
+  downloadFile(filename: string) {
+    this.fileService.downloadTemplateFile(filename, this.project_id).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
       },
-      error: (err) => { console.error("Error: " + err) }
-    })
+      error: (err) => {
+        console.error('Error downloading file: ', err);
+        alert('Error downloading file. Please try again later.');
+      },
+    });
   }
 
-  downloadFile(url: string) {
-    window.open(url, '_blank'); 
+  getSignedDownloadUrl(filename: string) {
+    this.fileService.getSignedDownloadUrl(filename, this.project_id).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      },
+      error: (err) => {
+        console.error('Error getting signed download URL: ', err);
+        alert('Error getting download link. Please try again later.');
+      }
+    });
+  }
+
+  uploadFiles() {
+    if (this.selectedFiles.size === 0) {
+      alert('Please select files to upload.');
+      return;
+    }
+
+    this.selectedFiles.forEach((file, filename) => {
+      this.fileService.uploadFile(file, this.project_id).subscribe({
+        next: (res) => {
+          console.log('File uploaded successfully: ', res);
+          alert(`File ${filename} uploaded successfully.`);
+          // Optionally, refresh the file list or perform other actions
+        },
+        error: (err) => {
+          console.error('Error uploading file: ', err);
+          alert(`Error uploading file ${filename}. Please try again later.`);
+        },
+      });
+    });
+
+    // Clear selected files after upload
+    this.selectedFiles.clear();
+  }
+
+  onFileSelect(event: any, filename: string) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const renamedFile = new File([file], filename, {
+      type: file.type,
+      lastModified: file.lastModified,
+    });
+
+    this.selectedFiles.set(renamedFile.name, renamedFile);
+    console.log(`File selected: ${renamedFile.name}`, renamedFile);
   }
 
 

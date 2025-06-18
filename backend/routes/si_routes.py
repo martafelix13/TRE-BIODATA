@@ -89,3 +89,43 @@ def get_files():
 
     audit_logger.info(f"SI_GET_FILES | SUCCESS | user_id={user_id} | dataset_id={dataset_id} | IP={user_ip} | files_count={len(files)}")
     return jsonify({"dataset": dataset_id, "files": files}), 200
+
+
+@si_bp.route('/files/<file_id>', methods=['GET'])
+def get_file(file_id):
+    """
+    Get details of a specific file from the FDP.
+    """
+    user_ip = request.remote_addr
+    access_token = request.cookies.get('access_token')
+    if not access_token:
+        audit_logger.warning(f"SI_GET_FILE | MISSING_ACCESS_TOKEN | IP={user_ip}")
+        return jsonify({"error": "Missing access token in cookies"}), 401
+
+    headers = {
+        'Authorization': f"Bearer {access_token}",
+        'Content-Type': 'application/json'
+    }
+
+    try:
+        response = requests.get(
+            f"{settings.DOWNLOAD_S3}/files/{file_id}",
+            headers=headers,
+            timeout=10
+        )
+        response.raise_for_status()
+        audit_logger.info(f"SI_GET_FILE | FILE_FETCHED | file_id={file_id} | IP={user_ip} | status={response.status_code}")
+    except requests.RequestException as e:
+        audit_logger.error(f"SI_GET_FILE | FILE_FETCH_FAIL | file_id={file_id} | IP={user_ip} | error={str(e)}")
+        return jsonify({"error": f"Failed to fetch file: {str(e)}"}), 502
+
+    try:
+        file_data = response.json()
+    except ValueError:
+        audit_logger.error(f"SI_GET_FILE | INVALID_JSON_RESPONSE | file_id={file_id} | IP={user_ip}")
+        return jsonify({"error": "Invalid JSON response from file server"}), 502
+
+    audit_logger.info(f"SI_GET_FILE | SUCCESS | file_id={file_id} | IP={user_ip}")
+
+    
+    return jsonify(file_data), 200

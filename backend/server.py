@@ -1,3 +1,4 @@
+import datetime
 import io
 import logging
 from bson import ObjectId
@@ -15,6 +16,7 @@ from rdflib import Graph
 
 from routes.fdp_routes import fdp_bp
 from routes.si_routes import si_bp
+from routes.files_routes import legal_docs_bp
 import xml.etree.ElementTree as ET
 
 import utils
@@ -49,6 +51,8 @@ fs = gridfs.GridFS(dbFiles)
 dbUser = client["users"]
 userDB = dbUser["users_info"]
 
+tasksDB = dbUser["tasks"]
+
 dbPipeline = client["pipeline"]
 pipelineDB = dbPipeline["pipeline_details"] #Pipeline_id | PayloadJson
 id_token = None
@@ -58,6 +62,7 @@ user = None
 
 app.register_blueprint(fdp_bp, url_prefix='/fdp')  # Optional prefix
 app.register_blueprint(si_bp, url_prefix='/si')  
+app.register_blueprint(legal_docs_bp, url_prefix='/files')
 
 ## Authentication and Authorization ##
 @app.route('/login')
@@ -321,108 +326,6 @@ def update_project(project_id):
 
 
 
-## File Handling ##
-@app.route('/files', methods=['GET'])
-def get_files():
-    """Return all files"""
-    files = list(templateDB.find({}, {"_id": 0}))
-    return jsonify(files), 200
-
-
-@app.route('/files/<string:project_id>', methods=['GET'])
-def get_files_by_project(project_id):
-    """Return all files for a specific project"""
-    files = fs.find({"project_id": project_id})
-    file_list = []
-    for file in files:
-        existing_file = next((f for f in file_list if f["filename"] == file.type), None)
-        if existing_file:
-            if file.uploadDate > existing_file["upload_date"]:
-                file_list.remove(existing_file)
-                file_list.append({
-                    "filename": file.type,
-                    "download_url": f"download/{file._id}",
-                    "upload_date": file.uploadDate,
-                })
-        else:
-            file_list.append({
-                "filename": file.type,
-                "download_url": f"download/{file._id}",
-                "upload_date": file.uploadDate,
-            })
-
-    for item in file_list:
-        item['download_url'] = request.host_url + item['download_url']
-    print('Files from project ', project_id)
-    print(file_list)
-    return jsonify(file_list), 200
-
-@app.route('/download/<file_id>', methods=['GET'])
-def download_file(file_id):
-    """Download a specific file."""
-
-    file_obj_id = ObjectId(file_id)
-
-    user_id = utils.get_user_id(request.cookies.get('id_token'))
-    audit_logger.info(f"DOWNLOAD_FILE | user_id={user_id} | file_id={file_id} | IP={request.remote_addr}")
-
-    try:
-        file_data = fs.get(file_obj_id)
-        if not file_data:
-            return "File not found", 404
-
-        return send_file(
-            io.BytesIO(file_data.read()),
-            as_attachment=True,
-            download_name=file_data.type,
-            mimetype="application/pdf"
-        )
-    except Exception as e:
-        return str(e), 500
-
-
-@app.route('/upload', methods=['POST'])
-def upload_signed_file():
-    """Receive signed files from users"""
-
-    if 'file' not in request.files:  # Check if 'file' key exists
-        return jsonify({"error": "No file part in request"}), 400
-    file = request.files['file']
-    
-    if 'project_id' not in request.form:
-        return jsonify({"error": "Project ID missing"}), 400
-    
-    if 'file_type' not in request.form:
-        return jsonify({"error": "Document type missing"}), 400
-
-    project_id = request.form.get('project_id')
-    file_type = request.form.get('file_type')
-
-    id_token = request.cookies.get('id_token')
-    user_id = utils.get_user_id(id_token)
-    if not user_id:
-        return jsonify({"error": "Unauthorized"}), 401
-    
-
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-    
-    file.filename = file_type
-    fs.put(file , owner=user_id, project_id=project_id, type=file_type)
-
-    user_id = utils.get_user_id(request.cookies.get('id_token'))
-    project_id = request.form.get('project_id')
-    file_type = request.form.get('file_type')
-    filename = request.files['file'].filename if 'file' in request.files else None
-    audit_logger.info(f"UPLOAD_FILE | user_id={user_id} | project_id={project_id} | file_type={file_type} | filename={filename} | IP={request.remote_addr}")
-
-    return jsonify({"message": "File uploaded successfully!" })
-
-
-@app.route('/redirect-rems', methods=['GET'])
-def redirect_rems():
-    # open new window with rems
-    return open('http://localhost:3000')
 
 
 @app.route('/rems/create_resource', methods=['POST'])
@@ -489,6 +392,11 @@ def runTask():
     file_id = request.json['file_id']
     pipeline_id = request.json['pipeline_id']
 
+    id_token = request.cookies.get('id_token')
+    user_id = utils.get_user_id(id_token)
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
     print (file_id)
     print (pipeline_id)
 
@@ -504,6 +412,7 @@ def runTask():
     payload_str = json.dumps(template)
 
     values = {
+    "$USER_NAME": user_id,
     "$FILE_ID": file_id,
     "$TOKEN": access_token
     }
@@ -516,36 +425,55 @@ def runTask():
     print (payload)
 
     response = requests.post(TES_URL, headers={"Accept": "application/json", "Content-Type": "application/json"}, data=payload)
-    
+
+    tasksDB.insert_one({
+        "task_id": response.json().get("id"),
+        "user_id": user_id,
+        "pipeline_id": pipeline_id,
+        "file_id": file_id,
+        "status": response.json().get("state", "PENDING"),
+        "created_at": datetime.datetime.utcnow(),
+        "result_url": f"{TES_URL}/{user_id}/{file_id}",
+    })
+
     return jsonify(response.json())
 
 @app.route("/run-task/<string:taskId>", methods=['GET'])
 def getTask(taskId):
     print ("Task_id: " + taskId)
 
+
     response = requests.get(f"{TES_URL}/{taskId}?view=FULL", headers={"Accept": "application/json", "Content-Type": ""}).json()
     print(response)
+
+    if not response:
+        return jsonify({"error": "Task not found"}), 404
+    
     if response["state"] == 'COMPLETE':
-        output = response['logs'][0]['logs'][0]['stdout']
-        print (output)
+        tasksDB.update_one({"task_id": taskId}, {"$set": {"status": "AWAITING REVIEW"}})
+    else:
+        tasksDB.update_one({"task_id": taskId}, {"$set": {"status": response["state"]}})
 
-        return jsonify({"message": "Task completed successfully", "output": output, "state":"COMPLETE"}), 200
-    
-
-        # Download the file
-        """ download_url = response['outputs'][0]['stdout']
-        file_response = requests.get(download_url, stream=True)
-
-        if file_response.status_code == 200:
-            # Save the file locally
-            with open('output_file', 'wb') as f:
-                for chunk in file_response.iter_content(chunk_size=8192):
-                    f.write(chunk)
-            return jsonify({"message": "File downloaded successfully"}), 200
-        else:
-            return jsonify({"error": "Failed to download file"}), file_response.status_code """
     return jsonify(response), 200
+
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    """Return all tasks for the user"""
+    id_token = request.cookies.get('id_token')
+    user_id = utils.get_user_id(id_token)
+    audit_logger.info(f"GET_TASKS | user_id={user_id} | IP={request.remote_addr}")
     
+    if not user_id:
+        audit_logger.warning(f"GET_TASKS | UNAUTHORIZED | IP={request.remote_addr}")
+        return jsonify({"error": "Unauthorized"}), 401
+
+    tasks = list(tasksDB.find({"user_id": user_id}))
+    
+    # Convert ObjectId to string
+    for i in range(len(tasks)):
+        tasks[i] = utils.serialize_doc(tasks[i])
+
+    return jsonify(tasks), 200
 
 @app.route("/skos/label", methods=['GET'])
 def get_skos_labels():
